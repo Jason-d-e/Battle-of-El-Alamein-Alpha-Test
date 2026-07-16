@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>阿拉曼战役 / El Alamein</title>
+    <link rel="stylesheet" href="style.css?v=20260716-alpha-map-zoom-v3" />
+  </head>
+  <body data-view="menu" data-lang="zh">
+    <section id="menuView" class="menu-view" aria-label="Main menu">
+      <div class="menu-panel">
+        <p class="eyebrow" data-i18n="menu.eyebrow">North African Campaign</p>
+        <h1 data-i18n="app.title">阿拉曼战役</h1>
+        <p class="menu-copy" data-i18n="menu.copy">北非战场上轴心国军队在埃及、叙利亚地区主动发起的最后一次大规模攻势，计划在同盟国增援到来而导致轴心国无法在非洲获得胜利之前借由这次战役击败英国第八集团军。</p>
+        <div class="language-switch" aria-label="Language">
+          <button id="langZhButton" type="button" data-lang-choice="zh">中文</button>
+          <button id="langEnButton" type="button" data-lang-choice="en">English</button>
+        </div>
+        <section class="mode-choice" aria-label="Game mode selection">
+          <p data-i18n="menu.modeLabel">Game mode</p>
+          <div class="mode-choice-buttons">
+            <button id="axisAiModeButton" type="button" data-game-mode="axis-vs-ai">
+              <img class="mode-flag" src="local-assets/ui/axis-human-flag.png" alt="" aria-hidden="true" />
+              <span class="mode-side" data-i18n="side.axis">Axis</span>
+              <span class="mode-versus">vs</span>
+              <span data-i18n="side.allied">Allied</span>
+            </button>
+            <button id="alliedAiModeButton" type="button" data-game-mode="allied-vs-ai">
+              <img class="mode-flag" src="local-assets/ui/allied-human-flag.png" alt="" aria-hidden="true" />
+              <span class="mode-side" data-i18n="side.allied">Allied</span>
+              <span class="mode-versus">vs</span>
+              <span data-i18n="side.axis">Axis</span>
+            </button>
+            <button id="hotseatModeButton" type="button" data-game-mode="hotseat" data-i18n="menu.hotseatMode">Hotseat</button>
+          </div>
+        </section>
+        <div class="menu-actions">
+          <button id="startCampaignButton" type="button" data-i18n="menu.start">开始战役</button>
+          <button id="continueCampaignButton" type="button" data-i18n="menu.continue">继续本回合</button>
+          <button id="menuLoadButton" type="button" data-i18n="menu.load">读取存档</button>
+        </div>
+        <p id="menuStatus" class="menu-status"></p>
+      </div>
+    </section>
+
+    <section id="gameView" class="game-view" aria-label="El Alamein game">
+      <header class="topbar">
+        <div class="game-title">
+          <h1 data-i18n="app.title">阿拉曼战役</h1>
+        </div>
+        <nav class="actions" aria-label="Game actions">
+          <button id="menuButton" type="button" data-i18n="ui.menu">主菜单</button>
+          <button id="newGameButton" type="button" data-i18n="ui.new">新战役</button>
+          <button id="saveButton" type="button" data-i18n="ui.save">保存</button>
+          <button id="loadButton" type="button" data-i18n="ui.load">读取</button>
+          <button id="chartsButton" type="button" data-i18n="ui.charts">表格</button>
+          <button id="aarButton" type="button" data-i18n="ui.aar">战报</button>
+          <button id="exportHumanDemonstrationButton" type="button" data-i18n="ui.exportHumanDemonstration">Export human demonstrations</button>
+        </nav>
+      </header>
+
+      <main class="layout">
+        <section class="board-panel" aria-label="Game board">
+          <div id="boardViewport" class="board-viewport">
+            <div id="mapZoomStage" class="map-zoom-stage">
+              <div id="boardSurface" class="board-surface">
+                <img id="mapImage" alt="El Alamein map" />
+                <canvas id="hexLayer" width="2448" height="1696"></canvas>
+                <div id="unitLayer"></div>
+                <div id="boardBadge" class="board-badge"></div>
+              </div>
+            </div>
+          </div>
+          <div id="mapZoomControls" class="map-zoom-controls" role="group" aria-label="地图缩放">
+            <button id="mapZoomOutButton" type="button" aria-label="缩小地图" title="缩小地图">−</button>
+            <div class="map-zoom-picker">
+              <button
+                id="mapZoomMenuButton"
+                class="map-zoom-menu-button"
+                type="button"
+                aria-haspopup="menu"
+                aria-expanded="false"
+                aria-controls="mapZoomMenu"
+              >
+                <output id="mapZoomOutput" role="status" aria-live="polite">100%</output>
+                <span aria-hidden="true">▾</span>
+              </button>
+              <div id="mapZoomMenu" class="map-zoom-menu" role="menu" hidden>
+                <button type="button" role="menuitemradio" data-map-zoom-preference="fit" data-i18n="ui.mapZoomFit">自适应</button>
+                <button type="button" role="menuitemradio" data-map-zoom-preference="0.75">75%</button>
+                <button type="button" role="menuitemradio" data-map-zoom-preference="1">100%</button>
+                <button type="button" role="menuitemradio" data-map-zoom-preference="1.25">125%</button>
+                <button type="button" role="menuitemradio" data-map-zoom-preference="1.5">150%</button>
+                <button type="button" role="menuitemradio" data-map-zoom-preference="1.75">175%</button>
+                <button type="button" role="menuitemradio" data-map-zoom-preference="2">200%</button>
+              </div>
+            </div>
+            <button id="mapZoomInButton" type="button" aria-label="放大地图" title="放大地图">+</button>
+          </div>
+        </section>
+
+        <aside class="side-panel" aria-label="Game controls">
+          <section class="panel-block phase-block">
+            <div class="turn-line">
+              <strong id="turnLabel">--</strong>
+              <span id="phaseLabel">--</span>
+            </div>
+            <div id="aiStatus" class="ai-status"></div>
+            <div id="winnerBanner" class="winner-banner" hidden></div>
+            <div class="phase-actions">
+              <button id="finishDeclarationsButton" type="button" hidden data-i18n="ui.finishDeclarations">完成宣告</button>
+              <button id="resolveBattleButton" type="button" hidden data-i18n="ui.resolveBattle">结算下一战斗</button>
+              <button id="endPhaseButton" type="button" data-i18n="ui.endPhase">结束阶段</button>
+            </div>
+          </section>
+
+          <section class="panel-block selected-unit-block">
+            <h2 data-i18n="ui.selectedUnit">选中单位</h2>
+            <div id="selectedUnit" class="selected-unit empty">--</div>
+          </section>
+
+          <section class="panel-block">
+            <h2 data-i18n="ui.combat">战斗</h2>
+            <div id="combatComposer" class="combat-composer"></div>
+          </section>
+
+          <section class="panel-block operations-block">
+            <p class="panel-kicker" data-i18n="ui.operationsKicker">Operations Board</p>
+            <h2 data-i18n="ui.operations">战情板</h2>
+            <div id="operationsFocus" class="operations-focus"></div>
+            <div id="battleList" class="battle-list"></div>
+          </section>
+
+          <section id="logBlock" class="panel-block log-block" data-expanded="false">
+            <div class="panel-title-row">
+              <h2 data-i18n="ui.log">记录</h2>
+              <button id="logToggleButton" type="button" data-i18n="ui.openLog">打开</button>
+            </div>
+            <div id="logList" class="log-list"></div>
+          </section>
+        </aside>
+      </main>
+    </section>
+
+    <section id="aarView" class="aar-view" hidden aria-label="After action report">
+      <div class="aar-shell">
+        <div>
+          <p class="eyebrow" data-i18n="aar.eyebrow">After Action Report</p>
+          <h2 id="aarTitle">--</h2>
+          <p id="aarSubtitle" class="aar-subtitle"></p>
+        </div>
+        <div class="aar-actions">
+          <button id="returnMapButton" type="button" data-i18n="aar.returnMap">返回地图</button>
+          <button id="aarMenuButton" type="button" data-i18n="aar.menu">主菜单</button>
+        </div>
+        <div id="aarSummary" class="aar-summary"></div>
+        <div id="aarLosses" class="aar-losses"></div>
+        <div id="aarEliminated" class="aar-eliminated"></div>
+        <div id="aarBattles" class="aar-battles"></div>
+      </div>
+    </section>
+
+    <dialog id="chartsDialog" class="charts-dialog">
+      <form method="dialog">
+        <button class="dialog-close" value="close" aria-label="Close">×</button>
+      </form>
+      <div class="chart-grid">
+        <figure>
+          <figcaption data-i18n="charts.crt">战斗结果表</figcaption>
+          <img id="crtImage" alt="Combat results table" />
+        </figure>
+        <figure>
+          <figcaption data-i18n="charts.tec">地形效果表</figcaption>
+          <img id="tecImage" alt="Terrain effects chart" />
+        </figure>
+        <figure>
+          <figcaption data-i18n="charts.turn">回合记录表</figcaption>
+          <img id="turnTrackImage" alt="Turn track" />
+        </figure>
+      </div>
+    </dialog>
+
+    <template id="missingDataTemplate">
+      <div class="missing-data">
+        <h2>缺少本地数据 / Local Data Missing</h2>
+        <p>请先准备本地地图和单位数据，然后刷新页面。</p>
+      </div>
+    </template>
+
+    <script src="game.js?v=20260716-alpha-map-zoom-v3" defer></script>
+  </body>
+</html>

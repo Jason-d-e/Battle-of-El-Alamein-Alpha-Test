@@ -1,0 +1,6901 @@
+{
+  "version": 1,
+  "format": "zizi-el-alamein-scenario",
+  "board": {
+    "name": "main",
+    "image": "local-assets/images/mainmap.jpg",
+    "width": 2448,
+    "height": 1696,
+    "hexes": [
+      {
+        "id": "c05r01",
+        "col": 5,
+        "row": 1,
+        "center": {
+          "x": 496.1,
+          "y": 142
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": [
+          "allied-west-exit-edge"
+        ]
+      },
+      {
+        "id": "c05r03",
+        "col": 5,
+        "row": 3,
+        "center": {
+          "x": 496.1,
+          "y": 298
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": [
+          "allied-west-exit-edge"
+        ]
+      },
+      {
+        "id": "c05r05",
+        "col": 5,
+        "row": 5,
+        "center": {
+          "x": 496.1,
+          "y": 454
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": [
+          "allied-west-exit-edge"
+        ]
+      },
+      {
+        "id": "c05r07",
+        "col": 5,
+        "row": 7,
+        "center": {
+          "x": 496.1,
+          "y": 610
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": [
+          "allied-west-exit-edge"
+        ]
+      },
+      {
+        "id": "c05r09",
+        "col": 5,
+        "row": 9,
+        "center": {
+          "x": 496.1,
+          "y": 766
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": [
+          "allied-west-exit-edge"
+        ]
+      },
+      {
+        "id": "c05r11",
+        "col": 5,
+        "row": 11,
+        "center": {
+          "x": 496.1,
+          "y": 922
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": [
+          "allied-west-exit-edge"
+        ]
+      },
+      {
+        "id": "c05r13",
+        "col": 5,
+        "row": 13,
+        "center": {
+          "x": 496.1,
+          "y": 1078
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": [
+          "allied-west-exit-edge"
+        ]
+      },
+      {
+        "id": "c05r15",
+        "col": 5,
+        "row": 15,
+        "center": {
+          "x": 496.1,
+          "y": 1234
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": [
+          "allied-west-exit-edge"
+        ]
+      },
+      {
+        "id": "c05r17",
+        "col": 5,
+        "row": 17,
+        "center": {
+          "x": 496.1,
+          "y": 1390
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": [
+          "allied-west-exit-edge"
+        ]
+      },
+      {
+        "id": "c05r19",
+        "col": 5,
+        "row": 19,
+        "center": {
+          "x": 496.1,
+          "y": 1546
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": false,
+        "objective": [
+          "allied-west-exit-edge"
+        ]
+      },
+      {
+        "id": "c06r00",
+        "col": 6,
+        "row": 0,
+        "center": {
+          "x": 541.2,
+          "y": 64
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": [
+          "allied-west-exit-edge"
+        ]
+      },
+      {
+        "id": "c06r01",
+        "col": 6,
+        "row": 1,
+        "center": {
+          "x": 586.3,
+          "y": 142
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c06r02",
+        "col": 6,
+        "row": 2,
+        "center": {
+          "x": 541.2,
+          "y": 220
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": [
+          "allied-west-exit-edge"
+        ]
+      },
+      {
+        "id": "c06r03",
+        "col": 6,
+        "row": 3,
+        "center": {
+          "x": 586.3,
+          "y": 298
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c06r04",
+        "col": 6,
+        "row": 4,
+        "center": {
+          "x": 541.2,
+          "y": 376
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": [
+          "allied-west-exit-edge"
+        ]
+      },
+      {
+        "id": "c06r05",
+        "col": 6,
+        "row": 5,
+        "center": {
+          "x": 586.3,
+          "y": 454
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c06r06",
+        "col": 6,
+        "row": 6,
+        "center": {
+          "x": 541.2,
+          "y": 532
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": [
+          "allied-west-exit-edge"
+        ]
+      },
+      {
+        "id": "c06r07",
+        "col": 6,
+        "row": 7,
+        "center": {
+          "x": 586.3,
+          "y": 610
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c06r08",
+        "col": 6,
+        "row": 8,
+        "center": {
+          "x": 541.2,
+          "y": 688
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": [
+          "allied-west-exit-edge"
+        ]
+      },
+      {
+        "id": "c06r09",
+        "col": 6,
+        "row": 9,
+        "center": {
+          "x": 586.3,
+          "y": 766
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c06r10",
+        "col": 6,
+        "row": 10,
+        "center": {
+          "x": 541.2,
+          "y": 844
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": [
+          "allied-west-exit-edge"
+        ]
+      },
+      {
+        "id": "c06r11",
+        "col": 6,
+        "row": 11,
+        "center": {
+          "x": 586.3,
+          "y": 922
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c06r12",
+        "col": 6,
+        "row": 12,
+        "center": {
+          "x": 541.2,
+          "y": 1000
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": false,
+        "objective": [
+          "allied-west-exit-edge"
+        ]
+      },
+      {
+        "id": "c06r13",
+        "col": 6,
+        "row": 13,
+        "center": {
+          "x": 586.3,
+          "y": 1078
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c06r14",
+        "col": 6,
+        "row": 14,
+        "center": {
+          "x": 541.2,
+          "y": 1156
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": [
+          "allied-west-exit-edge"
+        ]
+      },
+      {
+        "id": "c06r15",
+        "col": 6,
+        "row": 15,
+        "center": {
+          "x": 586.3,
+          "y": 1234
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c06r16",
+        "col": 6,
+        "row": 16,
+        "center": {
+          "x": 541.2,
+          "y": 1312
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": [
+          "allied-west-exit-edge"
+        ]
+      },
+      {
+        "id": "c06r17",
+        "col": 6,
+        "row": 17,
+        "center": {
+          "x": 586.3,
+          "y": 1390
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c06r18",
+        "col": 6,
+        "row": 18,
+        "center": {
+          "x": 541.2,
+          "y": 1468
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": [
+          "allied-west-exit-edge"
+        ]
+      },
+      {
+        "id": "c06r19",
+        "col": 6,
+        "row": 19,
+        "center": {
+          "x": 586.3,
+          "y": 1546
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c06r20",
+        "col": 6,
+        "row": 20,
+        "center": {
+          "x": 541.2,
+          "y": 1624
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": [
+          "allied-west-exit-edge"
+        ]
+      },
+      {
+        "id": "c07r00",
+        "col": 7,
+        "row": 0,
+        "center": {
+          "x": 631.4,
+          "y": 64
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c07r01",
+        "col": 7,
+        "row": 1,
+        "center": {
+          "x": 676.5,
+          "y": 142
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c07r02",
+        "col": 7,
+        "row": 2,
+        "center": {
+          "x": 631.4,
+          "y": 220
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c07r03",
+        "col": 7,
+        "row": 3,
+        "center": {
+          "x": 676.5,
+          "y": 298
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c07r04",
+        "col": 7,
+        "row": 4,
+        "center": {
+          "x": 631.4,
+          "y": 376
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c07r05",
+        "col": 7,
+        "row": 5,
+        "center": {
+          "x": 676.5,
+          "y": 454
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c07r06",
+        "col": 7,
+        "row": 6,
+        "center": {
+          "x": 631.4,
+          "y": 532
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c07r07",
+        "col": 7,
+        "row": 7,
+        "center": {
+          "x": 676.5,
+          "y": 610
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c07r08",
+        "col": 7,
+        "row": 8,
+        "center": {
+          "x": 631.4,
+          "y": 688
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c07r09",
+        "col": 7,
+        "row": 9,
+        "center": {
+          "x": 676.5,
+          "y": 766
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c07r10",
+        "col": 7,
+        "row": 10,
+        "center": {
+          "x": 631.4,
+          "y": 844
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c07r11",
+        "col": 7,
+        "row": 11,
+        "center": {
+          "x": 676.5,
+          "y": 922
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c07r12",
+        "col": 7,
+        "row": 12,
+        "center": {
+          "x": 631.4,
+          "y": 1000
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c07r13",
+        "col": 7,
+        "row": 13,
+        "center": {
+          "x": 676.5,
+          "y": 1078
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c07r14",
+        "col": 7,
+        "row": 14,
+        "center": {
+          "x": 631.4,
+          "y": 1156
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c07r15",
+        "col": 7,
+        "row": 15,
+        "center": {
+          "x": 676.5,
+          "y": 1234
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c07r16",
+        "col": 7,
+        "row": 16,
+        "center": {
+          "x": 631.4,
+          "y": 1312
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c07r17",
+        "col": 7,
+        "row": 17,
+        "center": {
+          "x": 676.5,
+          "y": 1390
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c07r18",
+        "col": 7,
+        "row": 18,
+        "center": {
+          "x": 631.4,
+          "y": 1468
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c07r19",
+        "col": 7,
+        "row": 19,
+        "center": {
+          "x": 676.5,
+          "y": 1546
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c07r20",
+        "col": 7,
+        "row": 20,
+        "center": {
+          "x": 631.4,
+          "y": 1624
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c08r00",
+        "col": 8,
+        "row": 0,
+        "center": {
+          "x": 721.6,
+          "y": 64
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": true,
+        "objective": []
+      },
+      {
+        "id": "c08r01",
+        "col": 8,
+        "row": 1,
+        "center": {
+          "x": 766.7,
+          "y": 142
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c08r02",
+        "col": 8,
+        "row": 2,
+        "center": {
+          "x": 721.6,
+          "y": 220
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c08r03",
+        "col": 8,
+        "row": 3,
+        "center": {
+          "x": 766.7,
+          "y": 298
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c08r04",
+        "col": 8,
+        "row": 4,
+        "center": {
+          "x": 721.6,
+          "y": 376
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c08r05",
+        "col": 8,
+        "row": 5,
+        "center": {
+          "x": 766.7,
+          "y": 454
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c08r06",
+        "col": 8,
+        "row": 6,
+        "center": {
+          "x": 721.6,
+          "y": 532
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c08r07",
+        "col": 8,
+        "row": 7,
+        "center": {
+          "x": 766.7,
+          "y": 610
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c08r08",
+        "col": 8,
+        "row": 8,
+        "center": {
+          "x": 721.6,
+          "y": 688
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c08r09",
+        "col": 8,
+        "row": 9,
+        "center": {
+          "x": 766.7,
+          "y": 766
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c08r10",
+        "col": 8,
+        "row": 10,
+        "center": {
+          "x": 721.6,
+          "y": 844
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c08r11",
+        "col": 8,
+        "row": 11,
+        "center": {
+          "x": 766.7,
+          "y": 922
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c08r12",
+        "col": 8,
+        "row": 12,
+        "center": {
+          "x": 721.6,
+          "y": 1000
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c08r13",
+        "col": 8,
+        "row": 13,
+        "center": {
+          "x": 766.7,
+          "y": 1078
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c08r14",
+        "col": 8,
+        "row": 14,
+        "center": {
+          "x": 721.6,
+          "y": 1156
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c08r15",
+        "col": 8,
+        "row": 15,
+        "center": {
+          "x": 766.7,
+          "y": 1234
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c08r16",
+        "col": 8,
+        "row": 16,
+        "center": {
+          "x": 721.6,
+          "y": 1312
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c08r17",
+        "col": 8,
+        "row": 17,
+        "center": {
+          "x": 766.7,
+          "y": 1390
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c08r18",
+        "col": 8,
+        "row": 18,
+        "center": {
+          "x": 721.6,
+          "y": 1468
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c08r19",
+        "col": 8,
+        "row": 19,
+        "center": {
+          "x": 766.7,
+          "y": 1546
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c08r20",
+        "col": 8,
+        "row": 20,
+        "center": {
+          "x": 721.6,
+          "y": 1624
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c09r00",
+        "col": 9,
+        "row": 0,
+        "center": {
+          "x": 811.8,
+          "y": 64
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c09r01",
+        "col": 9,
+        "row": 1,
+        "center": {
+          "x": 856.9,
+          "y": 142
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c09r02",
+        "col": 9,
+        "row": 2,
+        "center": {
+          "x": 811.8,
+          "y": 220
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": true,
+        "objective": []
+      },
+      {
+        "id": "c09r03",
+        "col": 9,
+        "row": 3,
+        "center": {
+          "x": 856.9,
+          "y": 298
+        },
+        "terrain": "desert",
+        "road": true,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c09r04",
+        "col": 9,
+        "row": 4,
+        "center": {
+          "x": 811.8,
+          "y": 376
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c09r05",
+        "col": 9,
+        "row": 5,
+        "center": {
+          "x": 856.9,
+          "y": 454
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c09r06",
+        "col": 9,
+        "row": 6,
+        "center": {
+          "x": 811.8,
+          "y": 532
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c09r07",
+        "col": 9,
+        "row": 7,
+        "center": {
+          "x": 856.9,
+          "y": 610
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c09r08",
+        "col": 9,
+        "row": 8,
+        "center": {
+          "x": 811.8,
+          "y": 688
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c09r09",
+        "col": 9,
+        "row": 9,
+        "center": {
+          "x": 856.9,
+          "y": 766
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": true,
+        "objective": []
+      },
+      {
+        "id": "c09r10",
+        "col": 9,
+        "row": 10,
+        "center": {
+          "x": 811.8,
+          "y": 844
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c09r11",
+        "col": 9,
+        "row": 11,
+        "center": {
+          "x": 856.9,
+          "y": 922
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": true,
+        "objective": []
+      },
+      {
+        "id": "c09r12",
+        "col": 9,
+        "row": 12,
+        "center": {
+          "x": 811.8,
+          "y": 1000
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c09r13",
+        "col": 9,
+        "row": 13,
+        "center": {
+          "x": 856.9,
+          "y": 1078
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c09r14",
+        "col": 9,
+        "row": 14,
+        "center": {
+          "x": 811.8,
+          "y": 1156
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c09r15",
+        "col": 9,
+        "row": 15,
+        "center": {
+          "x": 856.9,
+          "y": 1234
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c09r16",
+        "col": 9,
+        "row": 16,
+        "center": {
+          "x": 811.8,
+          "y": 1312
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c09r17",
+        "col": 9,
+        "row": 17,
+        "center": {
+          "x": 856.9,
+          "y": 1390
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c09r18",
+        "col": 9,
+        "row": 18,
+        "center": {
+          "x": 811.8,
+          "y": 1468
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c09r19",
+        "col": 9,
+        "row": 19,
+        "center": {
+          "x": 856.9,
+          "y": 1546
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c09r20",
+        "col": 9,
+        "row": 20,
+        "center": {
+          "x": 811.8,
+          "y": 1624
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c10r00",
+        "col": 10,
+        "row": 0,
+        "center": {
+          "x": 902,
+          "y": 64
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c10r01",
+        "col": 10,
+        "row": 1,
+        "center": {
+          "x": 947.1,
+          "y": 142
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c10r02",
+        "col": 10,
+        "row": 2,
+        "center": {
+          "x": 902,
+          "y": 220
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c10r03",
+        "col": 10,
+        "row": 3,
+        "center": {
+          "x": 947.1,
+          "y": 298
+        },
+        "terrain": "desert",
+        "road": true,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c10r04",
+        "col": 10,
+        "row": 4,
+        "center": {
+          "x": 902,
+          "y": 376
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": true,
+        "objective": []
+      },
+      {
+        "id": "c10r05",
+        "col": 10,
+        "row": 5,
+        "center": {
+          "x": 947.1,
+          "y": 454
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": true,
+        "objective": []
+      },
+      {
+        "id": "c10r06",
+        "col": 10,
+        "row": 6,
+        "center": {
+          "x": 902,
+          "y": 532
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c10r07",
+        "col": 10,
+        "row": 7,
+        "center": {
+          "x": 947.1,
+          "y": 610
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": true,
+        "objective": []
+      },
+      {
+        "id": "c10r08",
+        "col": 10,
+        "row": 8,
+        "center": {
+          "x": 902,
+          "y": 688
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": true,
+        "objective": []
+      },
+      {
+        "id": "c10r09",
+        "col": 10,
+        "row": 9,
+        "center": {
+          "x": 947.1,
+          "y": 766
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c10r10",
+        "col": 10,
+        "row": 10,
+        "center": {
+          "x": 902,
+          "y": 844
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c10r11",
+        "col": 10,
+        "row": 11,
+        "center": {
+          "x": 947.1,
+          "y": 922
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c10r12",
+        "col": 10,
+        "row": 12,
+        "center": {
+          "x": 902,
+          "y": 1000
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c10r13",
+        "col": 10,
+        "row": 13,
+        "center": {
+          "x": 947.1,
+          "y": 1078
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": true,
+        "objective": []
+      },
+      {
+        "id": "c10r14",
+        "col": 10,
+        "row": 14,
+        "center": {
+          "x": 902,
+          "y": 1156
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c10r15",
+        "col": 10,
+        "row": 15,
+        "center": {
+          "x": 947.1,
+          "y": 1234
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c10r16",
+        "col": 10,
+        "row": 16,
+        "center": {
+          "x": 902,
+          "y": 1312
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c10r17",
+        "col": 10,
+        "row": 17,
+        "center": {
+          "x": 947.1,
+          "y": 1390
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c10r18",
+        "col": 10,
+        "row": 18,
+        "center": {
+          "x": 902,
+          "y": 1468
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c10r19",
+        "col": 10,
+        "row": 19,
+        "center": {
+          "x": 947.1,
+          "y": 1546
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c10r20",
+        "col": 10,
+        "row": 20,
+        "center": {
+          "x": 902,
+          "y": 1624
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c11r00",
+        "col": 11,
+        "row": 0,
+        "center": {
+          "x": 992.2,
+          "y": 64
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c11r01",
+        "col": 11,
+        "row": 1,
+        "center": {
+          "x": 1037.3,
+          "y": 142
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c11r02",
+        "col": 11,
+        "row": 2,
+        "center": {
+          "x": 992.2,
+          "y": 220
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c11r03",
+        "col": 11,
+        "row": 3,
+        "center": {
+          "x": 1037.3,
+          "y": 298
+        },
+        "terrain": "desert",
+        "road": true,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c11r04",
+        "col": 11,
+        "row": 4,
+        "center": {
+          "x": 992.2,
+          "y": 376
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c11r05",
+        "col": 11,
+        "row": 5,
+        "center": {
+          "x": 1037.3,
+          "y": 454
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c11r06",
+        "col": 11,
+        "row": 6,
+        "center": {
+          "x": 992.2,
+          "y": 532
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c11r07",
+        "col": 11,
+        "row": 7,
+        "center": {
+          "x": 1037.3,
+          "y": 610
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c11r08",
+        "col": 11,
+        "row": 8,
+        "center": {
+          "x": 992.2,
+          "y": 688
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c11r09",
+        "col": 11,
+        "row": 9,
+        "center": {
+          "x": 1037.3,
+          "y": 766
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c11r10",
+        "col": 11,
+        "row": 10,
+        "center": {
+          "x": 992.2,
+          "y": 844
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c11r11",
+        "col": 11,
+        "row": 11,
+        "center": {
+          "x": 1037.3,
+          "y": 922
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c11r12",
+        "col": 11,
+        "row": 12,
+        "center": {
+          "x": 992.2,
+          "y": 1000
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c11r13",
+        "col": 11,
+        "row": 13,
+        "center": {
+          "x": 1037.3,
+          "y": 1078
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c11r14",
+        "col": 11,
+        "row": 14,
+        "center": {
+          "x": 992.2,
+          "y": 1156
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c11r15",
+        "col": 11,
+        "row": 15,
+        "center": {
+          "x": 1037.3,
+          "y": 1234
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c11r16",
+        "col": 11,
+        "row": 16,
+        "center": {
+          "x": 992.2,
+          "y": 1312
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c11r17",
+        "col": 11,
+        "row": 17,
+        "center": {
+          "x": 1037.3,
+          "y": 1390
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c11r18",
+        "col": 11,
+        "row": 18,
+        "center": {
+          "x": 992.2,
+          "y": 1468
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c11r19",
+        "col": 11,
+        "row": 19,
+        "center": {
+          "x": 1037.3,
+          "y": 1546
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c11r20",
+        "col": 11,
+        "row": 20,
+        "center": {
+          "x": 992.2,
+          "y": 1624
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c12r00",
+        "col": 12,
+        "row": 0,
+        "center": {
+          "x": 1082.4,
+          "y": 64
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c12r01",
+        "col": 12,
+        "row": 1,
+        "center": {
+          "x": 1127.5,
+          "y": 142
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c12r02",
+        "col": 12,
+        "row": 2,
+        "center": {
+          "x": 1082.4,
+          "y": 220
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c12r03",
+        "col": 12,
+        "row": 3,
+        "center": {
+          "x": 1127.5,
+          "y": 298
+        },
+        "terrain": "settlement",
+        "road": true,
+        "britishPosition": false,
+        "objective": [
+          "coastal-road-east"
+        ]
+      },
+      {
+        "id": "c12r04",
+        "col": 12,
+        "row": 4,
+        "center": {
+          "x": 1082.4,
+          "y": 376
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c12r05",
+        "col": 12,
+        "row": 5,
+        "center": {
+          "x": 1127.5,
+          "y": 454
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c12r06",
+        "col": 12,
+        "row": 6,
+        "center": {
+          "x": 1082.4,
+          "y": 532
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c12r07",
+        "col": 12,
+        "row": 7,
+        "center": {
+          "x": 1127.5,
+          "y": 610
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c12r08",
+        "col": 12,
+        "row": 8,
+        "center": {
+          "x": 1082.4,
+          "y": 688
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c12r09",
+        "col": 12,
+        "row": 9,
+        "center": {
+          "x": 1127.5,
+          "y": 766
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c12r10",
+        "col": 12,
+        "row": 10,
+        "center": {
+          "x": 1082.4,
+          "y": 844
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c12r11",
+        "col": 12,
+        "row": 11,
+        "center": {
+          "x": 1127.5,
+          "y": 922
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c12r12",
+        "col": 12,
+        "row": 12,
+        "center": {
+          "x": 1082.4,
+          "y": 1000
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c12r13",
+        "col": 12,
+        "row": 13,
+        "center": {
+          "x": 1127.5,
+          "y": 1078
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c12r14",
+        "col": 12,
+        "row": 14,
+        "center": {
+          "x": 1082.4,
+          "y": 1156
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c12r15",
+        "col": 12,
+        "row": 15,
+        "center": {
+          "x": 1127.5,
+          "y": 1234
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c12r16",
+        "col": 12,
+        "row": 16,
+        "center": {
+          "x": 1082.4,
+          "y": 1312
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c12r17",
+        "col": 12,
+        "row": 17,
+        "center": {
+          "x": 1127.5,
+          "y": 1390
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c12r18",
+        "col": 12,
+        "row": 18,
+        "center": {
+          "x": 1082.4,
+          "y": 1468
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c12r19",
+        "col": 12,
+        "row": 19,
+        "center": {
+          "x": 1127.5,
+          "y": 1546
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c12r20",
+        "col": 12,
+        "row": 20,
+        "center": {
+          "x": 1082.4,
+          "y": 1624
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c13r00",
+        "col": 13,
+        "row": 0,
+        "center": {
+          "x": 1172.6,
+          "y": 64
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c13r01",
+        "col": 13,
+        "row": 1,
+        "center": {
+          "x": 1217.7,
+          "y": 142
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c13r02",
+        "col": 13,
+        "row": 2,
+        "center": {
+          "x": 1172.6,
+          "y": 220
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c13r03",
+        "col": 13,
+        "row": 3,
+        "center": {
+          "x": 1217.7,
+          "y": 298
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c13r04",
+        "col": 13,
+        "row": 4,
+        "center": {
+          "x": 1172.6,
+          "y": 376
+        },
+        "terrain": "desert",
+        "road": true,
+        "britishPosition": false,
+        "objective": [
+          "coastal-road-east"
+        ]
+      },
+      {
+        "id": "c13r05",
+        "col": 13,
+        "row": 5,
+        "center": {
+          "x": 1217.7,
+          "y": 454
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c13r06",
+        "col": 13,
+        "row": 6,
+        "center": {
+          "x": 1172.6,
+          "y": 532
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c13r07",
+        "col": 13,
+        "row": 7,
+        "center": {
+          "x": 1217.7,
+          "y": 610
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c13r08",
+        "col": 13,
+        "row": 8,
+        "center": {
+          "x": 1172.6,
+          "y": 688
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c13r09",
+        "col": 13,
+        "row": 9,
+        "center": {
+          "x": 1217.7,
+          "y": 766
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c13r10",
+        "col": 13,
+        "row": 10,
+        "center": {
+          "x": 1172.6,
+          "y": 844
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c13r11",
+        "col": 13,
+        "row": 11,
+        "center": {
+          "x": 1217.7,
+          "y": 922
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c13r12",
+        "col": 13,
+        "row": 12,
+        "center": {
+          "x": 1172.6,
+          "y": 1000
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c13r13",
+        "col": 13,
+        "row": 13,
+        "center": {
+          "x": 1217.7,
+          "y": 1078
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c13r14",
+        "col": 13,
+        "row": 14,
+        "center": {
+          "x": 1172.6,
+          "y": 1156
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c13r15",
+        "col": 13,
+        "row": 15,
+        "center": {
+          "x": 1217.7,
+          "y": 1234
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c13r16",
+        "col": 13,
+        "row": 16,
+        "center": {
+          "x": 1172.6,
+          "y": 1312
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c13r17",
+        "col": 13,
+        "row": 17,
+        "center": {
+          "x": 1217.7,
+          "y": 1390
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c13r18",
+        "col": 13,
+        "row": 18,
+        "center": {
+          "x": 1172.6,
+          "y": 1468
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c13r19",
+        "col": 13,
+        "row": 19,
+        "center": {
+          "x": 1217.7,
+          "y": 1546
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c13r20",
+        "col": 13,
+        "row": 20,
+        "center": {
+          "x": 1172.6,
+          "y": 1624
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c14r00",
+        "col": 14,
+        "row": 0,
+        "center": {
+          "x": 1262.8,
+          "y": 64
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c14r01",
+        "col": 14,
+        "row": 1,
+        "center": {
+          "x": 1307.9,
+          "y": 142
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c14r02",
+        "col": 14,
+        "row": 2,
+        "center": {
+          "x": 1262.8,
+          "y": 220
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c14r03",
+        "col": 14,
+        "row": 3,
+        "center": {
+          "x": 1307.9,
+          "y": 298
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c14r04",
+        "col": 14,
+        "row": 4,
+        "center": {
+          "x": 1262.8,
+          "y": 376
+        },
+        "terrain": "desert",
+        "road": true,
+        "britishPosition": false,
+        "objective": [
+          "coastal-road-east"
+        ]
+      },
+      {
+        "id": "c14r05",
+        "col": 14,
+        "row": 5,
+        "center": {
+          "x": 1307.9,
+          "y": 454
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c14r06",
+        "col": 14,
+        "row": 6,
+        "center": {
+          "x": 1262.8,
+          "y": 532
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c14r07",
+        "col": 14,
+        "row": 7,
+        "center": {
+          "x": 1307.9,
+          "y": 610
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c14r08",
+        "col": 14,
+        "row": 8,
+        "center": {
+          "x": 1262.8,
+          "y": 688
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c14r09",
+        "col": 14,
+        "row": 9,
+        "center": {
+          "x": 1307.9,
+          "y": 766
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c14r10",
+        "col": 14,
+        "row": 10,
+        "center": {
+          "x": 1262.8,
+          "y": 844
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c14r11",
+        "col": 14,
+        "row": 11,
+        "center": {
+          "x": 1307.9,
+          "y": 922
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c14r12",
+        "col": 14,
+        "row": 12,
+        "center": {
+          "x": 1262.8,
+          "y": 1000
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c14r13",
+        "col": 14,
+        "row": 13,
+        "center": {
+          "x": 1307.9,
+          "y": 1078
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c14r14",
+        "col": 14,
+        "row": 14,
+        "center": {
+          "x": 1262.8,
+          "y": 1156
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c14r15",
+        "col": 14,
+        "row": 15,
+        "center": {
+          "x": 1307.9,
+          "y": 1234
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c14r16",
+        "col": 14,
+        "row": 16,
+        "center": {
+          "x": 1262.8,
+          "y": 1312
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c14r17",
+        "col": 14,
+        "row": 17,
+        "center": {
+          "x": 1307.9,
+          "y": 1390
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c14r18",
+        "col": 14,
+        "row": 18,
+        "center": {
+          "x": 1262.8,
+          "y": 1468
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c14r19",
+        "col": 14,
+        "row": 19,
+        "center": {
+          "x": 1307.9,
+          "y": 1546
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c14r20",
+        "col": 14,
+        "row": 20,
+        "center": {
+          "x": 1262.8,
+          "y": 1624
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c15r00",
+        "col": 15,
+        "row": 0,
+        "center": {
+          "x": 1353,
+          "y": 64
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c15r01",
+        "col": 15,
+        "row": 1,
+        "center": {
+          "x": 1398.1,
+          "y": 142
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c15r02",
+        "col": 15,
+        "row": 2,
+        "center": {
+          "x": 1353,
+          "y": 220
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c15r03",
+        "col": 15,
+        "row": 3,
+        "center": {
+          "x": 1398.1,
+          "y": 298
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c15r04",
+        "col": 15,
+        "row": 4,
+        "center": {
+          "x": 1353,
+          "y": 376
+        },
+        "terrain": "desert",
+        "road": true,
+        "britishPosition": false,
+        "objective": [
+          "coastal-road-east"
+        ]
+      },
+      {
+        "id": "c15r05",
+        "col": 15,
+        "row": 5,
+        "center": {
+          "x": 1398.1,
+          "y": 454
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c15r06",
+        "col": 15,
+        "row": 6,
+        "center": {
+          "x": 1353,
+          "y": 532
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c15r07",
+        "col": 15,
+        "row": 7,
+        "center": {
+          "x": 1398.1,
+          "y": 610
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": true,
+        "objective": []
+      },
+      {
+        "id": "c15r08",
+        "col": 15,
+        "row": 8,
+        "center": {
+          "x": 1353,
+          "y": 688
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c15r09",
+        "col": 15,
+        "row": 9,
+        "center": {
+          "x": 1398.1,
+          "y": 766
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c15r10",
+        "col": 15,
+        "row": 10,
+        "center": {
+          "x": 1353,
+          "y": 844
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c15r11",
+        "col": 15,
+        "row": 11,
+        "center": {
+          "x": 1398.1,
+          "y": 922
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c15r12",
+        "col": 15,
+        "row": 12,
+        "center": {
+          "x": 1353,
+          "y": 1000
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c15r13",
+        "col": 15,
+        "row": 13,
+        "center": {
+          "x": 1398.1,
+          "y": 1078
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c15r14",
+        "col": 15,
+        "row": 14,
+        "center": {
+          "x": 1353,
+          "y": 1156
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c15r15",
+        "col": 15,
+        "row": 15,
+        "center": {
+          "x": 1398.1,
+          "y": 1234
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c15r16",
+        "col": 15,
+        "row": 16,
+        "center": {
+          "x": 1353,
+          "y": 1312
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c15r17",
+        "col": 15,
+        "row": 17,
+        "center": {
+          "x": 1398.1,
+          "y": 1390
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c15r18",
+        "col": 15,
+        "row": 18,
+        "center": {
+          "x": 1353,
+          "y": 1468
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c15r19",
+        "col": 15,
+        "row": 19,
+        "center": {
+          "x": 1398.1,
+          "y": 1546
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c15r20",
+        "col": 15,
+        "row": 20,
+        "center": {
+          "x": 1353,
+          "y": 1624
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c16r00",
+        "col": 16,
+        "row": 0,
+        "center": {
+          "x": 1443.2,
+          "y": 64
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c16r01",
+        "col": 16,
+        "row": 1,
+        "center": {
+          "x": 1488.3,
+          "y": 142
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c16r02",
+        "col": 16,
+        "row": 2,
+        "center": {
+          "x": 1443.2,
+          "y": 220
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c16r03",
+        "col": 16,
+        "row": 3,
+        "center": {
+          "x": 1488.3,
+          "y": 298
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c16r04",
+        "col": 16,
+        "row": 4,
+        "center": {
+          "x": 1443.2,
+          "y": 376
+        },
+        "terrain": "desert",
+        "road": true,
+        "britishPosition": false,
+        "objective": [
+          "coastal-road-east"
+        ]
+      },
+      {
+        "id": "c16r05",
+        "col": 16,
+        "row": 5,
+        "center": {
+          "x": 1488.3,
+          "y": 454
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c16r06",
+        "col": 16,
+        "row": 6,
+        "center": {
+          "x": 1443.2,
+          "y": 532
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c16r07",
+        "col": 16,
+        "row": 7,
+        "center": {
+          "x": 1488.3,
+          "y": 610
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c16r08",
+        "col": 16,
+        "row": 8,
+        "center": {
+          "x": 1443.2,
+          "y": 688
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c16r09",
+        "col": 16,
+        "row": 9,
+        "center": {
+          "x": 1488.3,
+          "y": 766
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c16r10",
+        "col": 16,
+        "row": 10,
+        "center": {
+          "x": 1443.2,
+          "y": 844
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c16r11",
+        "col": 16,
+        "row": 11,
+        "center": {
+          "x": 1488.3,
+          "y": 922
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c16r12",
+        "col": 16,
+        "row": 12,
+        "center": {
+          "x": 1443.2,
+          "y": 1000
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c16r13",
+        "col": 16,
+        "row": 13,
+        "center": {
+          "x": 1488.3,
+          "y": 1078
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c16r14",
+        "col": 16,
+        "row": 14,
+        "center": {
+          "x": 1443.2,
+          "y": 1156
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c16r15",
+        "col": 16,
+        "row": 15,
+        "center": {
+          "x": 1488.3,
+          "y": 1234
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c16r16",
+        "col": 16,
+        "row": 16,
+        "center": {
+          "x": 1443.2,
+          "y": 1312
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c16r17",
+        "col": 16,
+        "row": 17,
+        "center": {
+          "x": 1488.3,
+          "y": 1390
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c16r18",
+        "col": 16,
+        "row": 18,
+        "center": {
+          "x": 1443.2,
+          "y": 1468
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c16r19",
+        "col": 16,
+        "row": 19,
+        "center": {
+          "x": 1488.3,
+          "y": 1546
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c16r20",
+        "col": 16,
+        "row": 20,
+        "center": {
+          "x": 1443.2,
+          "y": 1624
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c17r00",
+        "col": 17,
+        "row": 0,
+        "center": {
+          "x": 1533.4,
+          "y": 64
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c17r01",
+        "col": 17,
+        "row": 1,
+        "center": {
+          "x": 1578.5,
+          "y": 142
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c17r02",
+        "col": 17,
+        "row": 2,
+        "center": {
+          "x": 1533.4,
+          "y": 220
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c17r03",
+        "col": 17,
+        "row": 3,
+        "center": {
+          "x": 1578.5,
+          "y": 298
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c17r04",
+        "col": 17,
+        "row": 4,
+        "center": {
+          "x": 1533.4,
+          "y": 376
+        },
+        "terrain": "desert",
+        "road": true,
+        "britishPosition": false,
+        "objective": [
+          "coastal-road-east"
+        ]
+      },
+      {
+        "id": "c17r05",
+        "col": 17,
+        "row": 5,
+        "center": {
+          "x": 1578.5,
+          "y": 454
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c17r06",
+        "col": 17,
+        "row": 6,
+        "center": {
+          "x": 1533.4,
+          "y": 532
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c17r07",
+        "col": 17,
+        "row": 7,
+        "center": {
+          "x": 1578.5,
+          "y": 610
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c17r08",
+        "col": 17,
+        "row": 8,
+        "center": {
+          "x": 1533.4,
+          "y": 688
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c17r09",
+        "col": 17,
+        "row": 9,
+        "center": {
+          "x": 1578.5,
+          "y": 766
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c17r10",
+        "col": 17,
+        "row": 10,
+        "center": {
+          "x": 1533.4,
+          "y": 844
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": true,
+        "objective": [
+          "alam-halfa-ridge"
+        ]
+      },
+      {
+        "id": "c17r11",
+        "col": 17,
+        "row": 11,
+        "center": {
+          "x": 1578.5,
+          "y": 922
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c17r12",
+        "col": 17,
+        "row": 12,
+        "center": {
+          "x": 1533.4,
+          "y": 1000
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c17r13",
+        "col": 17,
+        "row": 13,
+        "center": {
+          "x": 1578.5,
+          "y": 1078
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c17r14",
+        "col": 17,
+        "row": 14,
+        "center": {
+          "x": 1533.4,
+          "y": 1156
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c17r15",
+        "col": 17,
+        "row": 15,
+        "center": {
+          "x": 1578.5,
+          "y": 1234
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c17r16",
+        "col": 17,
+        "row": 16,
+        "center": {
+          "x": 1533.4,
+          "y": 1312
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c17r17",
+        "col": 17,
+        "row": 17,
+        "center": {
+          "x": 1578.5,
+          "y": 1390
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c17r18",
+        "col": 17,
+        "row": 18,
+        "center": {
+          "x": 1533.4,
+          "y": 1468
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c17r19",
+        "col": 17,
+        "row": 19,
+        "center": {
+          "x": 1578.5,
+          "y": 1546
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c17r20",
+        "col": 17,
+        "row": 20,
+        "center": {
+          "x": 1533.4,
+          "y": 1624
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c18r00",
+        "col": 18,
+        "row": 0,
+        "center": {
+          "x": 1623.6,
+          "y": 64
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c18r01",
+        "col": 18,
+        "row": 1,
+        "center": {
+          "x": 1668.7,
+          "y": 142
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c18r02",
+        "col": 18,
+        "row": 2,
+        "center": {
+          "x": 1623.6,
+          "y": 220
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c18r03",
+        "col": 18,
+        "row": 3,
+        "center": {
+          "x": 1668.7,
+          "y": 298
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c18r04",
+        "col": 18,
+        "row": 4,
+        "center": {
+          "x": 1623.6,
+          "y": 376
+        },
+        "terrain": "desert",
+        "road": true,
+        "britishPosition": false,
+        "objective": [
+          "coastal-road-east"
+        ]
+      },
+      {
+        "id": "c18r05",
+        "col": 18,
+        "row": 5,
+        "center": {
+          "x": 1668.7,
+          "y": 454
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c18r06",
+        "col": 18,
+        "row": 6,
+        "center": {
+          "x": 1623.6,
+          "y": 532
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c18r07",
+        "col": 18,
+        "row": 7,
+        "center": {
+          "x": 1668.7,
+          "y": 610
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c18r08",
+        "col": 18,
+        "row": 8,
+        "center": {
+          "x": 1623.6,
+          "y": 688
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c18r09",
+        "col": 18,
+        "row": 9,
+        "center": {
+          "x": 1668.7,
+          "y": 766
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c18r10",
+        "col": 18,
+        "row": 10,
+        "center": {
+          "x": 1623.6,
+          "y": 844
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": true,
+        "objective": [
+          "alam-halfa-ridge"
+        ]
+      },
+      {
+        "id": "c18r11",
+        "col": 18,
+        "row": 11,
+        "center": {
+          "x": 1668.7,
+          "y": 922
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c18r12",
+        "col": 18,
+        "row": 12,
+        "center": {
+          "x": 1623.6,
+          "y": 1000
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c18r13",
+        "col": 18,
+        "row": 13,
+        "center": {
+          "x": 1668.7,
+          "y": 1078
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c18r14",
+        "col": 18,
+        "row": 14,
+        "center": {
+          "x": 1623.6,
+          "y": 1156
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c18r15",
+        "col": 18,
+        "row": 15,
+        "center": {
+          "x": 1668.7,
+          "y": 1234
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c18r16",
+        "col": 18,
+        "row": 16,
+        "center": {
+          "x": 1623.6,
+          "y": 1312
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c18r17",
+        "col": 18,
+        "row": 17,
+        "center": {
+          "x": 1668.7,
+          "y": 1390
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c18r18",
+        "col": 18,
+        "row": 18,
+        "center": {
+          "x": 1623.6,
+          "y": 1468
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c18r19",
+        "col": 18,
+        "row": 19,
+        "center": {
+          "x": 1668.7,
+          "y": 1546
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c18r20",
+        "col": 18,
+        "row": 20,
+        "center": {
+          "x": 1623.6,
+          "y": 1624
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c19r00",
+        "col": 19,
+        "row": 0,
+        "center": {
+          "x": 1713.8,
+          "y": 64
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c19r01",
+        "col": 19,
+        "row": 1,
+        "center": {
+          "x": 1758.9,
+          "y": 142
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c19r02",
+        "col": 19,
+        "row": 2,
+        "center": {
+          "x": 1713.8,
+          "y": 220
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c19r03",
+        "col": 19,
+        "row": 3,
+        "center": {
+          "x": 1758.9,
+          "y": 298
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c19r04",
+        "col": 19,
+        "row": 4,
+        "center": {
+          "x": 1713.8,
+          "y": 376
+        },
+        "terrain": "desert",
+        "road": true,
+        "britishPosition": false,
+        "objective": [
+          "coastal-road-east"
+        ]
+      },
+      {
+        "id": "c19r05",
+        "col": 19,
+        "row": 5,
+        "center": {
+          "x": 1758.9,
+          "y": 454
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c19r06",
+        "col": 19,
+        "row": 6,
+        "center": {
+          "x": 1713.8,
+          "y": 532
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c19r07",
+        "col": 19,
+        "row": 7,
+        "center": {
+          "x": 1758.9,
+          "y": 610
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c19r08",
+        "col": 19,
+        "row": 8,
+        "center": {
+          "x": 1713.8,
+          "y": 688
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c19r09",
+        "col": 19,
+        "row": 9,
+        "center": {
+          "x": 1758.9,
+          "y": 766
+        },
+        "terrain": "highland",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c19r10",
+        "col": 19,
+        "row": 10,
+        "center": {
+          "x": 1713.8,
+          "y": 844
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c19r11",
+        "col": 19,
+        "row": 11,
+        "center": {
+          "x": 1758.9,
+          "y": 922
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c19r12",
+        "col": 19,
+        "row": 12,
+        "center": {
+          "x": 1713.8,
+          "y": 1000
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c19r13",
+        "col": 19,
+        "row": 13,
+        "center": {
+          "x": 1758.9,
+          "y": 1078
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c19r14",
+        "col": 19,
+        "row": 14,
+        "center": {
+          "x": 1713.8,
+          "y": 1156
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c19r15",
+        "col": 19,
+        "row": 15,
+        "center": {
+          "x": 1758.9,
+          "y": 1234
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c19r16",
+        "col": 19,
+        "row": 16,
+        "center": {
+          "x": 1713.8,
+          "y": 1312
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c19r17",
+        "col": 19,
+        "row": 17,
+        "center": {
+          "x": 1758.9,
+          "y": 1390
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c19r18",
+        "col": 19,
+        "row": 18,
+        "center": {
+          "x": 1713.8,
+          "y": 1468
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c19r19",
+        "col": 19,
+        "row": 19,
+        "center": {
+          "x": 1758.9,
+          "y": 1546
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c19r20",
+        "col": 19,
+        "row": 20,
+        "center": {
+          "x": 1713.8,
+          "y": 1624
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c20r00",
+        "col": 20,
+        "row": 0,
+        "center": {
+          "x": 1804,
+          "y": 64
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c20r01",
+        "col": 20,
+        "row": 1,
+        "center": {
+          "x": 1849.1,
+          "y": 142
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c20r02",
+        "col": 20,
+        "row": 2,
+        "center": {
+          "x": 1804,
+          "y": 220
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c20r03",
+        "col": 20,
+        "row": 3,
+        "center": {
+          "x": 1849.1,
+          "y": 298
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c20r04",
+        "col": 20,
+        "row": 4,
+        "center": {
+          "x": 1804,
+          "y": 376
+        },
+        "terrain": "desert",
+        "road": true,
+        "britishPosition": false,
+        "objective": [
+          "coastal-road-east"
+        ]
+      },
+      {
+        "id": "c20r05",
+        "col": 20,
+        "row": 5,
+        "center": {
+          "x": 1849.1,
+          "y": 454
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c20r06",
+        "col": 20,
+        "row": 6,
+        "center": {
+          "x": 1804,
+          "y": 532
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c20r07",
+        "col": 20,
+        "row": 7,
+        "center": {
+          "x": 1849.1,
+          "y": 610
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c20r08",
+        "col": 20,
+        "row": 8,
+        "center": {
+          "x": 1804,
+          "y": 688
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c20r09",
+        "col": 20,
+        "row": 9,
+        "center": {
+          "x": 1849.1,
+          "y": 766
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c20r10",
+        "col": 20,
+        "row": 10,
+        "center": {
+          "x": 1804,
+          "y": 844
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c20r11",
+        "col": 20,
+        "row": 11,
+        "center": {
+          "x": 1849.1,
+          "y": 922
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c20r12",
+        "col": 20,
+        "row": 12,
+        "center": {
+          "x": 1804,
+          "y": 1000
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c20r13",
+        "col": 20,
+        "row": 13,
+        "center": {
+          "x": 1849.1,
+          "y": 1078
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c20r14",
+        "col": 20,
+        "row": 14,
+        "center": {
+          "x": 1804,
+          "y": 1156
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c20r15",
+        "col": 20,
+        "row": 15,
+        "center": {
+          "x": 1849.1,
+          "y": 1234
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c20r16",
+        "col": 20,
+        "row": 16,
+        "center": {
+          "x": 1804,
+          "y": 1312
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c20r17",
+        "col": 20,
+        "row": 17,
+        "center": {
+          "x": 1849.1,
+          "y": 1390
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c20r18",
+        "col": 20,
+        "row": 18,
+        "center": {
+          "x": 1804,
+          "y": 1468
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c20r19",
+        "col": 20,
+        "row": 19,
+        "center": {
+          "x": 1849.1,
+          "y": 1546
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c20r20",
+        "col": 20,
+        "row": 20,
+        "center": {
+          "x": 1804,
+          "y": 1624
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c21r00",
+        "col": 21,
+        "row": 0,
+        "center": {
+          "x": 1894.2,
+          "y": 64
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c21r01",
+        "col": 21,
+        "row": 1,
+        "center": {
+          "x": 1939.3,
+          "y": 142
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c21r02",
+        "col": 21,
+        "row": 2,
+        "center": {
+          "x": 1894.2,
+          "y": 220
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c21r03",
+        "col": 21,
+        "row": 3,
+        "center": {
+          "x": 1939.3,
+          "y": 298
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c21r04",
+        "col": 21,
+        "row": 4,
+        "center": {
+          "x": 1894.2,
+          "y": 376
+        },
+        "terrain": "desert",
+        "road": true,
+        "britishPosition": false,
+        "objective": [
+          "coastal-road-east"
+        ]
+      },
+      {
+        "id": "c21r05",
+        "col": 21,
+        "row": 5,
+        "center": {
+          "x": 1939.3,
+          "y": 454
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c21r06",
+        "col": 21,
+        "row": 6,
+        "center": {
+          "x": 1894.2,
+          "y": 532
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c21r07",
+        "col": 21,
+        "row": 7,
+        "center": {
+          "x": 1939.3,
+          "y": 610
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c21r08",
+        "col": 21,
+        "row": 8,
+        "center": {
+          "x": 1894.2,
+          "y": 688
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": true,
+        "objective": []
+      },
+      {
+        "id": "c21r09",
+        "col": 21,
+        "row": 9,
+        "center": {
+          "x": 1939.3,
+          "y": 766
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c21r10",
+        "col": 21,
+        "row": 10,
+        "center": {
+          "x": 1894.2,
+          "y": 844
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c21r11",
+        "col": 21,
+        "row": 11,
+        "center": {
+          "x": 1939.3,
+          "y": 922
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c21r12",
+        "col": 21,
+        "row": 12,
+        "center": {
+          "x": 1894.2,
+          "y": 1000
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c21r13",
+        "col": 21,
+        "row": 13,
+        "center": {
+          "x": 1939.3,
+          "y": 1078
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c21r14",
+        "col": 21,
+        "row": 14,
+        "center": {
+          "x": 1894.2,
+          "y": 1156
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c21r15",
+        "col": 21,
+        "row": 15,
+        "center": {
+          "x": 1939.3,
+          "y": 1234
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c21r16",
+        "col": 21,
+        "row": 16,
+        "center": {
+          "x": 1894.2,
+          "y": 1312
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c21r17",
+        "col": 21,
+        "row": 17,
+        "center": {
+          "x": 1939.3,
+          "y": 1390
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c21r18",
+        "col": 21,
+        "row": 18,
+        "center": {
+          "x": 1894.2,
+          "y": 1468
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c21r19",
+        "col": 21,
+        "row": 19,
+        "center": {
+          "x": 1939.3,
+          "y": 1546
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c21r20",
+        "col": 21,
+        "row": 20,
+        "center": {
+          "x": 1894.2,
+          "y": 1624
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c22r00",
+        "col": 22,
+        "row": 0,
+        "center": {
+          "x": 1984.4,
+          "y": 64
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c22r01",
+        "col": 22,
+        "row": 1,
+        "center": {
+          "x": 2029.5,
+          "y": 142
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c22r02",
+        "col": 22,
+        "row": 2,
+        "center": {
+          "x": 1984.4,
+          "y": 220
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c22r03",
+        "col": 22,
+        "row": 3,
+        "center": {
+          "x": 2029.5,
+          "y": 298
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c22r04",
+        "col": 22,
+        "row": 4,
+        "center": {
+          "x": 1984.4,
+          "y": 376
+        },
+        "terrain": "desert",
+        "road": true,
+        "britishPosition": false,
+        "objective": [
+          "coastal-road-east"
+        ]
+      },
+      {
+        "id": "c22r05",
+        "col": 22,
+        "row": 5,
+        "center": {
+          "x": 2029.5,
+          "y": 454
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c22r06",
+        "col": 22,
+        "row": 6,
+        "center": {
+          "x": 1984.4,
+          "y": 532
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c22r07",
+        "col": 22,
+        "row": 7,
+        "center": {
+          "x": 2029.5,
+          "y": 610
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c22r08",
+        "col": 22,
+        "row": 8,
+        "center": {
+          "x": 1984.4,
+          "y": 688
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c22r09",
+        "col": 22,
+        "row": 9,
+        "center": {
+          "x": 2029.5,
+          "y": 766
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c22r10",
+        "col": 22,
+        "row": 10,
+        "center": {
+          "x": 1984.4,
+          "y": 844
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c22r11",
+        "col": 22,
+        "row": 11,
+        "center": {
+          "x": 2029.5,
+          "y": 922
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c22r12",
+        "col": 22,
+        "row": 12,
+        "center": {
+          "x": 1984.4,
+          "y": 1000
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c22r13",
+        "col": 22,
+        "row": 13,
+        "center": {
+          "x": 2029.5,
+          "y": 1078
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c22r14",
+        "col": 22,
+        "row": 14,
+        "center": {
+          "x": 1984.4,
+          "y": 1156
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c22r15",
+        "col": 22,
+        "row": 15,
+        "center": {
+          "x": 2029.5,
+          "y": 1234
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c22r16",
+        "col": 22,
+        "row": 16,
+        "center": {
+          "x": 1984.4,
+          "y": 1312
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c22r17",
+        "col": 22,
+        "row": 17,
+        "center": {
+          "x": 2029.5,
+          "y": 1390
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c22r18",
+        "col": 22,
+        "row": 18,
+        "center": {
+          "x": 1984.4,
+          "y": 1468
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c22r19",
+        "col": 22,
+        "row": 19,
+        "center": {
+          "x": 2029.5,
+          "y": 1546
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c22r20",
+        "col": 22,
+        "row": 20,
+        "center": {
+          "x": 1984.4,
+          "y": 1624
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c23r00",
+        "col": 23,
+        "row": 0,
+        "center": {
+          "x": 2074.6,
+          "y": 64
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c23r01",
+        "col": 23,
+        "row": 1,
+        "center": {
+          "x": 2119.7,
+          "y": 142
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c23r02",
+        "col": 23,
+        "row": 2,
+        "center": {
+          "x": 2074.6,
+          "y": 220
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c23r03",
+        "col": 23,
+        "row": 3,
+        "center": {
+          "x": 2119.7,
+          "y": 298
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c23r04",
+        "col": 23,
+        "row": 4,
+        "center": {
+          "x": 2074.6,
+          "y": 376
+        },
+        "terrain": "desert",
+        "road": true,
+        "britishPosition": false,
+        "objective": [
+          "coastal-road-east"
+        ]
+      },
+      {
+        "id": "c23r05",
+        "col": 23,
+        "row": 5,
+        "center": {
+          "x": 2119.7,
+          "y": 454
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c23r06",
+        "col": 23,
+        "row": 6,
+        "center": {
+          "x": 2074.6,
+          "y": 532
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c23r07",
+        "col": 23,
+        "row": 7,
+        "center": {
+          "x": 2119.7,
+          "y": 610
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c23r08",
+        "col": 23,
+        "row": 8,
+        "center": {
+          "x": 2074.6,
+          "y": 688
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c23r09",
+        "col": 23,
+        "row": 9,
+        "center": {
+          "x": 2119.7,
+          "y": 766
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c23r10",
+        "col": 23,
+        "row": 10,
+        "center": {
+          "x": 2074.6,
+          "y": 844
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c23r11",
+        "col": 23,
+        "row": 11,
+        "center": {
+          "x": 2119.7,
+          "y": 922
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c23r12",
+        "col": 23,
+        "row": 12,
+        "center": {
+          "x": 2074.6,
+          "y": 1000
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c23r13",
+        "col": 23,
+        "row": 13,
+        "center": {
+          "x": 2119.7,
+          "y": 1078
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c23r14",
+        "col": 23,
+        "row": 14,
+        "center": {
+          "x": 2074.6,
+          "y": 1156
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c23r15",
+        "col": 23,
+        "row": 15,
+        "center": {
+          "x": 2119.7,
+          "y": 1234
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c23r16",
+        "col": 23,
+        "row": 16,
+        "center": {
+          "x": 2074.6,
+          "y": 1312
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c23r17",
+        "col": 23,
+        "row": 17,
+        "center": {
+          "x": 2119.7,
+          "y": 1390
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c23r18",
+        "col": 23,
+        "row": 18,
+        "center": {
+          "x": 2074.6,
+          "y": 1468
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c23r19",
+        "col": 23,
+        "row": 19,
+        "center": {
+          "x": 2119.7,
+          "y": 1546
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c23r20",
+        "col": 23,
+        "row": 20,
+        "center": {
+          "x": 2074.6,
+          "y": 1624
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c24r00",
+        "col": 24,
+        "row": 0,
+        "center": {
+          "x": 2164.8,
+          "y": 64
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c24r01",
+        "col": 24,
+        "row": 1,
+        "center": {
+          "x": 2209.9,
+          "y": 142
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c24r02",
+        "col": 24,
+        "row": 2,
+        "center": {
+          "x": 2164.8,
+          "y": 220
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c24r03",
+        "col": 24,
+        "row": 3,
+        "center": {
+          "x": 2209.9,
+          "y": 298
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c24r04",
+        "col": 24,
+        "row": 4,
+        "center": {
+          "x": 2164.8,
+          "y": 376
+        },
+        "terrain": "settlement",
+        "road": true,
+        "britishPosition": false,
+        "objective": [
+          "coastal-road-east"
+        ]
+      },
+      {
+        "id": "c24r05",
+        "col": 24,
+        "row": 5,
+        "center": {
+          "x": 2209.9,
+          "y": 454
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c24r06",
+        "col": 24,
+        "row": 6,
+        "center": {
+          "x": 2164.8,
+          "y": 532
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c24r07",
+        "col": 24,
+        "row": 7,
+        "center": {
+          "x": 2209.9,
+          "y": 610
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c24r08",
+        "col": 24,
+        "row": 8,
+        "center": {
+          "x": 2164.8,
+          "y": 688
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c24r09",
+        "col": 24,
+        "row": 9,
+        "center": {
+          "x": 2209.9,
+          "y": 766
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c24r10",
+        "col": 24,
+        "row": 10,
+        "center": {
+          "x": 2164.8,
+          "y": 844
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c24r11",
+        "col": 24,
+        "row": 11,
+        "center": {
+          "x": 2209.9,
+          "y": 922
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c24r12",
+        "col": 24,
+        "row": 12,
+        "center": {
+          "x": 2164.8,
+          "y": 1000
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c24r13",
+        "col": 24,
+        "row": 13,
+        "center": {
+          "x": 2209.9,
+          "y": 1078
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c24r14",
+        "col": 24,
+        "row": 14,
+        "center": {
+          "x": 2164.8,
+          "y": 1156
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c24r15",
+        "col": 24,
+        "row": 15,
+        "center": {
+          "x": 2209.9,
+          "y": 1234
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c24r16",
+        "col": 24,
+        "row": 16,
+        "center": {
+          "x": 2164.8,
+          "y": 1312
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c24r17",
+        "col": 24,
+        "row": 17,
+        "center": {
+          "x": 2209.9,
+          "y": 1390
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c24r18",
+        "col": 24,
+        "row": 18,
+        "center": {
+          "x": 2164.8,
+          "y": 1468
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c24r19",
+        "col": 24,
+        "row": 19,
+        "center": {
+          "x": 2209.9,
+          "y": 1546
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c24r20",
+        "col": 24,
+        "row": 20,
+        "center": {
+          "x": 2164.8,
+          "y": 1624
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c25r00",
+        "col": 25,
+        "row": 0,
+        "center": {
+          "x": 2255,
+          "y": 64
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c25r01",
+        "col": 25,
+        "row": 1,
+        "center": {
+          "x": 2300.1,
+          "y": 142
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c25r02",
+        "col": 25,
+        "row": 2,
+        "center": {
+          "x": 2255,
+          "y": 220
+        },
+        "terrain": "mediterranean",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c25r03",
+        "col": 25,
+        "row": 3,
+        "center": {
+          "x": 2300.1,
+          "y": 298
+        },
+        "terrain": "desert",
+        "road": true,
+        "britishPosition": false,
+        "objective": [
+          "coastal-road-east"
+        ]
+      },
+      {
+        "id": "c25r04",
+        "col": 25,
+        "row": 4,
+        "center": {
+          "x": 2255,
+          "y": 376
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c25r05",
+        "col": 25,
+        "row": 5,
+        "center": {
+          "x": 2300.1,
+          "y": 454
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c25r06",
+        "col": 25,
+        "row": 6,
+        "center": {
+          "x": 2255,
+          "y": 532
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c25r07",
+        "col": 25,
+        "row": 7,
+        "center": {
+          "x": 2300.1,
+          "y": 610
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c25r08",
+        "col": 25,
+        "row": 8,
+        "center": {
+          "x": 2255,
+          "y": 688
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c25r09",
+        "col": 25,
+        "row": 9,
+        "center": {
+          "x": 2300.1,
+          "y": 766
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c25r10",
+        "col": 25,
+        "row": 10,
+        "center": {
+          "x": 2255,
+          "y": 844
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c25r11",
+        "col": 25,
+        "row": 11,
+        "center": {
+          "x": 2300.1,
+          "y": 922
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c25r12",
+        "col": 25,
+        "row": 12,
+        "center": {
+          "x": 2255,
+          "y": 1000
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c25r13",
+        "col": 25,
+        "row": 13,
+        "center": {
+          "x": 2300.1,
+          "y": 1078
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c25r14",
+        "col": 25,
+        "row": 14,
+        "center": {
+          "x": 2255,
+          "y": 1156
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c25r15",
+        "col": 25,
+        "row": 15,
+        "center": {
+          "x": 2300.1,
+          "y": 1234
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c25r16",
+        "col": 25,
+        "row": 16,
+        "center": {
+          "x": 2255,
+          "y": 1312
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c25r17",
+        "col": 25,
+        "row": 17,
+        "center": {
+          "x": 2300.1,
+          "y": 1390
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c25r18",
+        "col": 25,
+        "row": 18,
+        "center": {
+          "x": 2255,
+          "y": 1468
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c25r19",
+        "col": 25,
+        "row": 19,
+        "center": {
+          "x": 2300.1,
+          "y": 1546
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c25r20",
+        "col": 25,
+        "row": 20,
+        "center": {
+          "x": 2255,
+          "y": 1624
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c26r00",
+        "col": 26,
+        "row": 0,
+        "center": {
+          "x": 2345.2,
+          "y": 64
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c26r01",
+        "col": 26,
+        "row": 1,
+        "center": {
+          "x": 2390.3,
+          "y": 142
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c26r02",
+        "col": 26,
+        "row": 2,
+        "center": {
+          "x": 2345.2,
+          "y": 220
+        },
+        "terrain": "desert",
+        "road": true,
+        "britishPosition": false,
+        "objective": [
+          "coastal-road-east"
+        ]
+      },
+      {
+        "id": "c26r03",
+        "col": 26,
+        "row": 3,
+        "center": {
+          "x": 2390.3,
+          "y": 298
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c26r04",
+        "col": 26,
+        "row": 4,
+        "center": {
+          "x": 2345.2,
+          "y": 376
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c26r05",
+        "col": 26,
+        "row": 5,
+        "center": {
+          "x": 2390.3,
+          "y": 454
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c26r06",
+        "col": 26,
+        "row": 6,
+        "center": {
+          "x": 2345.2,
+          "y": 532
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c26r07",
+        "col": 26,
+        "row": 7,
+        "center": {
+          "x": 2390.3,
+          "y": 610
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c26r08",
+        "col": 26,
+        "row": 8,
+        "center": {
+          "x": 2345.2,
+          "y": 688
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c26r09",
+        "col": 26,
+        "row": 9,
+        "center": {
+          "x": 2390.3,
+          "y": 766
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c26r10",
+        "col": 26,
+        "row": 10,
+        "center": {
+          "x": 2345.2,
+          "y": 844
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c26r11",
+        "col": 26,
+        "row": 11,
+        "center": {
+          "x": 2390.3,
+          "y": 922
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c26r12",
+        "col": 26,
+        "row": 12,
+        "center": {
+          "x": 2345.2,
+          "y": 1000
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c26r13",
+        "col": 26,
+        "row": 13,
+        "center": {
+          "x": 2390.3,
+          "y": 1078
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c26r14",
+        "col": 26,
+        "row": 14,
+        "center": {
+          "x": 2345.2,
+          "y": 1156
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c26r15",
+        "col": 26,
+        "row": 15,
+        "center": {
+          "x": 2390.3,
+          "y": 1234
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c26r16",
+        "col": 26,
+        "row": 16,
+        "center": {
+          "x": 2345.2,
+          "y": 1312
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c26r17",
+        "col": 26,
+        "row": 17,
+        "center": {
+          "x": 2390.3,
+          "y": 1390
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c26r18",
+        "col": 26,
+        "row": 18,
+        "center": {
+          "x": 2345.2,
+          "y": 1468
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c26r19",
+        "col": 26,
+        "row": 19,
+        "center": {
+          "x": 2390.3,
+          "y": 1546
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      },
+      {
+        "id": "c26r20",
+        "col": 26,
+        "row": 20,
+        "center": {
+          "x": 2345.2,
+          "y": 1624
+        },
+        "terrain": "desert",
+        "road": false,
+        "britishPosition": false,
+        "objective": []
+      }
+    ]
+  },
+  "charts": {
+    "crtImage": "local-assets/images/CRT.jpg",
+    "terrainImage": "local-assets/images/TEC.jpg",
+    "turnTrackImage": "local-assets/images/TurnTrack.jpg"
+  },
+  "objectives": {
+    "alamHalfaRidge": [
+      "c17r10",
+      "c18r10"
+    ],
+    "coastalRoadEast": [
+      "c12r03",
+      "c13r04",
+      "c14r04",
+      "c15r04",
+      "c16r04",
+      "c17r04",
+      "c18r04",
+      "c19r04",
+      "c20r04",
+      "c21r04",
+      "c22r04",
+      "c23r04",
+      "c24r04",
+      "c25r03",
+      "c26r02"
+    ],
+    "alliedWestExitEdge": [
+      "c05r01",
+      "c05r03",
+      "c05r05",
+      "c05r07",
+      "c05r09",
+      "c05r11",
+      "c05r13",
+      "c05r15",
+      "c05r17",
+      "c05r19",
+      "c06r00",
+      "c06r02",
+      "c06r04",
+      "c06r06",
+      "c06r08",
+      "c06r10",
+      "c06r12",
+      "c06r14",
+      "c06r16",
+      "c06r18",
+      "c06r20"
+    ]
+  },
+  "units": [
+    {
+      "id": "u01",
+      "name": "第1南非师第1步兵旅",
+      "entryName": "第1南非师第1步兵旅",
+      "gpid": "8",
+      "side": "allied",
+      "nationality": "british-commonwealth",
+      "unitType": "infantry",
+      "combat": 1,
+      "movement": 4,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/e1sa1.jpg",
+      "sourceImage": "e1sa1.jpg",
+      "sourceLocation": "0713",
+      "sourcePixel": {
+        "x": 946,
+        "y": 455
+      },
+      "hexId": "c10r05"
+    },
+    {
+      "id": "u02",
+      "name": "第1南非师第2步兵旅",
+      "entryName": "第1南非师第2步兵旅",
+      "gpid": "9",
+      "side": "allied",
+      "nationality": "british-commonwealth",
+      "unitType": "infantry",
+      "combat": 1,
+      "movement": 4,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/e1sa2.jpg",
+      "sourceImage": "e1sa2.jpg",
+      "sourceLocation": "0913",
+      "sourcePixel": {
+        "x": 946,
+        "y": 611
+      },
+      "hexId": "c10r07"
+    },
+    {
+      "id": "u03",
+      "name": "第1南非师第3步兵旅",
+      "entryName": "第1南非师第3步兵旅",
+      "gpid": "10",
+      "side": "allied",
+      "nationality": "british-commonwealth",
+      "unitType": "infantry",
+      "combat": 1,
+      "movement": 4,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/e1sa3.jpg",
+      "sourceImage": "e1sa3.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 902,
+        "y": 376
+      },
+      "hexId": "c10r04"
+    },
+    {
+      "id": "u04",
+      "name": "第44师131步兵旅",
+      "entryName": "第44师131步兵旅",
+      "gpid": "11",
+      "side": "allied",
+      "nationality": "british-commonwealth",
+      "unitType": "infantry",
+      "combat": 2,
+      "movement": 4,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/e44d131.jpg",
+      "sourceImage": "e44d131.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 1894,
+        "y": 686
+      },
+      "hexId": "c21r08"
+    },
+    {
+      "id": "u05",
+      "name": "第44师132步兵旅",
+      "entryName": "第44师132步兵旅",
+      "gpid": "0",
+      "side": "allied",
+      "nationality": "british-commonwealth",
+      "unitType": "infantry",
+      "combat": 2,
+      "movement": 4,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/e44d132.jpg",
+      "sourceImage": "e44d132.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 856,
+        "y": 768
+      },
+      "hexId": "c09r09"
+    },
+    {
+      "id": "u06",
+      "name": "第44师133步兵旅",
+      "entryName": "第44师133步兵旅",
+      "gpid": "6",
+      "side": "allied",
+      "nationality": "british-commonwealth",
+      "unitType": "infantry",
+      "combat": 2,
+      "movement": 4,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/e44d133.jpg",
+      "sourceImage": "e44d133.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 1621,
+        "y": 843
+      },
+      "hexId": "c18r10"
+    },
+    {
+      "id": "u07",
+      "name": "第9澳大利亚师第22步兵旅",
+      "entryName": "第9澳大利亚师第20步兵旅",
+      "gpid": "7",
+      "side": "allied",
+      "nationality": "british-commonwealth",
+      "unitType": "infantry",
+      "combat": 2,
+      "movement": 4,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/e9Aus20.jpg",
+      "sourceImage": "e9Aus20.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 722,
+        "y": 67
+      },
+      "hexId": "c08r00"
+    },
+    {
+      "id": "u08",
+      "name": "第9澳大利亚师第24步兵旅",
+      "entryName": "第9澳大利亚师第24步兵旅",
+      "gpid": "69",
+      "side": "allied",
+      "nationality": "british-commonwealth",
+      "unitType": "infantry",
+      "combat": 2,
+      "movement": 4,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/e9Aus24.jpg",
+      "sourceImage": "e9Aus24.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 811,
+        "y": 221
+      },
+      "hexId": "c09r02"
+    },
+    {
+      "id": "u09",
+      "name": "第9澳大利亚师第26步兵旅",
+      "entryName": "第9澳大利亚师第26步兵旅",
+      "gpid": "15",
+      "side": "allied",
+      "nationality": "british-commonwealth",
+      "unitType": "infantry",
+      "combat": 2,
+      "movement": 4,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/e9Aus26.jpg",
+      "sourceImage": "e9Aus26.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 1531,
+        "y": 373
+      },
+      "hexId": "c17r04"
+    },
+    {
+      "id": "u10",
+      "name": "第5印度师第5步兵旅",
+      "entryName": "第5印度师第5步兵旅",
+      "gpid": "91",
+      "side": "allied",
+      "nationality": "british-commonwealth",
+      "unitType": "infantry",
+      "combat": 2,
+      "movement": 4,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/e5Ind5.jpg",
+      "sourceImage": "e5Ind5.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 1396,
+        "y": 607
+      },
+      "hexId": "c15r07"
+    },
+    {
+      "id": "u11",
+      "name": "第5印度师第9步兵旅",
+      "entryName": "第5印度师第9步兵旅",
+      "gpid": "102",
+      "side": "allied",
+      "nationality": "british-commonwealth",
+      "unitType": "infantry",
+      "combat": 2,
+      "movement": 4,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/e5Ind9.jpg",
+      "sourceImage": "e5Ind9.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 902,
+        "y": 688
+      },
+      "hexId": "c10r08"
+    },
+    {
+      "id": "u12",
+      "name": "第2新西兰师第5步兵旅",
+      "entryName": "第2新西兰师第5步兵旅",
+      "gpid": "18",
+      "side": "allied",
+      "nationality": "british-commonwealth",
+      "unitType": "infantry",
+      "combat": 2,
+      "movement": 4,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/e2NZ5.jpg",
+      "sourceImage": "e2NZ5.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 946,
+        "y": 1080
+      },
+      "hexId": "c10r13"
+    },
+    {
+      "id": "u13",
+      "name": "第2新西兰师第6步兵旅",
+      "entryName": "第2新西兰师第6步兵旅",
+      "gpid": "74",
+      "side": "allied",
+      "nationality": "british-commonwealth",
+      "unitType": "infantry",
+      "combat": 2,
+      "movement": 4,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/e2NZ6.jpg",
+      "sourceImage": "e2NZ6.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 856,
+        "y": 924
+      },
+      "hexId": "c09r11"
+    },
+    {
+      "id": "u14",
+      "name": "第7装甲师第4装甲旅",
+      "entryName": "第7装甲师第4装甲旅",
+      "gpid": "75",
+      "side": "allied",
+      "nationality": "british-commonwealth",
+      "unitType": "armor",
+      "combat": 4,
+      "movement": 8,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/e7td4.jpg",
+      "sourceImage": "e7td4.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 994,
+        "y": 1469
+      },
+      "hexId": "c11r18"
+    },
+    {
+      "id": "u15",
+      "name": "第7装甲师第7装甲旅",
+      "entryName": "第7装甲师第7装甲旅",
+      "gpid": "76",
+      "side": "allied",
+      "nationality": "british-commonwealth",
+      "unitType": "armor",
+      "combat": 4,
+      "movement": 8,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/e7td7.jpg",
+      "sourceImage": "e7td7.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 1804,
+        "y": 1469
+      },
+      "hexId": "c20r18"
+    },
+    {
+      "id": "u16",
+      "name": "第7装甲师机械化步兵旅",
+      "entryName": "第7装甲师机械化步兵旅",
+      "gpid": "77",
+      "side": "allied",
+      "nationality": "british-commonwealth",
+      "unitType": "armor",
+      "combat": 2,
+      "movement": 8,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/e7td7m.jpg",
+      "sourceImage": "e7td7m.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 855,
+        "y": 1234
+      },
+      "hexId": "c09r15"
+    },
+    {
+      "id": "u17",
+      "name": "第8装甲师第23装甲旅",
+      "entryName": "第8装甲师第23装甲旅",
+      "gpid": "78",
+      "side": "allied",
+      "nationality": "british-commonwealth",
+      "unitType": "armor",
+      "combat": 3,
+      "movement": 8,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/e8td23.jpg",
+      "sourceImage": "e8td23.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 1262,
+        "y": 691
+      },
+      "hexId": "c14r08"
+    },
+    {
+      "id": "u18",
+      "name": "第10装甲师第8装甲旅",
+      "entryName": "第10装甲师第8装甲旅",
+      "gpid": "13",
+      "side": "allied",
+      "nationality": "british-commonwealth",
+      "unitType": "armor",
+      "combat": 4,
+      "movement": 8,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/e10td8.jpg",
+      "sourceImage": "e10td8.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 2208,
+        "y": 609
+      },
+      "hexId": "c24r07"
+    },
+    {
+      "id": "u19",
+      "name": "第22装甲旅",
+      "entryName": "第22装甲旅",
+      "gpid": "171",
+      "side": "allied",
+      "nationality": "british-commonwealth",
+      "unitType": "armor",
+      "combat": 4,
+      "movement": 8,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/e22.jpg",
+      "sourceImage": "e22.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 1443,
+        "y": 1001
+      },
+      "hexId": "c16r12"
+    },
+    {
+      "id": "u20",
+      "name": "第164师382步兵团",
+      "entryName": "第164师382步兵团",
+      "gpid": "34",
+      "side": "axis",
+      "nationality": "german",
+      "unitType": "mechanized",
+      "combat": 2,
+      "movement": 8,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/g164md382rgt.jpg",
+      "sourceImage": "g164md382rgt.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 541,
+        "y": 221
+      },
+      "hexId": "c06r02"
+    },
+    {
+      "id": "u21",
+      "name": "第164师125步兵团",
+      "entryName": "第164师125步兵团",
+      "gpid": "35",
+      "side": "axis",
+      "nationality": "german",
+      "unitType": "mechanized",
+      "combat": 2,
+      "movement": 8,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/g164md125rgt.jpg",
+      "sourceImage": "g164md125rgt.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 539,
+        "y": 63
+      },
+      "hexId": "c06r00"
+    },
+    {
+      "id": "u22",
+      "name": "第164师433步兵团",
+      "entryName": "第164师433步兵团",
+      "gpid": "40",
+      "side": "axis",
+      "nationality": "german",
+      "unitType": "mechanized",
+      "combat": 2,
+      "movement": 8,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/g164md433rgt.jpg",
+      "sourceImage": "g164md433rgt.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 583,
+        "y": 298
+      },
+      "hexId": "c06r03"
+    },
+    {
+      "id": "u23",
+      "name": "第15装甲师第115装甲掷弹兵团",
+      "entryName": "第15装甲师第115装甲掷弹兵团",
+      "gpid": "42",
+      "side": "axis",
+      "nationality": "german",
+      "unitType": "mechanized",
+      "combat": 4,
+      "movement": 10,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/g15pd115rgt.jpg",
+      "sourceImage": "g15pd115rgt.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 541,
+        "y": 1467
+      },
+      "hexId": "c06r18"
+    },
+    {
+      "id": "u24",
+      "name": "第15装甲师第8装甲团",
+      "entryName": "第15装甲师第8装甲团",
+      "gpid": "43",
+      "side": "axis",
+      "nationality": "german",
+      "unitType": "armor",
+      "combat": 6,
+      "movement": 10,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/g15pd8rgt.jpg",
+      "sourceImage": "g15pd8rgt.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 631,
+        "y": 1468
+      },
+      "hexId": "c07r18"
+    },
+    {
+      "id": "u25",
+      "name": "第21装甲师第5装甲团",
+      "entryName": "第21装甲师第5装甲团",
+      "gpid": "36",
+      "side": "axis",
+      "nationality": "german",
+      "unitType": "armor",
+      "combat": 6,
+      "movement": 10,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/g21pd5rgt.jpg",
+      "sourceImage": "g21pd5rgt.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 585,
+        "y": 1390
+      },
+      "hexId": "c06r17"
+    },
+    {
+      "id": "u26",
+      "name": "第21装甲师第104装甲掷弹兵团",
+      "entryName": "第21装甲师第104装甲掷弹兵团",
+      "gpid": "37",
+      "side": "axis",
+      "nationality": "german",
+      "unitType": "mechanized",
+      "combat": 4,
+      "movement": 10,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/g21pd104rgt.jpg",
+      "sourceImage": "g21pd104rgt.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 494,
+        "y": 1390
+      },
+      "hexId": "c05r17"
+    },
+    {
+      "id": "u27",
+      "name": "第21装甲师第200装甲掷弹兵团",
+      "entryName": "第21装甲师第200装甲掷弹兵团",
+      "gpid": "53",
+      "side": "axis",
+      "nationality": "german",
+      "unitType": "mechanized",
+      "combat": 4,
+      "movement": 10,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/g21pd200rgt.jpg",
+      "sourceImage": "g21pd200rgt.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 677,
+        "y": 1388
+      },
+      "hexId": "c07r17"
+    },
+    {
+      "id": "u28",
+      "name": "第90轻装师第155装甲掷弹兵团",
+      "entryName": "第90轻装师第155装甲掷弹兵团",
+      "gpid": "54",
+      "side": "axis",
+      "nationality": "german",
+      "unitType": "mechanized",
+      "combat": 4,
+      "movement": 10,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/g90ld155rgt.jpg",
+      "sourceImage": "g90ld155rgt.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 494,
+        "y": 1233
+      },
+      "hexId": "c05r15"
+    },
+    {
+      "id": "u29",
+      "name": "第90轻装师第361装甲掷弹兵团",
+      "entryName": "第90轻装师第361装甲掷弹兵团",
+      "gpid": "60",
+      "side": "axis",
+      "nationality": "german",
+      "unitType": "mechanized",
+      "combat": 4,
+      "movement": 10,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/g90ld361rgt.jpg",
+      "sourceImage": "g90ld361rgt.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 585,
+        "y": 1233
+      },
+      "hexId": "c06r15"
+    },
+    {
+      "id": "u30",
+      "name": "雷姆克伞兵团",
+      "entryName": "雷姆克伞兵团",
+      "gpid": "48",
+      "side": "axis",
+      "nationality": "german",
+      "unitType": "airborne",
+      "combat": 1,
+      "movement": 8,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/gFJrget.jpg",
+      "sourceImage": "gFJrget.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 586,
+        "y": 453
+      },
+      "hexId": "c06r05"
+    },
+    {
+      "id": "u31",
+      "name": "帕维亚步兵师",
+      "entryName": "帕维亚步兵师",
+      "gpid": "44",
+      "side": "axis",
+      "nationality": "italian",
+      "unitType": "infantry",
+      "combat": 1,
+      "movement": 3,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/iPaviaDiv.jpg",
+      "sourceImage": "iPaviaDiv.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 539,
+        "y": 687
+      },
+      "hexId": "c06r08"
+    },
+    {
+      "id": "u32",
+      "name": "布雷西亚步兵师",
+      "entryName": "布雷西亚步兵师",
+      "gpid": "38",
+      "side": "axis",
+      "nationality": "italian",
+      "unitType": "infantry",
+      "combat": 1,
+      "movement": 3,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/iBresciaDiv.jpg",
+      "sourceImage": "iBresciaDiv.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 538,
+        "y": 533
+      },
+      "hexId": "c06r06"
+    },
+    {
+      "id": "u33",
+      "name": "特伦托步兵师",
+      "entryName": "特伦托步兵师",
+      "gpid": "41",
+      "side": "axis",
+      "nationality": "italian",
+      "unitType": "infantry",
+      "combat": 1,
+      "movement": 3,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/iTrentoDiv.jpg",
+      "sourceImage": "iTrentoDiv.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 540,
+        "y": 377
+      },
+      "hexId": "c06r04"
+    },
+    {
+      "id": "u34",
+      "name": "博洛尼亚步兵师",
+      "entryName": "博洛尼亚步兵师",
+      "gpid": "46",
+      "side": "axis",
+      "nationality": "italian",
+      "unitType": "infantry",
+      "combat": 1,
+      "movement": 3,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/iBolognaDiv.jpg",
+      "sourceImage": "iBolognaDiv.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 543,
+        "y": 845
+      },
+      "hexId": "c06r10"
+    },
+    {
+      "id": "u35",
+      "name": "弗尔格尔伞兵师",
+      "entryName": "弗尔格尔伞兵师",
+      "gpid": "52",
+      "side": "axis",
+      "nationality": "italian",
+      "unitType": "airborne",
+      "combat": 1,
+      "movement": 6,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/iFolgoreDiv.jpg",
+      "sourceImage": "iFolgoreDiv.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 586,
+        "y": 1548
+      },
+      "hexId": "c06r19"
+    },
+    {
+      "id": "u36",
+      "name": "利托里奥装甲师",
+      "entryName": "利托里奥装甲师",
+      "gpid": "49",
+      "side": "axis",
+      "nationality": "italian",
+      "unitType": "armor",
+      "combat": 3,
+      "movement": 6,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/iLittorioTD.jpg",
+      "sourceImage": "iLittorioTD.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 542,
+        "y": 1314
+      },
+      "hexId": "c06r16"
+    },
+    {
+      "id": "u37",
+      "name": "公羊装甲师",
+      "entryName": "公羊装甲师",
+      "gpid": "57",
+      "side": "axis",
+      "nationality": "italian",
+      "unitType": "armor",
+      "combat": 4,
+      "movement": 6,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/iArieteTD.jpg",
+      "sourceImage": "iArieteTD.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 632,
+        "y": 1314
+      },
+      "hexId": "c07r16"
+    },
+    {
+      "id": "u38",
+      "name": "的里雅斯特机械化师",
+      "entryName": "的里雅斯特机械化师",
+      "gpid": "47",
+      "side": "axis",
+      "nationality": "italian",
+      "unitType": "mechanized",
+      "combat": 2,
+      "movement": 6,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/iTriesteMD.jpg",
+      "sourceImage": "iTriesteMD.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 632,
+        "y": 1002
+      },
+      "hexId": "c07r12"
+    },
+    {
+      "id": "u39",
+      "name": "第161印度装甲旅",
+      "entryName": "第161印度装甲旅",
+      "gpid": "217",
+      "side": "allied",
+      "nationality": "british-commonwealth",
+      "unitType": "infantry",
+      "combat": 1,
+      "movement": 8,
+      "steps": 1,
+      "status": "ready",
+      "eliminated": false,
+      "disrupted": false,
+      "image": "local-assets/images/e161Ind.jpg",
+      "sourceImage": "e161Ind.jpg",
+      "sourceLocation": "",
+      "sourcePixel": {
+        "x": 1037,
+        "y": 614
+      },
+      "hexId": "c11r07"
+    }
+  ]
+}

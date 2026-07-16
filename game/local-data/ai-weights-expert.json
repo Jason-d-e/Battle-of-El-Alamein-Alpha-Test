@@ -1,0 +1,71 @@
+{
+  "schema": "zizi-el-alamein-ai-weights-v1",
+  "profile": "expert",
+  "generatedAt": "2026-07-08T18:03:34.074Z",
+  "method": "coordinate-descent-logistic-ranking",
+  "sources": [
+    "el-alamein-training-tr-mrbfbxud-pnzx2a.json",
+    "el-alamein-training-tr-mrbfbxud-pnzx2a (1).json",
+    "el-alamein-training-tr-mrbfbxud-pnzx2a (2).json"
+  ],
+  "sampleCount": 388,
+  "trainableKeys": [
+    "axisProgress",
+    "axisObjective",
+    "axisObjectiveCounterThreat",
+    "axisObjectiveUnsupportedPenalty",
+    "axisAdjacent",
+    "axisNear",
+    "axisReserve",
+    "alliedForwardBand",
+    "alliedForwardBandPenalty",
+    "alliedObjectiveHugPenalty",
+    "alliedContact",
+    "alliedContactPenalty",
+    "alliedLine",
+    "alliedDrift",
+    "alliedCombat"
+  ],
+  "metrics": {
+    "samples": 388,
+    "pairCount": 1801,
+    "pairAccuracy": 0.5336,
+    "loss": 1.5201,
+    "top1Rate": 0.299,
+    "top3Rate": 0.6082,
+    "meanReciprocalRank": 0.5039
+  },
+  "baselineMetrics": {
+    "samples": 388,
+    "pairCount": 1801,
+    "pairAccuracy": 0.4081,
+    "loss": 3.2124,
+    "top1Rate": 0.1778,
+    "top3Rate": 0.4485,
+    "meanReciprocalRank": 0.3998
+  },
+  "phaseSearch": {
+    "axisProgress": 88,
+    "axisMobileFactor": 0.25,
+    "axisCombatFactor": 0.18,
+    "axisObjective": 3112,
+    "axisObjectiveSupport": 30,
+    "axisObjectiveCounterThreat": -316,
+    "axisObjectiveUnsupportedPenalty": -872,
+    "axisAdjacent": 124,
+    "axisNear": 0,
+    "axisReserve": 19,
+    "axisStateObjectiveHeld": 2400,
+    "axisStateObjectiveDistance": -42,
+    "alliedForwardBand": 160,
+    "alliedForwardBandPenalty": -172,
+    "alliedObjectiveHugPenalty": -80,
+    "alliedContact": 406,
+    "alliedContactPenalty": -105,
+    "alliedLine": 45,
+    "alliedDrift": -97,
+    "alliedCombat": 18,
+    "alliedStateAxisDistance": 34,
+    "alliedStateWallLink": 38
+  }
+}
