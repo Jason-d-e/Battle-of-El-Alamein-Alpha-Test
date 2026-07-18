@@ -1,5 +1,6 @@
 export const HUMAN_DEMONSTRATION_RECORDING_SCHEMA = "wargame-alpha-human-demonstration-recording-v1";
 export const HUMAN_DEMONSTRATION_DATASET_SCHEMA = "wargame-alpha-human-demonstration-dataset-v1";
+export const HUMAN_DEMONSTRATION_CAPTURE_BUNDLE_SCHEMA = "wargame-alpha-human-demonstration-capture-bundle-v1";
 export const HUMAN_DEMONSTRATION_SCHEMA_VERSION = 1;
 export const HUMAN_POLICY_LABEL_OBSERVED = "observed_move";
 export const HUMAN_POLICY_LABEL_EXPERT = "expert_best";
@@ -200,6 +201,7 @@ export function createHumanDemonstrationRecorder({
     ? createId
     : (kind, sequence) => `${kind}-${sequence}`;
   let recording = initialRecording ? canonicalCopy(initialRecording) : null;
+  if (recording) ensureCaptureMetadata(recording);
 
   function start({ datasetId, gameId, generatedAt = now(), recordingFingerprints = fingerprints } = {}) {
     recording = {
@@ -213,7 +215,15 @@ export function createHumanDemonstrationRecorder({
       fingerprints: canonicalCopy(recordingFingerprints),
       players: [],
       decisions: [],
+      journal: [],
+      capture: {
+        lastDecisionSequence: 0,
+        lastMutationSequence: 0,
+        lastExportedSequence: 0,
+        lastExportFingerprint: null,
+      },
     };
+    appendJournal("RECORDING_STARTED", { stateHash: null });
     notify();
     return getRecording();
   }
@@ -251,6 +261,7 @@ export function createHumanDemonstrationRecorder({
   function recordDecision(decision, player = null) {
     ensureStarted();
     assert(isPlainObject(decision), "invalid_recorder_decision");
+    assertObservedOnlyDecision(decision);
     if (player) ensurePlayer(player);
     else ensurePlayer({
       sourceId: decision.playerSourceId,
@@ -258,7 +269,7 @@ export function createHumanDemonstrationRecorder({
       metadata: decision.metadata,
     });
     const sequence = decision.sequence === undefined
-      ? recording.decisions.length + 1
+      ? nextDecisionSequence()
       : decision.sequence;
     const normalized = {
       ...canonicalCopy(decision),
@@ -268,9 +279,65 @@ export function createHumanDemonstrationRecorder({
     };
     delete normalized.participantId;
     delete normalized.metadata;
+    delete normalized.expertBestAction;
+    delete normalized.rankedAlternatives;
+    delete normalized.confidence;
+    delete normalized.intent;
     recording.decisions.push(normalized);
+    recording.capture.lastDecisionSequence = Math.max(recording.capture.lastDecisionSequence, sequence);
+    const journalEntry = appendJournal("DECISION_RECORDED", {
+      decisionId: normalized.id,
+      stateHash: normalized.stateHash,
+    });
+    recording.capture.lastMutationSequence = journalEntry.sequence;
     notify();
     return canonicalCopy(normalized);
+  }
+
+  function recordLifecycle({ type, stateHash = null, details = null } = {}) {
+    ensureStarted();
+    const normalizedType = requiredId(type, "invalid_recorder_lifecycle_type");
+    assert(!["RECORDING_STARTED", "DECISION_RECORDED", "DECISION_TOMBSTONED", "DATASET_EXPORTED"].includes(normalizedType), "reserved_recorder_lifecycle_type");
+    const entry = appendJournal(normalizedType, {
+      stateHash: stateHash === null ? null : requiredStateHash(stateHash, "invalid_state_hash"),
+      details: details === null ? null : canonicalValue(details),
+    });
+    notify();
+    return canonicalCopy(entry);
+  }
+
+  function tombstoneDecision(decisionId, { reason, stateHash = null } = {}) {
+    ensureStarted();
+    const normalizedId = requiredId(decisionId, "invalid_decision_id");
+    const index = recording.decisions.findIndex((entry) => entry.id === normalizedId);
+    assert(index >= 0, "decision_not_found");
+    const [decision] = recording.decisions.splice(index, 1);
+    const entry = appendJournal("DECISION_TOMBSTONED", {
+      decisionId: normalizedId,
+      stateHash: stateHash === null ? decision.stateHash : requiredStateHash(stateHash, "invalid_state_hash"),
+      details: { reason: requiredId(reason, "invalid_tombstone_reason") },
+    });
+    recording.capture.lastMutationSequence = entry.sequence;
+    notify();
+    return canonicalCopy(entry);
+  }
+
+  function hasUnexportedDecisions() {
+    ensureRecording();
+    return recording.capture.lastMutationSequence > recording.capture.lastExportedSequence;
+  }
+
+  function markExported(datasetFingerprint) {
+    ensureRecording();
+    const fingerprint = requiredFingerprint(datasetFingerprint, "invalid_dataset_fingerprint");
+    recording.capture.lastExportedSequence = recording.capture.lastMutationSequence;
+    recording.capture.lastExportFingerprint = fingerprint;
+    const entry = appendJournal("DATASET_EXPORTED", {
+      stateHash: null,
+      details: { datasetFingerprint: fingerprint },
+    });
+    notify();
+    return canonicalCopy(entry);
   }
 
   function complete(finalState) {
@@ -280,6 +347,10 @@ export function createHumanDemonstrationRecorder({
     assert(isPlainObject(terminal), "completed_game_requires_terminal_result");
     recording.game.status = "completed";
     recording.finalState = canonicalCopy(finalState);
+    const entry = appendJournal("RECORDING_COMPLETED", {
+      stateHash: terminal.stateHash,
+    });
+    recording.capture.lastMutationSequence = entry.sequence;
     notify();
     return getRecording();
   }
@@ -287,6 +358,14 @@ export function createHumanDemonstrationRecorder({
   function reset() {
     recording = null;
     notify();
+  }
+
+  function restore(nextRecording) {
+    assert(nextRecording?.schema === HUMAN_DEMONSTRATION_RECORDING_SCHEMA, "invalid_recording_schema");
+    recording = canonicalCopy(nextRecording);
+    ensureCaptureMetadata(recording);
+    notify();
+    return getRecording();
   }
 
   function buildDataset() {
@@ -298,6 +377,24 @@ export function createHumanDemonstrationRecorder({
     return recording ? canonicalCopy(recording) : null;
   }
 
+  function nextDecisionSequence() {
+    return recording.capture.lastDecisionSequence + 1;
+  }
+
+  function appendJournal(type, { decisionId = null, stateHash = null, details = null } = {}) {
+    ensureCaptureMetadata(recording);
+    const entry = {
+      sequence: recording.journal.length + 1,
+      type,
+      observedAt: now(),
+      decisionId,
+      stateHash,
+      details: details === null ? null : canonicalCopy(details),
+    };
+    recording.journal.push(entry);
+    return entry;
+  }
+
   function notify() {
     onChange?.(getRecording());
   }
@@ -307,10 +404,101 @@ export function createHumanDemonstrationRecorder({
     complete,
     ensurePlayer,
     getRecording,
+    hasUnexportedDecisions,
+    markExported,
     recordDecision,
+    recordLifecycle,
     reset,
+    restore,
     start,
+    tombstoneDecision,
   });
+}
+
+/** Serializes the append-only local capture separately from the derived dataset. */
+export function serializeHumanDemonstrationRecording(recording) {
+  assert(recording?.schema === HUMAN_DEMONSTRATION_RECORDING_SCHEMA, "invalid_recording_schema");
+  assertNoLocalizedLogInput(recording);
+  return `${canonicalJsonStringify(recording)}\n`;
+}
+
+/**
+ * Produces one browser download while preserving independently hashed raw-recording,
+ * derived-dataset, and model lineage sections. This avoids treating two browser
+ * download attempts as one atomic export.
+ */
+export function serializeHumanDemonstrationCaptureBundle(recording, dataset) {
+  const recordingText = serializeHumanDemonstrationRecording(recording);
+  const datasetText = serializeHumanDemonstrationDataset(dataset);
+  assert(recording.game?.id === dataset.game?.id, "recording_dataset_game_mismatch");
+  assert(recording.datasetId === dataset.datasetId, "recording_dataset_id_mismatch");
+  assert(canonicalJsonStringify(recording.fingerprints) === canonicalJsonStringify(dataset.fingerprints), "recording_dataset_fingerprint_binding_mismatch");
+  return `${canonicalJsonStringify({
+    schema: HUMAN_DEMONSTRATION_CAPTURE_BUNDLE_SCHEMA,
+    rawRecording: {
+      sha256: `sha256:${sha256Hex(recordingText)}`,
+      content: JSON.parse(recordingText),
+    },
+    dataset: {
+      sha256: `sha256:${sha256Hex(datasetText)}`,
+      fingerprint: dataset.fingerprint,
+      content: JSON.parse(datasetText),
+    },
+    model: { status: "none", sha256: null },
+  })}\n`;
+}
+
+/** Validates an exported single-download capture bundle and restores its two canonical inputs. */
+export function parseHumanDemonstrationCaptureBundle(text) {
+  let bundle;
+  try {
+    bundle = JSON.parse(String(text));
+  } catch {
+    throw new Error("invalid_capture_bundle_json");
+  }
+  assert(bundle?.schema === HUMAN_DEMONSTRATION_CAPTURE_BUNDLE_SCHEMA, "invalid_capture_bundle_schema");
+  assert(bundle.model?.status === "none" && bundle.model.sha256 === null, "invalid_capture_bundle_model_lineage");
+  const recordingText = serializeHumanDemonstrationRecording(bundle.rawRecording?.content);
+  const dataset = parseHumanDemonstrationDataset(canonicalJsonStringify(bundle.dataset?.content));
+  const datasetText = serializeHumanDemonstrationDataset(dataset);
+  assert(bundle.rawRecording?.sha256 === `sha256:${sha256Hex(recordingText)}`, "capture_bundle_recording_sha256_mismatch");
+  assert(bundle.dataset?.sha256 === `sha256:${sha256Hex(datasetText)}`, "capture_bundle_dataset_sha256_mismatch");
+  assert(bundle.dataset?.fingerprint === dataset.fingerprint, "capture_bundle_dataset_fingerprint_mismatch");
+  assert(bundle.rawRecording.content.game?.id === dataset.game.id, "recording_dataset_game_mismatch");
+  assert(bundle.rawRecording.content.datasetId === dataset.datasetId, "recording_dataset_id_mismatch");
+  assert(canonicalJsonStringify(bundle.rawRecording.content.fingerprints) === canonicalJsonStringify(dataset.fingerprints), "recording_dataset_fingerprint_binding_mismatch");
+  return Object.freeze({
+    bundle: canonicalCopy(bundle),
+    recording: canonicalCopy(bundle.rawRecording.content),
+    dataset,
+    recordingText,
+    datasetText,
+  });
+}
+
+function ensureCaptureMetadata(recording) {
+  if (!Array.isArray(recording.journal)) recording.journal = [];
+  const decisionMaximum = Array.isArray(recording.decisions)
+    ? recording.decisions.reduce((maximum, entry) => Math.max(maximum, Number(entry.sequence) || 0), 0)
+    : 0;
+  if (!isPlainObject(recording.capture)) {
+    recording.capture = {
+      lastDecisionSequence: decisionMaximum,
+      lastMutationSequence: decisionMaximum ? Math.max(recording.journal.length, 1) : 0,
+      lastExportedSequence: 0,
+      lastExportFingerprint: null,
+    };
+  }
+  if (!Number.isInteger(recording.capture.lastDecisionSequence)) {
+    recording.capture.lastDecisionSequence = decisionMaximum;
+  }
+}
+
+function assertObservedOnlyDecision(decision) {
+  assert(decision.expertBestAction === undefined || decision.expertBestAction === null, "human_lab_expert_label_forbidden");
+  assert(decision.confidence === undefined || decision.confidence === null, "human_lab_confidence_forbidden");
+  assert(decision.intent === undefined || decision.intent === null, "human_lab_intent_forbidden");
+  assert(decision.rankedAlternatives === undefined || (Array.isArray(decision.rankedAlternatives) && decision.rankedAlternatives.length === 0), "human_lab_ranked_labels_forbidden");
 }
 
 /** Generates a privacy-preserving local participant token from an injected seed. */

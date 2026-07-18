@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "alpha",
+  "features": {
+    "scriptedAi": true,
+    "hotseat": true,
+    "trainingCapture": true,
+    "alphaRuntime": true,
+    "humanLabCaptureIntegrity": true,
+    "onlineFriendMatch": false
+  },
+  "sourceSha": "79efc587d6ec7c49a13817db7a1cd1ececf268e3"
+}

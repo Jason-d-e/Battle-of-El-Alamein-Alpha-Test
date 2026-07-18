@@ -1,6 +1,9 @@
 (function () {
   "use strict";
 
+  const PRODUCT_PROFILE = globalThis.ElAlameinProductProfile?.current;
+  if (!PRODUCT_PROFILE) throw new Error("El Alamein product profile was not initialized");
+
   const SAVE_KEY = "zizi-el-alamein-save-v2";
   const LEGACY_SAVE_KEY = "zizi-el-alamein-save-v1";
   const CHECKPOINT_KEY = "zizi-el-alamein-turn-checkpoint-v1";
@@ -8,10 +11,13 @@
   const LANG_KEY = "zizi-el-alamein-lang";
   const AI_HUMAN_SIDE_KEY = "zizi-el-alamein-human-side-v1";
   const AI_GAME_MODE_KEY = "zizi-el-alamein-game-mode-v1";
+  const ONLINE_ROOM_SESSION_KEY = "zizi-el-alamein-online-room-v1";
   const TRAINING_LOG_KEY = "zizi-el-alamein-training-log-v1";
   const TRAINING_EVENT_KEY = "zizi-el-alamein-training-events-v1";
   const TRAINING_SESSION_KEY = "zizi-el-alamein-training-session-v1";
-  const HUMAN_DEMONSTRATION_RECORDING_KEY = "zizi-el-alamein-human-demonstration-recording-v1";
+  const HUMAN_DEMONSTRATION_RECORDING_KEY = PRODUCT_PROFILE.features.humanLabCaptureIntegrity
+    ? "zizi-el-alamein-alpha-human-demonstration-recording-v1"
+    : "zizi-el-alamein-human-demonstration-recording-v1";
   const TRAINING_LOG_LIMIT = 420;
   const TRAINING_EVENT_LIMIT = 520;
   const AI_SCORE_BATCH_SIZE = 1;
@@ -30,17 +36,32 @@
   const OPPOSITE_SIDE = { axis: "allied", allied: "axis" };
   const coreRulesPromise = import("./src/core/index.js?v=20260709-zoc-step-1");
   const phaseFlowPromise = import("./src/app/phase-flow.js?v=20260714-empty-movement-confirm-1");
-  const mapZoomPromise = import("./src/app/map-zoom.js?v=20260716-alpha-map-zoom-v3");
-  const mapZoomControlsPromise = import("./src/ui/map-zoom-controls.js?v=20260716-alpha-map-zoom-v3");
+  const menuModeSelectionPromise = import("./src/app/game-mode-selection.js?v=20260717-product-profiles-1");
+  const mapZoomPromise = import("./src/app/map-zoom.js?v=20260717-product-profiles-1");
+  const mapZoomControlsPromise = import("./src/ui/map-zoom-controls.js?v=20260717-product-profiles-1");
   const aiHeuristicsPromise = import("./src/app/ai-heuristics.js?v=20260708-ai-heuristics-16");
   const aiPhaseSearchPromise = import("./src/app/ai-phase-search.js?v=20260709-ai-projection-1");
   const aiTacticsPromise = import("./src/app/ai-tactics.js?v=20260714-shared-move-performance-1");
-  const aiAlphaBrowserPromise = import("./src/app/ai-alpha-browser.js?v=20260714-local-preview-1");
-  const aiAlphaPreviewPromise = import("./src/app/ai-alpha-preview.js?v=20260714-local-preview-1");
-  const aiHumanDemonstrationPromise = import("./src/app/ai-alpha-human-demonstration.js?v=20260713-human-recorder-1");
+  const aiAlphaBrowserPromise = PRODUCT_PROFILE.features.alphaRuntime
+    ? import("./src/app/ai-alpha-browser.js?v=20260714-local-preview-1")
+    : Promise.resolve(null);
+  const aiAlphaPreviewPromise = PRODUCT_PROFILE.features.alphaRuntime
+    ? import("./src/app/ai-alpha-preview.js?v=20260714-local-preview-1")
+    : Promise.resolve(null);
+  const aiHumanDemonstrationPromise = import("./src/app/ai-alpha-human-demonstration.js?v=20260718-human-lab-public-1");
+  const aiHumanCapturePromise = PRODUCT_PROFILE.features.humanLabCaptureIntegrity
+    ? import("./src/app/ai-alpha-human-lab-capture.js?v=20260718-human-lab-public-1")
+    : Promise.resolve(null);
   const aiAlphaEnvironmentAdapterPromise = import("./src/app/ai-alpha-environment-adapter.js?v=20260713-human-recorder-1");
   const aiAlphaTrainingPromise = import("./src/app/ai-alpha-training.js?v=20260713-human-recorder-1");
   const alphaFingerprintPromise = import("../shared/wargame-alpha/fingerprint.js?v=20260713-human-recorder-1");
+  const onlineModulesPromise = PRODUCT_PROFILE.features.onlineFriendMatch
+    ? Promise.all([
+      import("./src/app/supabase-online-transport.js?v=20260714-friend-playtest-1"),
+      import("./src/app/online-game-bridge.js?v=20260714-friend-playtest-1"),
+      import("./src/ui/online-multiplayer-panel.js?v=20260714-online-menu-fix-1"),
+    ]).then(([transport, bridge, panel]) => ({ transport, bridge, panel }))
+    : Promise.resolve(null);
   const HIGHLIGHT = {
     selected: "rgba(0, 166, 166, 0.56)",
     reachable: "rgba(34, 124, 118, 0.34)",
@@ -123,6 +144,11 @@
         resolveBattle: "结算下一战斗",
         done: "战斗结束",
         endPhase: "结束阶段",
+        mapZoom: "地图缩放",
+        mapZoomFit: "自适应",
+        mapZoomChoose: "选择地图缩放",
+        mapZoomOut: "缩小地图",
+        mapZoomIn: "放大地图",
         confirmEmptyMovementPhaseEnd: "本移动阶段尚未移动任何单位。确认已经完成移动并结束阶段吗？",
         selectedUnit: "选中单位",
         combat: "战斗",
@@ -250,6 +276,11 @@
         resolveBattle: "Resolve Next Combat",
         done: "Combat Complete",
         endPhase: "End Phase",
+        mapZoom: "Map zoom",
+        mapZoomFit: "Fit",
+        mapZoomChoose: "Choose map zoom",
+        mapZoomOut: "Zoom map out",
+        mapZoomIn: "Zoom map in",
         confirmEmptyMovementPhaseEnd: "No units have moved during this movement phase. Are you sure you are finished moving and want to end the phase?",
         selectedUnit: "Selected Unit",
         combat: "Combat",
@@ -516,13 +547,113 @@
   Object.assign(I18N.zh.menu, {
     modeLabel: "选择模式",
     hotseatMode: "热座模式",
+    onlineMode: "好友联机测试",
   });
   Object.assign(I18N.en.menu, {
     modeLabel: "Choose Mode",
     hotseatMode: "Hotseat Mode",
+    onlineMode: "Friend Match",
   });
+  I18N.zh.online = {
+    setupAria: "好友联机设置",
+    guideTitle: "好友联机步骤",
+    stepOpen: "两位玩家都打开这个联机测试版，并选择“好友联机测试”。",
+    stepConfigure: "双方输入相同的 Project URL 和 publishable key，然后连接测试服务器。",
+    stepRoom: "房主选择阵营并创建房间，把房间码发给好友；好友选择另一阵营并加入。",
+    stepReady: "双方都点击“准备”，房间会自动开始。轮到自己的阵营时才能操作。",
+    sessionNote: "配置只保留在当前浏览器标签页的临时会话中，不写入游戏存档。",
+    projectUrlLabel: "Supabase 项目 URL",
+    publishableKeyLabel: "Publishable key（不要使用 secret/service-role key）",
+    connect: "连接测试服务器",
+    switchConfigBlocked: "请先离开当前房间，再更换联机配置。",
+    configRequired: "请输入 Project URL 和 publishable key。",
+    connecting: "正在建立匿名测试会话……",
+    syncFailed: "同步失败：{reason}",
+    operationFailed: "{code}：{reason}",
+    connected: "已连接测试服务器。可创建房间，或输入好友房间码加入。",
+    restoredRoom: "已恢复房间 {roomCode}。",
+    restoreFailed: "旧房间无法恢复：{reason}",
+    roomAbandoned: "房间 {roomCode} 已中止。",
+    roomExpired: "房间 {roomCode} 已过期。",
+    offlineSwitchBlocked: "请先离开当前联机房间，再切换离线模式。",
+    startFromReady: "联机房间由准备状态启动；不会覆盖本地战役。",
+    panel: {
+      title: "好友联机测试",
+      roomCode: "房间码",
+      axis: "轴心国",
+      allied: "英军",
+      create: "创建房间",
+      join: "加入房间",
+      ready: "准备",
+      notReady: "取消准备",
+      reconnect: "重新连接",
+      leave: "离开房间",
+      offline: "离线",
+      connecting: "正在连接",
+      connected: "已连接",
+      disconnected: "已断开",
+      error: "联机错误",
+      lobby: "房间大厅",
+      active: "对局进行中",
+      finished: "对局已结束",
+      abandoned: "房间已中止",
+      expired: "房间已过期",
+      empty: "空位",
+      occupied: "已占用",
+    },
+  };
+  I18N.en.online = {
+    setupAria: "Friend match setup",
+    guideTitle: "Friend match steps",
+    stepOpen: "Both players open this online playtest and choose “Friend Match”.",
+    stepConfigure: "Enter the same Project URL and publishable key, then connect to the test server.",
+    stepRoom: "The host chooses a side and creates a room, then sends the room code to the friend, who joins as the other side.",
+    stepReady: "Both players select “Ready”. The match starts automatically, and only the active side can act.",
+    sessionNote: "Configuration stays only in this browser tab's temporary session and is never written to a game save.",
+    projectUrlLabel: "Supabase Project URL",
+    publishableKeyLabel: "Publishable key (never use a secret/service-role key)",
+    connect: "Connect to test server",
+    switchConfigBlocked: "Leave the current room before changing the online configuration.",
+    configRequired: "Enter the Project URL and publishable key.",
+    connecting: "Starting an anonymous test session…",
+    syncFailed: "Sync failed: {reason}",
+    operationFailed: "{code}: {reason}",
+    connected: "Connected to the test server. Create a room or enter a friend's room code to join.",
+    restoredRoom: "Restored room {roomCode}.",
+    restoreFailed: "The previous room could not be restored: {reason}",
+    roomAbandoned: "Room {roomCode} was abandoned.",
+    roomExpired: "Room {roomCode} expired.",
+    offlineSwitchBlocked: "Leave the current online room before switching to an offline mode.",
+    startFromReady: "Online matches start when both players are ready and never overwrite a local campaign.",
+    panel: {
+      title: "Friend Match",
+      roomCode: "Room code",
+      axis: "Axis",
+      allied: "Allied",
+      create: "Create room",
+      join: "Join room",
+      ready: "Ready",
+      notReady: "Not ready",
+      reconnect: "Reconnect",
+      leave: "Leave room",
+      offline: "Offline",
+      connecting: "Connecting",
+      connected: "Connected",
+      disconnected: "Disconnected",
+      error: "Online error",
+      lobby: "Lobby",
+      active: "Match active",
+      finished: "Match finished",
+      abandoned: "Room abandoned",
+      expired: "Room expired",
+      empty: "Open",
+      occupied: "Occupied",
+    },
+  };
   Object.assign(I18N.zh.ui, {
     exportHumanDemonstration: "\u5bfc\u51fa\u4eba\u7c7b\u793a\u8303",
+    humanLabPrivacyNotice: "\u6570\u636e\u4ec5\u4fdd\u5b58\u5728\u6b64\u6d4f\u89c8\u5668\uff1b\u5bfc\u51fa\u7531\u7528\u6237\u4e3b\u52a8\u4e0b\u8f7d\uff1b\u4e0d\u4f1a\u81ea\u52a8\u4e0a\u4f20\u3002",
+    confirmUnexportedHumanDemonstrationNewGame: "\u5f53\u524d\u4eba\u7c7b\u793a\u8303\u5c1a\u672a\u5bfc\u51fa\u3002\u5f00\u59cb\u65b0\u5bf9\u5c40\u524d\u4f1a\u5c06\u5176\u4fdd\u7559\u5728\u672c\u5730\u5f52\u6863\u4e2d\u3002\u662f\u5426\u7ee7\u7eed\uff1f",
     aiThinking: "AI \u6b63\u5728\u6307\u6325 {side}",
     aiAwaitingInput: "AI \u5df2\u5b8c\u6210\u52a8\u4f5c\uff0c\u8bf7\u70b9\u51fb\u9636\u6bb5\u6309\u94ae\u7ee7\u7eed",
     aiWaiting: "\u4f60\u6307\u6325 {side}\uff0cAI \u6307\u6325 {enemy}",
@@ -544,6 +675,8 @@
   });
   Object.assign(I18N.en.ui, {
     exportHumanDemonstration: "Export human demonstrations",
+    humanLabPrivacyNotice: "Data stays in this browser. Export is a user-initiated download. Nothing is uploaded automatically.",
+    confirmUnexportedHumanDemonstrationNewGame: "This human demonstration has not been exported. It will be preserved in a local archive before a new game starts. Continue?",
     aiThinking: "AI is commanding {side}",
     aiAwaitingInput: "AI has finished. Use the phase buttons to continue",
     aiWaiting: "You command {side}; AI commands {enemy}",
@@ -591,6 +724,13 @@
     axisAiModeButton: document.getElementById("axisAiModeButton"),
     alliedAiModeButton: document.getElementById("alliedAiModeButton"),
     hotseatModeButton: document.getElementById("hotseatModeButton"),
+    onlineModeButton: document.getElementById("onlineModeButton"),
+    onlineSetupPanel: document.getElementById("onlineSetupPanel"),
+    onlineProjectUrlInput: document.getElementById("onlineProjectUrlInput"),
+    onlinePublishableKeyInput: document.getElementById("onlinePublishableKeyInput"),
+    onlineConnectButton: document.getElementById("onlineConnectButton"),
+    onlineSetupStatus: document.getElementById("onlineSetupStatus"),
+    onlinePanelRoot: document.getElementById("onlinePanelRoot"),
     startCampaignButton: document.getElementById("startCampaignButton"),
     continueCampaignButton: document.getElementById("continueCampaignButton"),
     menuLoadButton: document.getElementById("menuLoadButton"),
@@ -611,6 +751,7 @@
     turnLabel: document.getElementById("turnLabel"),
     phaseLabel: document.getElementById("phaseLabel"),
     aiStatus: document.getElementById("aiStatus"),
+    onlineGameStatus: document.getElementById("onlineGameStatus"),
     selectedUnit: document.getElementById("selectedUnit"),
     combatComposer: document.getElementById("combatComposer"),
     battleList: document.getElementById("battleList"),
@@ -629,6 +770,7 @@
     chartsButton: document.getElementById("chartsButton"),
     aarButton: document.getElementById("aarButton"),
     exportHumanDemonstrationButton: document.getElementById("exportHumanDemonstrationButton"),
+    humanLabPrivacyNotice: document.getElementById("humanLabPrivacyNotice"),
     returnMapButton: document.getElementById("returnMapButton"),
     aarMenuButton: document.getElementById("aarMenuButton"),
     aarTitle: document.getElementById("aarTitle"),
@@ -647,12 +789,14 @@
   const app = {
     core: null,
     phaseFlow: null,
+    menuModeSelection: null,
     mapZoom: null,
     mapZoomControlsUi: null,
     mapZoomPreference: "fit",
     mapZoomLevel: 1,
     mapZoomResizeTimer: null,
     mapZoomControlCleanups: [],
+    mapZoomFitCancel: null,
     aiHeuristics: null,
     aiPhaseSearch: null,
     aiTactics: null,
@@ -663,6 +807,8 @@
     aiHumanDemonstration: null,
     aiHumanDemonstrationAdapter: null,
     aiHumanRecorder: null,
+    aiHumanCapture: null,
+    aiHumanCaptureStore: null,
     aiAlphaAnalysisScheduler: null,
     aiAlphaGameAdapter: null,
     scenario: null,
@@ -693,6 +839,19 @@
       scheduled: false,
       waitingForHuman: false,
       movementPlan: null,
+    },
+    online: {
+      modules: null,
+      selected: false,
+      connecting: false,
+      runtime: null,
+      panel: null,
+      unsubscribe: null,
+      rulesetHash: null,
+      lastAppliedRevision: null,
+      submitting: false,
+      hadRoom: false,
+      setupStatus: null,
     },
   };
 
@@ -776,6 +935,7 @@
   }
 
   function scheduleAlphaAssessment() {
+    if (app.ai.mode === "hotseat" || isOnlineMatch()) return;
     if (!app.aiAlpha?.client?.analyze || !app.state || app.state.winner) return;
     if (app.animating || app.ai.running || el.body.dataset.view !== "game") return;
     if (app.aiAlphaGameAdapter?.request) {
@@ -851,6 +1011,34 @@
     const table = I18N[app.lang] || I18N.zh;
     const value = key.split(".").reduce((node, part) => node?.[part], table) ?? key;
     return String(value).replace(/\{(\w+)\}/g, (_, name) => params[name] ?? "");
+  }
+
+  function onlinePanelLabels() {
+    const keys = [
+      "title",
+      "roomCode",
+      "axis",
+      "allied",
+      "create",
+      "join",
+      "ready",
+      "notReady",
+      "reconnect",
+      "leave",
+      "offline",
+      "connecting",
+      "connected",
+      "disconnected",
+      "error",
+      "lobby",
+      "active",
+      "finished",
+      "abandoned",
+      "expired",
+      "empty",
+      "occupied",
+    ];
+    return Object.fromEntries(keys.map((key) => [key, tr(`online.panel.${key}`)]));
   }
 
   function phase() {
@@ -1410,11 +1598,102 @@
   function startHumanDemonstrationRecording() {
     if (!app.aiHumanRecorder) return;
     const suffix = Date.now().toString(36);
-    app.aiHumanRecorder.start({
+    return app.aiHumanRecorder.start({
       datasetId: `human-demo-${app.training.sessionId}-${suffix}`,
       gameId: `game-${app.training.sessionId}-${suffix}`,
       generatedAt: new Date().toISOString(),
     });
+  }
+
+  function humanDemonstrationStateHash(state = app.state) {
+    if (!state || !app.aiHumanDemonstrationAdapter) return null;
+    try {
+      return app.aiHumanDemonstrationAdapter.verifyDecision(trainingStateSnapshot(state))?.stateHash || null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function archiveHumanDemonstrationRecording(reason, state = app.state) {
+    const recording = app.aiHumanRecorder?.getRecording();
+    if (!recording?.decisions?.length || !app.aiHumanCaptureStore) return true;
+    try {
+      app.aiHumanCaptureStore.archiveRecording(recording, {
+        reason,
+        stateHash: humanDemonstrationStateHash(state),
+      });
+      return true;
+    } catch (error) {
+      console.warn("Human-lab recording archive failed closed.", error);
+      return false;
+    }
+  }
+
+  function checkpointHumanDemonstration(slot, lifecycleType, state = app.state) {
+    if (!app.aiHumanRecorder || !app.aiHumanCaptureStore || !state) return false;
+    const stateHash = humanDemonstrationStateHash(state);
+    if (!stateHash) return false;
+    try {
+      const recording = app.aiHumanRecorder.getRecording();
+      if (recording?.game?.status === "incomplete") {
+        app.aiHumanRecorder.recordLifecycle({ type: lifecycleType, stateHash, details: { slot } });
+      }
+      app.aiHumanCaptureStore.writeCheckpoint(slot, {
+        stateHash,
+        recording: app.aiHumanRecorder.getRecording(),
+      });
+      return true;
+    } catch (error) {
+      console.warn("Human-lab recording checkpoint failed closed.", error);
+      return false;
+    }
+  }
+
+  function restoreHumanDemonstrationCheckpoint(slot, state) {
+    if (!app.aiHumanRecorder || !app.aiHumanCaptureStore) return "unavailable";
+    const stateHash = humanDemonstrationStateHash(state);
+    if (!stateHash) return "state_unavailable";
+    try {
+      const result = app.aiHumanCaptureStore.readCheckpoint(slot, stateHash);
+      if (result.status === "matched") {
+        app.aiHumanRecorder.restore(result.recording);
+        if (result.recording.game?.status === "incomplete") {
+          app.aiHumanRecorder.recordLifecycle({ type: "RECORDING_RESTORED", stateHash, details: { slot } });
+        }
+        return "restored";
+      }
+      if (!archiveHumanDemonstrationRecording(`restore_${result.status}`, app.state)) return "archive_failed";
+      startHumanDemonstrationRecording();
+      app.aiHumanRecorder.recordLifecycle({
+        type: "RECORDING_REBUILT",
+        stateHash,
+        details: { slot, reason: result.status },
+      });
+      return "rebuilt";
+    } catch (error) {
+      console.warn("Human-lab recording restore failed closed.", error);
+      return "restore_failed";
+    }
+  }
+
+  function shouldProtectHumanDemonstrationRecording() {
+    return Boolean(app.aiHumanCapture?.shouldProtectUnexportedHumanLabRecording(
+      app.aiHumanRecorder?.getRecording(),
+    ));
+  }
+
+  function prepareHumanDemonstrationForNewGame() {
+    if (shouldProtectHumanDemonstrationRecording()
+      && !window.confirm(tr("ui.confirmUnexportedHumanDemonstrationNewGame"))) {
+      return false;
+    }
+    return archiveHumanDemonstrationRecording("new_game");
+  }
+
+  function protectUnexportedHumanDemonstrationOnLeave(event) {
+    if (!shouldProtectHumanDemonstrationRecording()) return;
+    event.preventDefault();
+    event.returnValue = "";
   }
 
   function humanDemonstrationPlayer(side) {
@@ -1442,7 +1721,7 @@
       app.aiHumanDemonstration.canonicalHumanActionKey(entry) === chosenKey
     ));
     if (!isLegal) return false;
-    app.aiHumanRecorder.recordDecision({
+    return app.aiHumanRecorder.recordDecision({
       playerSourceId: humanDemonstrationPlayer(side).sourceId,
       turn: facts.turn,
       phase: facts.phase,
@@ -1457,7 +1736,6 @@
       intent: null,
       turnDoctrineTags: [],
     }, humanDemonstrationPlayer(side));
-    return true;
   }
 
   function completeHumanDemonstrationRecording() {
@@ -1472,23 +1750,37 @@
   function exportHumanDemonstration() {
     if (!app.aiHumanRecorder || !app.aiHumanDemonstration) return;
     try {
+      const recording = app.aiHumanRecorder.getRecording();
       const dataset = app.aiHumanRecorder.buildDataset();
-      const text = app.aiHumanDemonstration.serializeHumanDemonstrationDataset(dataset);
-      const blob = new Blob([text], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `el-alamein-human-demonstration-${dataset.datasetId}.json`;
-      document.body.append(link);
-      link.click();
-      link.remove();
-      URL.revokeObjectURL(url);
+      const captureIntegrityEnabled = PRODUCT_PROFILE.features.humanLabCaptureIntegrity;
+      const text = captureIntegrityEnabled
+        ? app.aiHumanDemonstration.serializeHumanDemonstrationCaptureBundle(recording, dataset)
+        : app.aiHumanDemonstration.serializeHumanDemonstrationDataset(dataset);
+      downloadHumanLabJson(
+        text,
+        captureIntegrityEnabled
+          ? `el-alamein-human-capture-${dataset.datasetId}.json`
+          : `el-alamein-human-demonstration-${dataset.datasetId}.json`,
+      );
+      if (captureIntegrityEnabled) app.aiHumanRecorder.markExported(dataset.fingerprint);
       log(tr("text.humanDemonstrationExported", { count: dataset.decisions.length }));
     } catch (error) {
       console.warn("Human-demonstration export failed.", error);
       log(tr("text.humanDemonstrationExportFailed", { reason: String(error?.message || error) }));
     }
     draw();
+  }
+
+  function downloadHumanLabJson(text, filename) {
+    const blob = new Blob([text], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
   }
 
   function makeStats() {
@@ -1572,6 +1864,7 @@
       const [
         core,
         phaseFlow,
+        menuModeSelection,
         mapZoom,
         mapZoomControlsUi,
         aiHeuristics,
@@ -1580,9 +1873,11 @@
         aiAlphaBrowser,
         aiAlphaPreview,
         aiHumanDemonstration,
+        aiHumanCapture,
         aiAlphaEnvironmentAdapter,
         aiAlphaTraining,
         alphaFingerprint,
+        onlineModules,
         scenario,
         rules,
         aiWeights,
@@ -1590,6 +1885,7 @@
       ] = await Promise.all([
         coreRulesPromise,
         phaseFlowPromise,
+        menuModeSelectionPromise,
         mapZoomPromise,
         mapZoomControlsPromise,
         aiHeuristicsPromise,
@@ -1598,19 +1894,27 @@
         aiAlphaBrowserPromise,
         aiAlphaPreviewPromise,
         aiHumanDemonstrationPromise,
+        aiHumanCapturePromise,
         aiAlphaEnvironmentAdapterPromise,
         aiAlphaTrainingPromise,
         alphaFingerprintPromise,
+        onlineModulesPromise,
         fetchJson("local-data/scenario.json"),
         fetchJson("local-data/rules.json"),
         fetchJson("local-data/ai-weights-expert.json").catch(() => null),
-        fetchOptionalJson("local-data/alpha-model.json"),
+        PRODUCT_PROFILE.features.alphaRuntime
+          ? fetchOptionalJson("local-data/alpha-model.json")
+          : Promise.resolve({ status: "missing", value: null, reason: "profile_disabled" }),
       ]);
       app.core = core;
       app.phaseFlow = phaseFlow;
+      app.menuModeSelection = menuModeSelection;
       app.mapZoom = mapZoom;
       app.mapZoomControlsUi = mapZoomControlsUi;
-      app.mapZoomPreference = app.mapZoom.readAlphaMapZoomPreference(localStorage);
+      app.mapZoomPreference = app.mapZoom.readMapZoomPreference(
+        localStorage,
+        PRODUCT_PROFILE.storage.mapZoomStorageKey,
+      );
       app.mapZoomLevel = app.mapZoomPreference === app.mapZoom.FIT_MAP_ZOOM
         ? app.mapZoom.DEFAULT_MAP_ZOOM
         : app.mapZoomPreference;
@@ -1618,59 +1922,77 @@
       app.aiPhaseSearch = aiPhaseSearch;
       app.aiTactics = aiTactics;
       app.aiWeights = aiWeights;
+      app.online.modules = onlineModules;
       app.aiAlphaBrowser = aiAlphaBrowser;
-      const previewLoad = await aiAlphaPreview.loadLocalAlphaPreviewModel({
-        location: window.location,
-        loadJson: fetchOptionalJson,
-      });
+      const previewLoad = aiAlphaPreview
+        ? await aiAlphaPreview.loadLocalAlphaPreviewModel({
+            location: window.location,
+            loadJson: fetchOptionalJson,
+          })
+        : {
+            requested: false,
+            modelLoad: normalAiAlphaModelLoad,
+            previewValidationOptions: null,
+          };
       const aiAlphaModelLoad = previewLoad.requested
         ? previewLoad.modelLoad
         : normalAiAlphaModelLoad;
       app.aiAlphaModelLoad = aiAlphaModelLoad;
       app.aiHumanDemonstration = aiHumanDemonstration;
-      app.aiAlpha = aiAlphaBrowser.createBrowserAlphaAi({
-        rawModel: aiAlphaModelLoad.value,
-        scenario,
-        rules,
-        workerFactory: aiAlphaBrowser.createAlphaWorkerFactory(),
-        timeoutMs: 90,
-        logger: console,
-        previewValidationOptions: previewLoad.previewValidationOptions,
-      });
-      app.aiAlphaAnalysisScheduler = aiAlphaBrowser.createBrowserAlphaAnalysisScheduler({
-        minIntervalMs: AI_ALPHA_ANALYSIS_INTERVAL_MS,
-        defaultSearchOptions: alphaAssessmentSearchOptions(),
-        onResult: () => {
-          if (app.state && el.body.dataset.view === "game" && isAlphaAssessmentSummaryCurrent()) draw();
-        },
-        onError: (error) => console.warn("Alpha AI realtime analysis failed.", error),
-      });
-      app.aiAlphaGameAdapter = aiAlphaBrowser.createBrowserAlphaGameAdapter?.({
-        alpha: app.aiAlpha,
-        scenario,
-        rules,
-        getState: () => app.state,
-        getSide: () => activeSide(),
-        getLegalActions: () => legalAlphaActions(),
-        searchOptions: alphaAssessmentSearchOptions(),
-        minIntervalMs: AI_ALPHA_ANALYSIS_INTERVAL_MS,
-        onSnapshot: (snapshot) => {
-          if (app.state && el.body.dataset.view === "game" && snapshot?.status !== "pending" && isAlphaAssessmentSummaryCurrent()) draw();
-        },
-        onError: (error) => console.warn("Alpha AI realtime adapter failed.", error),
-        logger: console,
-      }) || null;
+      app.aiHumanCapture = aiHumanCapture;
+      if (aiAlphaBrowser) {
+        app.aiAlpha = aiAlphaBrowser.createBrowserAlphaAi({
+          rawModel: aiAlphaModelLoad.value,
+          scenario,
+          rules,
+          workerFactory: aiAlphaBrowser.createAlphaWorkerFactory(),
+          timeoutMs: 90,
+          logger: console,
+          previewValidationOptions: previewLoad.previewValidationOptions,
+        });
+        app.aiAlphaAnalysisScheduler = aiAlphaBrowser.createBrowserAlphaAnalysisScheduler({
+          minIntervalMs: AI_ALPHA_ANALYSIS_INTERVAL_MS,
+          defaultSearchOptions: alphaAssessmentSearchOptions(),
+          onResult: () => {
+            if (app.state && el.body.dataset.view === "game" && isAlphaAssessmentSummaryCurrent()) draw();
+          },
+          onError: (error) => console.warn("Alpha AI realtime analysis failed.", error),
+        });
+        app.aiAlphaGameAdapter = aiAlphaBrowser.createBrowserAlphaGameAdapter?.({
+          alpha: app.aiAlpha,
+          scenario,
+          rules,
+          getState: () => app.state,
+          getSide: () => activeSide(),
+          getLegalActions: () => legalAlphaActions(),
+          searchOptions: alphaAssessmentSearchOptions(),
+          minIntervalMs: AI_ALPHA_ANALYSIS_INTERVAL_MS,
+          onSnapshot: (snapshot) => {
+            if (app.state && el.body.dataset.view === "game" && snapshot?.status !== "pending" && isAlphaAssessmentSummaryCurrent()) draw();
+          },
+          onError: (error) => console.warn("Alpha AI realtime adapter failed.", error),
+          logger: console,
+        }) || null;
+      }
       app.scenario = scenario;
       app.rules = rules;
       app.board = app.core.createBoard(scenario);
       app.hexes = app.board.hexes;
       app.hexById = app.board.hexById;
+      app.online.rulesetHash = app.online.modules
+        ? await app.online.modules.bridge.computeOnlineRulesetHash({ scenario, rules })
+        : null;
       const humanAdapterContext = createHumanDemonstrationAdapter({
         environmentAdapterModule: aiAlphaEnvironmentAdapter,
         trainingModule: aiAlphaTraining,
         fingerprintModule: alphaFingerprint,
       });
       app.aiHumanDemonstrationAdapter = humanAdapterContext.adapter;
+      app.aiHumanCaptureStore = app.aiHumanCapture?.createHumanLabCaptureStore({
+        storage: localStorage,
+        keyPrefix: "zizi-el-alamein-alpha-human-lab-capture-v1",
+        now: () => new Date().toISOString(),
+      }) || null;
       app.aiHumanRecorder = app.aiHumanDemonstration.createHumanDemonstrationRecorder({
         ...humanAdapterContext,
         initialRecording: loadHumanDemonstrationRecording(),
@@ -1729,6 +2051,7 @@
   }
 
   function wireUi() {
+    el.humanLabPrivacyNotice.hidden = !PRODUCT_PROFILE.features.humanLabCaptureIntegrity;
     el.boardSurface.addEventListener("click", onBoardClick);
     app.mapZoomControlCleanups.push(
       app.mapZoomControlsUi.wirePressAndHoldButton(el.mapZoomOutButton, (kind) => changeMapZoom(-1, kind)),
@@ -1750,11 +2073,21 @@
     });
     window.addEventListener("resize", onMapZoomViewportResize);
     window.addEventListener("pagehide", cleanupMapZoomControls, { once: true });
+    if (PRODUCT_PROFILE.features.humanLabCaptureIntegrity) {
+      window.addEventListener("beforeunload", protectUnexportedHumanDemonstrationOnLeave);
+    }
     el.langZhButton.addEventListener("click", () => setLanguage("zh"));
     el.langEnButton.addEventListener("click", () => setLanguage("en"));
     el.axisAiModeButton.addEventListener("click", () => setGameMode("axis-vs-ai"));
     el.alliedAiModeButton.addEventListener("click", () => setGameMode("allied-vs-ai"));
     el.hotseatModeButton.addEventListener("click", () => setGameMode("hotseat"));
+    if (PRODUCT_PROFILE.features.onlineFriendMatch) {
+      el.onlineModeButton.addEventListener("click", selectOnlineGameMode);
+      el.onlineConnectButton.addEventListener("click", () => void connectOnlineTestServer());
+    } else {
+      el.onlineModeButton.hidden = true;
+      el.onlineSetupPanel.hidden = true;
+    }
     el.startCampaignButton.addEventListener("click", startNewCampaign);
     el.continueCampaignButton.addEventListener("click", continueCampaign);
     el.menuLoadButton.addEventListener("click", () => loadGame({ fromMenu: true }));
@@ -1776,6 +2109,222 @@
     });
   }
 
+  function onlineClientState() {
+    return app.online.runtime?.client?.getState?.() || null;
+  }
+
+  function onlineRoom() {
+    return onlineClientState()?.room || null;
+  }
+
+  function hasOnlineRoom() {
+    return Boolean(onlineRoom());
+  }
+
+  function isOnlineMatch() {
+    return ["active", "finished"].includes(onlineRoom()?.status);
+  }
+
+  function setOnlineSetupStatus(message = "", isError = false) {
+    app.online.setupStatus = message ? { message, isError: Boolean(isError) } : null;
+    renderOnlineSetupStatus();
+  }
+
+  function setOnlineSetupStatusI18n(key = "", params = {}, isError = false) {
+    app.online.setupStatus = key
+      ? { key, params: { ...params }, isError: Boolean(isError) }
+      : null;
+    renderOnlineSetupStatus();
+  }
+
+  function renderOnlineSetupStatus() {
+    const setupStatus = app.online.setupStatus;
+    el.onlineSetupStatus.textContent = setupStatus
+      ? setupStatus.key
+        ? tr(setupStatus.key, setupStatus.params)
+        : setupStatus.message
+      : "";
+    el.onlineSetupStatus.dataset.error = String(Boolean(setupStatus?.isError));
+  }
+
+  function readRememberedOnlineRoom() {
+    try {
+      return sessionStorage.getItem(ONLINE_ROOM_SESSION_KEY) || null;
+    } catch {
+      return null;
+    }
+  }
+
+  function rememberOnlineRoom(roomCode) {
+    try {
+      if (roomCode) sessionStorage.setItem(ONLINE_ROOM_SESSION_KEY, roomCode);
+      else sessionStorage.removeItem(ONLINE_ROOM_SESSION_KEY);
+    } catch (error) {
+      console.warn("Unable to update online room session marker.", error);
+    }
+  }
+
+  function destroyOnlineRuntime() {
+    app.online.unsubscribe?.();
+    app.online.unsubscribe = null;
+    app.online.panel?.destroy?.();
+    app.online.panel = null;
+    app.online.runtime?.destroy?.();
+    app.online.runtime = null;
+    app.online.lastAppliedRevision = null;
+    app.online.submitting = false;
+    app.online.hadRoom = false;
+  }
+
+  function selectOnlineGameMode() {
+    if (!PRODUCT_PROFILE.features.onlineFriendMatch || !app.online.modules) return;
+    app.online.selected = true;
+    el.onlineSetupPanel.hidden = false;
+    setMenuStatus("");
+    syncMenuModeControls();
+  }
+
+  async function connectOnlineTestServer() {
+    if (!PRODUCT_PROFILE.features.onlineFriendMatch || !app.online.modules) return;
+    if (app.online.connecting) return;
+    if (hasOnlineRoom()) {
+      setOnlineSetupStatusI18n("online.switchConfigBlocked", {}, true);
+      return;
+    }
+    const projectUrl = el.onlineProjectUrlInput.value.trim();
+    const publishableKey = el.onlinePublishableKeyInput.value.trim();
+    if (!projectUrl || !publishableKey) {
+      setOnlineSetupStatusI18n("online.configRequired", {}, true);
+      return;
+    }
+
+    app.online.connecting = true;
+    el.onlineConnectButton.disabled = true;
+    setOnlineSetupStatusI18n("online.connecting");
+    destroyOnlineRuntime();
+    try {
+      const { transport, bridge, panel } = app.online.modules;
+      const sessionStore = transport.createSupabaseWebStorageSessionStore({
+        storage: window.sessionStorage,
+      });
+      const commandExecutor = bridge.createOnlineGameCommandExecutor({
+        core: app.core,
+        scenario: app.scenario,
+        rules: app.rules,
+        board: app.board,
+      });
+      app.online.runtime = await transport.createSupabaseOnlineRoomRuntime({
+        enabled: true,
+        projectUrl,
+        publishableKey,
+        sessionStore,
+        rulesetHash: app.online.rulesetHash,
+        commandExecutor,
+        pollIntervalMs: 1_000,
+        onPollError: (error) => setOnlineSetupStatusI18n("online.syncFailed", { reason: error.message }, true),
+        onListenerError: (error) => console.error("Online room listener failed.", error),
+      });
+      app.online.unsubscribe = app.online.runtime.client.subscribe(handleOnlineClientState);
+      app.online.panel = panel.createOnlineMultiplayerPanel({
+        root: el.onlinePanelRoot,
+        client: app.online.runtime.client,
+        labels: onlinePanelLabels(),
+        getInitialRoomState: async () => ({
+          state: bridge.projectOnlineAuthoritativeState(makeInitialState()),
+        }),
+        onError: (error) => setOnlineSetupStatusI18n("online.operationFailed", {
+          code: error.code || "ONLINE_ERROR",
+          reason: error.message,
+        }, true),
+      });
+      setOnlineSetupStatusI18n("online.connected");
+      const rememberedRoom = readRememberedOnlineRoom();
+      if (rememberedRoom) {
+        try {
+          await app.online.runtime.client.reconnect({ roomCode: rememberedRoom });
+          setOnlineSetupStatusI18n("online.restoredRoom", { roomCode: rememberedRoom });
+        } catch (error) {
+          rememberOnlineRoom(null);
+          setOnlineSetupStatusI18n("online.restoreFailed", { reason: error.message }, true);
+        }
+      }
+    } catch (error) {
+      destroyOnlineRuntime();
+      setOnlineSetupStatusI18n("online.operationFailed", {
+        code: error.code || "ONLINE_SETUP_FAILED",
+        reason: error.message,
+      }, true);
+    } finally {
+      app.online.connecting = false;
+      el.onlineConnectButton.disabled = false;
+      updateMenu();
+    }
+  }
+
+  function handleOnlineClientState(clientState) {
+    const room = clientState.room;
+    if (!room) {
+      app.online.runtime?.stopPolling?.();
+      if (app.online.hadRoom) {
+        rememberOnlineRoom(null);
+        app.online.lastAppliedRevision = null;
+        if (el.body.dataset.view === "game") setView("menu");
+      }
+      app.online.hadRoom = false;
+      drawAiControls();
+      updateMenu();
+      return;
+    }
+
+    app.online.hadRoom = true;
+    rememberOnlineRoom(room.roomCode);
+    app.online.runtime?.startPolling?.({ immediate: true });
+    if (["active", "finished"].includes(room.status)) adoptOnlineRoomSnapshot(room);
+    if (["abandoned", "expired"].includes(room.status)) {
+      setOnlineSetupStatusI18n(
+        room.status === "abandoned" ? "online.roomAbandoned" : "online.roomExpired",
+        { roomCode: room.roomCode },
+        true,
+      );
+      if (el.body.dataset.view === "game") setView("menu");
+    }
+  }
+
+  function adoptOnlineRoomSnapshot(room) {
+    if (app.online.lastAppliedRevision === room.revision) return;
+    const nextState = normalizeState(clone(room.authoritativeState), { preserveTransient: true });
+    nextState.selectedUnitId = null;
+    nextState.selectedDefenderId = null;
+    nextState.selectedAttackers = [];
+    nextState.log = [];
+    app.state = nextState;
+    app.online.lastAppliedRevision = room.revision;
+    app.ai.running = false;
+    app.ai.scheduled = false;
+    app.ai.waitingForHuman = false;
+    restoreInteractiveState();
+    showGame();
+  }
+
+  async function submitOnlineGameAction(action) {
+    const client = app.online.runtime?.client;
+    if (!client || !isOnlineMatch() || app.online.submitting) return;
+    app.online.submitting = true;
+    draw();
+    try {
+      await client.submitGameAction(action);
+      setOnlineSetupStatus("");
+    } catch (error) {
+      setOnlineSetupStatusI18n("online.operationFailed", {
+        code: error.code || "ONLINE_ACTION_FAILED",
+        reason: error.message,
+      }, true);
+    } finally {
+      app.online.submitting = false;
+      draw();
+    }
+  }
+
   function setLanguage(lang) {
     app.lang = lang === "en" ? "en" : "zh";
     localStorage.setItem(LANG_KEY, app.lang);
@@ -1791,28 +2340,59 @@
     document.querySelectorAll("[data-i18n]").forEach((node) => {
       node.textContent = tr(node.dataset.i18n);
     });
+    document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+      node.setAttribute("aria-label", tr(node.dataset.i18nAriaLabel));
+    });
     el.langZhButton.dataset.active = String(app.lang === "zh");
     el.langEnButton.dataset.active = String(app.lang === "en");
+    renderOnlineSetupStatus();
+    app.online.panel?.setLabels?.(onlinePanelLabels());
     drawAiControls();
     drawMapZoomControls();
   }
 
   function setGameMode(mode) {
+    if (hasOnlineRoom()) {
+      setOnlineSetupStatusI18n("online.offlineSwitchBlocked", {}, true);
+      return;
+    }
+    destroyOnlineRuntime();
+    app.online.selected = false;
+    el.onlineSetupPanel.hidden = true;
     app.ai.mode = ["axis-vs-ai", "allied-vs-ai", "hotseat"].includes(mode) ? mode : "axis-vs-ai";
     app.ai.humanSide = humanSideForMode(app.ai.mode);
     app.ai.waitingForHuman = false;
     app.ai.scheduled = false;
     localStorage.setItem(AI_GAME_MODE_KEY, app.ai.mode);
     localStorage.setItem(AI_HUMAN_SIDE_KEY, app.ai.humanSide);
-    drawAiControls();
+    syncMenuModeControls();
     drawStatus();
     scheduleAiTurn();
   }
 
+  function syncMenuModeControls() {
+    drawAiControls();
+    updateMenu();
+  }
+
   function drawAiControls() {
-    if (el.axisAiModeButton) el.axisAiModeButton.dataset.active = String(app.ai.mode === "axis-vs-ai");
-    if (el.alliedAiModeButton) el.alliedAiModeButton.dataset.active = String(app.ai.mode === "allied-vs-ai");
-    if (el.hotseatModeButton) el.hotseatModeButton.dataset.active = String(app.ai.mode === "hotseat");
+    const selection = app.menuModeSelection.createMenuGameModeSelection({
+      offlineMode: app.ai.mode,
+      onlineSelected: app.online.selected,
+    });
+    const modeButtons = [
+      [el.axisAiModeButton, "axis-vs-ai"],
+      [el.alliedAiModeButton, "allied-vs-ai"],
+      [el.hotseatModeButton, "hotseat"],
+      [el.onlineModeButton, "online"],
+    ];
+    for (const [button, mode] of modeButtons) {
+      if (!button) continue;
+      const active = Boolean(selection[mode]);
+      button.dataset.active = String(active);
+      button.setAttribute("aria-pressed", String(active));
+    }
+    el.onlineSetupPanel.hidden = !app.online.selected;
   }
 
   function setMenuStatus(text = "") {
@@ -1820,8 +2400,14 @@
   }
 
   function updateMenu() {
-    el.continueCampaignButton.disabled = !(localStorage.getItem(SESSION_KEY) || localStorage.getItem(CHECKPOINT_KEY));
-    el.menuLoadButton.disabled = !(localStorage.getItem(SAVE_KEY) || localStorage.getItem(LEGACY_SAVE_KEY));
+    const actionState = app.menuModeSelection.createMenuActionState({
+      onlineSelected: app.online.selected,
+      hasContinuation: Boolean(localStorage.getItem(SESSION_KEY) || localStorage.getItem(CHECKPOINT_KEY)),
+      hasSave: Boolean(localStorage.getItem(SAVE_KEY) || localStorage.getItem(LEGACY_SAVE_KEY)),
+    });
+    el.startCampaignButton.disabled = actionState.startDisabled;
+    el.continueCampaignButton.disabled = actionState.continueDisabled;
+    el.menuLoadButton.disabled = actionState.loadDisabled;
   }
 
   function setView(view) {
@@ -1836,18 +2422,23 @@
   }
 
   function showMenu() {
-    saveSessionState();
+    if (!isOnlineMatch()) saveSessionState();
     setView("menu");
     updateMenu();
   }
 
   function showGame() {
     setView("game");
-    checkAlliedBreakthroughVictory();
+    if (!isOnlineMatch()) checkAlliedBreakthroughVictory();
     draw();
   }
 
   function startNewCampaign() {
+    if (app.online.selected || hasOnlineRoom()) {
+      setOnlineSetupStatusI18n("online.startFromReady", {}, true);
+      return;
+    }
+    if (!prepareHumanDemonstrationForNewGame()) return;
     localStorage.removeItem(SESSION_KEY);
     app.focusedBattleId = null;
     app.ai.running = false;
@@ -1868,6 +2459,7 @@
 
   function saveGame() {
     localStorage.setItem(SAVE_KEY, JSON.stringify(app.state));
+    checkpointHumanDemonstration("manual", "SAVE", app.state);
     log(tr("text.saved"));
     updateMenu();
     draw();
@@ -1884,7 +2476,12 @@
       return;
     }
     try {
-      app.state = normalizeState(JSON.parse(raw), { preserveTransient: true });
+      const nextState = normalizeState(JSON.parse(raw), { preserveTransient: true });
+      const captureStatus = restoreHumanDemonstrationCheckpoint("manual", nextState);
+      if (["archive_failed", "restore_failed", "state_unavailable"].includes(captureStatus)) {
+        throw new Error(`human_lab_${captureStatus}`);
+      }
+      app.state = nextState;
       app.focusedBattleId = null;
       app.ai.running = false;
       app.ai.scheduled = false;
@@ -1909,12 +2506,14 @@
     snapshot.advanceTask = null;
     snapshot.lastMove = null;
     localStorage.setItem(CHECKPOINT_KEY, JSON.stringify(snapshot));
+    checkpointHumanDemonstration("turn", "TURN_CHECKPOINT", snapshot);
     updateMenu();
   }
 
   function saveSessionState() {
     if (!app.state) return;
     localStorage.setItem(SESSION_KEY, JSON.stringify(app.state));
+    checkpointHumanDemonstration("session", "SESSION_CHECKPOINT", app.state);
     updateMenu();
   }
 
@@ -1927,7 +2526,12 @@
       return;
     }
     try {
-      app.state = normalizeState(JSON.parse(raw), { preserveTransient: Boolean(sessionRaw) });
+      const nextState = normalizeState(JSON.parse(raw), { preserveTransient: Boolean(sessionRaw) });
+      const captureStatus = restoreHumanDemonstrationCheckpoint(sessionRaw ? "session" : "turn", nextState);
+      if (["archive_failed", "restore_failed", "state_unavailable"].includes(captureStatus)) {
+        throw new Error(`human_lab_${captureStatus}`);
+      }
+      app.state = nextState;
       app.focusedBattleId = null;
       app.ai.running = false;
       app.ai.scheduled = false;
@@ -1983,7 +2587,11 @@
 
   function setMapZoomPreference(preference, { restoreMenuFocus = false } = {}) {
     app.mapZoomPreference = app.mapZoom.normalizeMapZoomPreference(preference);
-    app.mapZoom.writeAlphaMapZoomPreference(localStorage, app.mapZoomPreference);
+    app.mapZoom.writeMapZoomPreference(
+      localStorage,
+      PRODUCT_PROFILE.storage.mapZoomStorageKey,
+      app.mapZoomPreference,
+    );
     closeMapZoomMenu({ restoreFocus: restoreMenuFocus });
     applyPreferredMapZoom();
   }
@@ -2019,17 +2627,22 @@
 
   function applyPreferredMapZoom({ preserveCenter = true } = {}) {
     if (!app.mapZoom || el.body.dataset.view !== "game") return;
-    const fittedZoom = app.mapZoom.calculateFitMapZoom({
-      viewportWidth: el.boardViewport.clientWidth,
-      viewportHeight: el.boardViewport.clientHeight,
+    app.mapZoomFitCancel?.();
+    app.mapZoomFitCancel = app.mapZoom.fitMapZoomWithDeferredStabilization({
+      measureViewport: () => ({
+        viewportWidth: el.boardViewport.clientWidth,
+        viewportHeight: el.boardViewport.clientHeight,
+      }),
+      applyZoom: (fitZoom) => applyMapZoom(
+        app.mapZoom.calculateMapZoomForPreference({
+          fitZoom,
+          preference: app.mapZoomPreference,
+        }),
+        { preserveCenter },
+      ),
       mapWidth: app.scenario.board.width,
       mapHeight: app.scenario.board.height,
     });
-    const preferredZoom = app.mapZoom.calculateMapZoomForPreference({
-      fitZoom: fittedZoom,
-      preference: app.mapZoomPreference,
-    });
-    applyMapZoom(preferredZoom, { preserveCenter });
   }
 
   function onMapZoomViewportResize() {
@@ -2049,7 +2662,11 @@
   }
 
   function closeMapZoomMenu({ restoreFocus = false } = {}) {
-    app.mapZoomControlsUi.closeMapZoomMenuElement(el.mapZoomMenu, el.mapZoomMenuButton, { restoreFocus });
+    app.mapZoomControlsUi.closeMapZoomMenuElement(
+      el.mapZoomMenu,
+      el.mapZoomMenuButton,
+      { restoreFocus },
+    );
   }
 
   function onMapZoomMenuKeydown(event) {
@@ -2073,6 +2690,8 @@
   function cleanupMapZoomControls() {
     window.clearTimeout(app.mapZoomResizeTimer);
     app.mapZoomResizeTimer = null;
+    app.mapZoomFitCancel?.();
+    app.mapZoomFitCancel = null;
     app.mapZoomControlCleanups.splice(0).forEach((cleanup) => cleanup());
   }
 
@@ -2182,6 +2801,7 @@
   }
 
   function canUndoLastMove(unit = unitById(app.state.selectedUnitId)) {
+    if (isOnlineMatch()) return false;
     const move = app.state.lastMove;
     return Boolean(
       move
@@ -2263,6 +2883,14 @@
     const attackers = app.state.selectedAttackers.map(unitById).filter(Boolean);
     if (!defender || !attackers.length) return;
     if (attackers.some((attacker) => !canAttack(attacker, defender))) return;
+    if (isOnlineMatch()) {
+      void submitOnlineGameAction({
+        type: app.core.ENV_ACTION.DECLARE_COMBAT,
+        defenderId: defender.id,
+        attackerIds: attackers.map((unit) => unit.id),
+      });
+      return;
+    }
     const odds = calculateOdds(attackers, defender);
     const eventStateBefore = clone(app.state);
     const trainingEntry = combatTrainingEntry(attackers, defender, odds);
@@ -2321,6 +2949,7 @@
   }
 
   function cancelDeclaredBattle(battleId) {
+    if (isOnlineMatch()) return;
     if (!isCombatPhase() || app.state.combatMode !== "declare") return;
     const battle = app.state.declaredCombats.find((item) => item.id === battleId);
     if (!battle) return;
@@ -2339,6 +2968,10 @@
 
   function finishDeclarations() {
     if (!isCombatPhase() || app.state.combatMode !== "declare") return;
+    if (isOnlineMatch()) {
+      void submitOnlineGameAction({ type: app.core.ENV_ACTION.FINISH_DECLARATIONS });
+      return;
+    }
     const eventStateBefore = clone(app.state);
     recordHumanDemonstrationDecision({ type: app.core.ENV_ACTION.FINISH_DECLARATIONS }, eventStateBefore);
     const aiPhase = isAiTurn();
@@ -2387,6 +3020,16 @@
   function resolveNextBattle() {
     if (!isCombatPhase() || app.state.combatMode !== "resolve") return;
     if (app.state.retreatTask || app.state.advanceTask) return;
+    if (isOnlineMatch()) {
+      const battle = currentBattle();
+      if (!battle) return;
+      void submitOnlineGameAction({
+        type: app.core.ENV_ACTION.RESOLVE_COMBAT,
+        battleId: battle.id,
+        dieRoll: app.online.modules.bridge.rollOnlineFriendDie(),
+      });
+      return;
+    }
     const aiPhase = isAiTurn();
     if (aiPhase) app.ai.waitingForHuman = false;
     const battle = currentBattle();
@@ -2628,6 +3271,16 @@
     const unit = unitById(task.unitIds[task.index]);
     if (!unit) return;
     const path = app.retreatPaths.get(hexId);
+    if (isOnlineMatch()) {
+      await submitOnlineGameAction({
+        type: app.core.ENV_ACTION.RETREAT_UNIT,
+        unitId: unit.id,
+        toHexId: hexId,
+        route: { path: path.slice(), remaining: 0 },
+        battleId: task.battleId || null,
+      });
+      return;
+    }
     const eventStateBefore = clone(app.state);
     const fromHexId = unit.hexId;
     const trainingEntry = retreatTrainingEntry(unit, hexId, path);
@@ -2700,6 +3353,13 @@
 
   async function advanceUnit(unitId) {
     const task = app.state.advanceTask;
+    if (isOnlineMatch()) {
+      if (!task) return;
+      await submitOnlineGameAction(unitId === "skip"
+        ? { type: app.core.ENV_ACTION.SKIP_ADVANCE, battleId: task.battleId, targetHexId: task.targetHexId }
+        : { type: app.core.ENV_ACTION.ADVANCE_UNIT, unitId, battleId: task.battleId, targetHexId: task.targetHexId });
+      return;
+    }
     const eventStateBefore = clone(app.state);
     const trainingEntry = advanceTrainingEntry(unitId);
     recordHumanDemonstrationDecision(
@@ -2808,10 +3468,20 @@
     }
     const fromHexId = unit.hexId;
     const path = route.path || [fromHexId, destinationHexId];
+    if (isOnlineMatch()) {
+      await submitOnlineGameAction({
+        type: app.core.ENV_ACTION.MOVE_UNIT,
+        unitId: unit.id,
+        fromHexId,
+        toHexId: destinationHexId,
+        route: clone(route),
+      });
+      return;
+    }
     const movedUnitsBefore = app.state.movedUnits.slice();
     const eventStateBefore = clone(app.state);
     const trainingEntry = movementTrainingEntry(unit, fromHexId, destinationHexId, route, app.reachable);
-    recordHumanDemonstrationDecision({
+    const humanDemonstrationDecision = recordHumanDemonstrationDecision({
       type: app.core.ENV_ACTION.MOVE_UNIT,
       unitId: unit.id,
       fromHexId,
@@ -2822,7 +3492,18 @@
     await animateUnitPath(unit, path);
     unit.hexId = destinationHexId;
     app.state.movedUnits.push(unit.id);
-    app.state.lastMove = { unitId: unit.id, fromHexId, toHexId: destinationHexId, path, movedUnitsBefore, turn: app.state.turn, phaseIndex: app.state.phaseIndex };
+    app.state.lastMove = {
+      unitId: unit.id,
+      fromHexId,
+      toHexId: destinationHexId,
+      path,
+      movedUnitsBefore,
+      turn: app.state.turn,
+      phaseIndex: app.state.phaseIndex,
+      ...(PRODUCT_PROFILE.features.humanLabCaptureIntegrity
+        ? { humanDemonstrationDecisionId: humanDemonstrationDecision?.id || null }
+        : {}),
+    };
     recordTrainingEntry(trainingEntry);
     log(tr("text.moved", { unit: unitName(unit), hex: hexLabel(destinationHexId), mp: route.remaining }));
     if (app.core.isAlliedBreakthroughMove(coreContext(), unit, destinationHexId, route.remaining)) {
@@ -2851,6 +3532,18 @@
     const reversePath = (move.path || [move.fromHexId, move.toHexId]).slice().reverse();
     app.reachable.clear();
     await animateUnitPath(unit, reversePath);
+    if (PRODUCT_PROFILE.features.humanLabCaptureIntegrity && move.humanDemonstrationDecisionId) {
+      try {
+        app.aiHumanRecorder?.tombstoneDecision(move.humanDemonstrationDecisionId, {
+          reason: "undo_move",
+          stateHash: humanDemonstrationStateHash(app.state),
+        });
+      } catch (error) {
+        console.warn("Human-lab undo tombstone failed closed.", error);
+        draw();
+        return;
+      }
+    }
     unit.hexId = move.fromHexId;
     app.state.movedUnits = move.movedUnitsBefore || app.state.movedUnits.filter((id) => id !== unit.id);
     app.state.selectedUnitId = unit.id;
@@ -2937,6 +3630,7 @@
   }
 
   function isAiSide(side) {
+    if (isOnlineMatch()) return false;
     return Boolean(app.ai.mode !== "hotseat" && side && side !== app.ai.humanSide);
   }
 
@@ -2961,10 +3655,22 @@
   }
 
   function isHumanInputBlocked() {
+    if (isOnlineMatch()) {
+      const clientState = onlineClientState();
+      const room = clientState?.room;
+      return Boolean(
+        room?.status !== "active"
+        || clientState?.connection !== "connected"
+        || clientState?.operation
+        || app.online.submitting
+        || clientState?.playerSide !== room?.activeSide
+      );
+    }
     return Boolean(app.ai.running || isAiTurn() || hasAiControlledTask());
   }
 
   function scheduleAiTurn() {
+    if (isOnlineMatch()) return;
     if (!app.state || app.state.winner || app.ai.running || app.ai.scheduled) return;
     if (el.body.dataset.view !== "game") return;
     if (app.ai.waitingForHuman && !hasAiControlledTask()) return;
@@ -5751,6 +6457,16 @@
 
   function endPhase() {
     if (app.state.winner) return;
+    if (app.phaseFlow.shouldConfirmEmptyMovementPhaseEnd({
+      phase: phase(),
+      movedUnits: app.state.movedUnits,
+    }) && !window.confirm(tr("ui.confirmEmptyMovementPhaseEnd"))) {
+      return;
+    }
+    if (isOnlineMatch()) {
+      void submitOnlineGameAction({ type: app.core.ENV_ACTION.END_PHASE });
+      return;
+    }
     if (app.state.retreatTask || app.state.advanceTask) {
       log(tr("text.retreatPrompt", { unit: "" }));
       draw();
@@ -5773,6 +6489,9 @@
       return;
     }
     const eventStateBefore = clone(app.state);
+    if (PRODUCT_PROFILE.features.humanLabCaptureIntegrity) {
+      recordHumanDemonstrationDecision({ type: app.core.ENV_ACTION.END_PHASE }, eventStateBefore);
+    }
     const endedPhaseId = phase().id;
     const endedTurn = app.state.turn;
     app.ai.waitingForHuman = false;
@@ -6205,30 +6924,45 @@
     const turn = app.rules.turns[app.state.turn - 1];
     el.turnLabel.textContent = `${turnLabel(turn)} · ${sideLabel(activeSide())}`;
     el.phaseLabel.textContent = phaseLabel(phase().id);
-    el.aiStatus.dataset.active = String(app.ai.mode !== "hotseat" && (app.ai.running || isAiTurn() || hasAiControlledTask()));
-    const aiControlStatus = app.ai.mode === "hotseat"
+    const onlineState = onlineClientState();
+    const room = onlineState?.room;
+    el.aiStatus.dataset.active = String(!isOnlineMatch() && app.ai.mode !== "hotseat" && (app.ai.running || isAiTurn() || hasAiControlledTask()));
+    const aiControlStatus = isOnlineMatch() || app.ai.mode === "hotseat"
       ? ""
       : app.ai.waitingForHuman && isAiTurn()
         ? tr("ui.aiAwaitingInput")
         : app.ai.running || isAiTurn()
         ? tr("ui.aiThinking", { side: sideLabel(activeSide()) })
         : tr("ui.aiWaiting", { side: sideLabel(app.ai.humanSide), enemy: sideLabel(enemySide(app.ai.humanSide)) });
-    const alphaRuntime = currentAlphaRuntimeMode();
-    el.aiStatus.dataset.alphaRuntime = alphaRuntime.mode;
-    el.aiStatus.title = alphaRuntime.reason ? app.aiAlphaBrowser?.alphaModelStatusReasonLabel?.(alphaRuntime.reason) || alphaRuntime.reason : "";
-    el.aiStatus.textContent = app.ai.mode === "hotseat"
-      ? ""
-      : `${aiControlStatus} · ${alphaRuntimeStatusText(alphaRuntime)}`;
+    if (PRODUCT_PROFILE.features.alphaRuntime && !isOnlineMatch() && app.ai.mode !== "hotseat") {
+      const alphaRuntime = currentAlphaRuntimeMode();
+      el.aiStatus.dataset.alphaRuntime = alphaRuntime.mode;
+      el.aiStatus.title = alphaRuntime.reason
+        ? app.aiAlphaBrowser?.alphaModelStatusReasonLabel?.(alphaRuntime.reason) || alphaRuntime.reason
+        : "";
+      el.aiStatus.textContent = `${aiControlStatus} · ${alphaRuntimeStatusText(alphaRuntime)}`;
+    } else {
+      delete el.aiStatus.dataset.alphaRuntime;
+      el.aiStatus.title = "";
+      el.aiStatus.textContent = aiControlStatus;
+    }
+    el.onlineGameStatus.hidden = !isOnlineMatch();
+    el.onlineGameStatus.textContent = isOnlineMatch()
+      ? `房间 ${room.roomCode} · 你是 ${sideLabel(onlineState.playerSide)} · revision ${room.revision} · ${isHumanInputBlocked() ? "等待对方或同步" : "轮到你行动"}`
+      : "";
     el.boardBadge.textContent = boardBadgeText();
     el.finishDeclarationsButton.hidden = !(isCombatPhase() && app.state.combatMode === "declare");
     el.resolveBattleButton.hidden = !(isCombatPhase() && app.state.combatMode === "resolve");
     el.endPhaseButton.hidden = isCombatPhase() && app.state.combatMode === "declare";
     const pendingBattle = isCombatPhase() && app.state.combatMode === "resolve" ? currentBattle() : null;
-    const blockInput = app.ai.running || hasAiControlledTask();
+    const blockInput = isOnlineMatch() ? isHumanInputBlocked() : app.ai.running || hasAiControlledTask();
     el.resolveBattleButton.disabled = Boolean(app.state.winner || blockInput || app.state.retreatTask || app.state.advanceTask || !pendingBattle);
     el.resolveBattleButton.textContent = pendingBattle ? tr("ui.resolveBattle") : tr("ui.done");
     el.finishDeclarationsButton.disabled = Boolean(app.state.winner || blockInput);
     el.endPhaseButton.disabled = Boolean(app.state.winner || blockInput);
+    el.newGameButton.disabled = isOnlineMatch();
+    el.saveButton.disabled = isOnlineMatch();
+    el.loadButton.disabled = isOnlineMatch();
     if (app.state.winner) {
       el.winnerBanner.hidden = false;
       el.winnerBanner.textContent = `${sideLabel(app.state.winner.side)} · ${app.state.winner.reason}`;
@@ -6587,6 +7321,7 @@
   }
 
   function appendAlphaAssessmentCard() {
+    if (app.ai.mode === "hotseat") return;
     const summary = app.aiAlpha?.lastSummary;
     const snapshot = app.aiAlphaGameAdapter?.lastSnapshot;
     const bestAction = currentAlphaBestAction();
@@ -7047,6 +7782,8 @@
     cancel.className = "battle-cancel-button";
     cancel.textContent = "X";
     cancel.title = tr("text.cancel");
+    cancel.hidden = isOnlineMatch();
+    cancel.disabled = isOnlineMatch();
     cancel.addEventListener("click", (event) => {
       event.stopPropagation();
       cancelDeclaredBattle(battle.id);

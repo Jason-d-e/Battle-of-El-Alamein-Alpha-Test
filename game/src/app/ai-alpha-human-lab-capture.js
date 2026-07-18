@@ -1,0 +1,114 @@
+export const HUMAN_LAB_CAPTURE_ENVELOPE_SCHEMA = "zizi-el-alamein-human-lab-capture-envelope-v1";
+
+export function createHumanLabCaptureStore({
+  storage,
+  keyPrefix = "zizi-el-alamein-human-lab-capture-v1",
+  now,
+} = {}) {
+  assertStorage(storage);
+  assert(typeof now === "function", "human_lab_capture_clock_required");
+
+  function writeCheckpoint(slot, { stateHash, recording }) {
+    const envelope = captureEnvelope({ kind: "checkpoint", slot, stateHash, recording, createdAt: now() });
+    storage.setItem(checkpointKey(slot), JSON.stringify(envelope));
+    return copy(envelope);
+  }
+
+  function readCheckpoint(slot, expectedStateHash) {
+    const raw = storage.getItem(checkpointKey(slot));
+    if (!raw) return { status: "missing", recording: null, envelope: null };
+    const envelope = parseEnvelope(raw);
+    if (envelope.stateHash !== requiredText(expectedStateHash, "invalid_capture_state_hash")) {
+      return { status: "state_mismatch", recording: null, envelope: copy(envelope) };
+    }
+    return { status: "matched", recording: copy(envelope.recording), envelope: copy(envelope) };
+  }
+
+  function archiveRecording(recording, { reason, stateHash = null } = {}) {
+    const gameId = requiredText(recording?.game?.id, "invalid_capture_game_id");
+    const envelope = captureEnvelope({
+      kind: "archive",
+      slot: requiredText(reason, "invalid_capture_archive_reason"),
+      stateHash,
+      recording,
+      createdAt: now(),
+    });
+    const mutationSequence = Number(recording.capture?.lastMutationSequence || 0);
+    assert(Number.isInteger(mutationSequence) && mutationSequence >= 0, "invalid_capture_mutation_sequence");
+    const key = `${keyPrefix}:archive:${gameId}:${mutationSequence}`;
+    const existing = storage.getItem(key);
+    if (existing !== null) {
+      const parsed = parseEnvelope(existing);
+      assert(canonicalJson(parsed.recording) === canonicalJson(envelope.recording), "human_lab_archive_collision");
+      return { status: "already_archived", key, envelope: copy(parsed) };
+    }
+    storage.setItem(key, JSON.stringify(envelope));
+    return { status: "archived", key, envelope: copy(envelope) };
+  }
+
+  function checkpointKey(slot) {
+    return `${keyPrefix}:checkpoint:${requiredText(slot, "invalid_capture_checkpoint_slot")}`;
+  }
+
+  return Object.freeze({ archiveRecording, readCheckpoint, writeCheckpoint });
+}
+
+export function shouldProtectUnexportedHumanLabRecording(recording) {
+  if (!recording || recording.game?.status !== "incomplete") return false;
+  const lastMutation = Number(recording.capture?.lastMutationSequence || 0);
+  const lastExported = Number(recording.capture?.lastExportedSequence || 0);
+  return Array.isArray(recording.decisions) && recording.decisions.length > 0 && lastMutation > lastExported;
+}
+
+function captureEnvelope({ kind, slot, stateHash, recording, createdAt }) {
+  assert(recording && typeof recording === "object" && !Array.isArray(recording), "invalid_capture_recording");
+  return {
+    schema: HUMAN_LAB_CAPTURE_ENVELOPE_SCHEMA,
+    kind: requiredText(kind, "invalid_capture_kind"),
+    slot: requiredText(slot, "invalid_capture_slot"),
+    stateHash: stateHash === null ? null : requiredText(stateHash, "invalid_capture_state_hash"),
+    createdAt: requiredText(createdAt, "invalid_capture_timestamp"),
+    recording: copy(recording),
+  };
+}
+
+function parseEnvelope(raw) {
+  let envelope;
+  try {
+    envelope = JSON.parse(String(raw));
+  } catch {
+    throw new Error("invalid_capture_envelope_json");
+  }
+  assert(envelope?.schema === HUMAN_LAB_CAPTURE_ENVELOPE_SCHEMA, "invalid_capture_envelope_schema");
+  assert(envelope.recording && typeof envelope.recording === "object" && !Array.isArray(envelope.recording), "invalid_capture_recording");
+  requiredText(envelope.kind, "invalid_capture_kind");
+  requiredText(envelope.slot, "invalid_capture_slot");
+  requiredText(envelope.createdAt, "invalid_capture_timestamp");
+  if (envelope.stateHash !== null) requiredText(envelope.stateHash, "invalid_capture_state_hash");
+  return envelope;
+}
+
+function assertStorage(storage) {
+  assert(storage && typeof storage.getItem === "function" && typeof storage.setItem === "function", "invalid_capture_storage");
+}
+
+function requiredText(value, reason) {
+  assert(typeof value === "string" && value.length > 0, reason);
+  return value;
+}
+
+function canonicalJson(value) {
+  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(",")}]`;
+  if (value && typeof value === "object") {
+    return `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${canonicalJson(value[key])}`).join(",")}}`;
+  }
+  return JSON.stringify(value);
+}
+
+function copy(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
+function assert(condition, reason) {
+  if (!condition) throw new Error(reason);
+}
