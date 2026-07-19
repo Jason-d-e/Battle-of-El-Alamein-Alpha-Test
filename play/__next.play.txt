@@ -2,4 +2,4 @@
 2:I[12224,["/Battle-of-El-Alamein-Alpha-Test/_next/static/chunks/04.swrss7h53m.js","/Battle-of-El-Alamein-Alpha-Test/_next/static/chunks/14xdthwga5u9i.js"],"default"]
 3:I[67689,["/Battle-of-El-Alamein-Alpha-Test/_next/static/chunks/04.swrss7h53m.js","/Battle-of-El-Alamein-Alpha-Test/_next/static/chunks/14xdthwga5u9i.js"],"default"]
 4:[]
-0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"kDVTe6opf_9oE7ukHo92f"}
+0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"rOo_OEZh3OMg18DE6gm2w"}

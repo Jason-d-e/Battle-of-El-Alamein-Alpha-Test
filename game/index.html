@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>阿拉曼战役 / El Alamein</title>
-    <link rel="stylesheet" href="style.css?v=20260717-product-profiles-1" />
+    <link rel="stylesheet" href="style.css?v=20260719-human-lab-recovery-1" />
     <script src="src/app/product-profile.js?v=20260717-product-profiles-1" data-profile="alpha"></script>
   </head>
   <body data-view="menu" data-lang="zh" data-runtime-marker="product-profile-main-1">
@@ -63,11 +63,13 @@
           <button id="startCampaignButton" type="button" data-i18n="menu.start">开始战役</button>
           <button id="continueCampaignButton" type="button" data-i18n="menu.continue">继续本回合</button>
           <button id="menuLoadButton" type="button" data-i18n="menu.load">读取存档</button>
+          <button id="menuExportHumanDemonstrationButton" type="button" data-i18n="ui.exportHumanRecovery" hidden>导出可恢复人类示范</button>
         </div>
         <p id="humanLabPrivacyNotice" class="human-lab-privacy-notice" data-i18n="ui.humanLabPrivacyNotice" hidden>
           Data stays in this browser. Export is a user-initiated download. Nothing is uploaded automatically.
         </p>
         <p id="menuStatus" class="menu-status"></p>
+        <p id="humanLabMenuStatus" class="human-lab-recovery-status" role="status" hidden></p>
       </div>
     </section>
 
@@ -85,6 +87,7 @@
           <button id="aarButton" type="button" data-i18n="ui.aar">战报</button>
           <button id="exportHumanDemonstrationButton" type="button" data-i18n="ui.exportHumanDemonstration">Export human demonstrations</button>
         </nav>
+        <p id="humanLabGameStatus" class="human-lab-recovery-status human-lab-game-status" role="status" hidden></p>
       </header>
 
       <main class="layout">
@@ -216,6 +219,6 @@
       </div>
     </template>
 
-    <script src="game.js?v=20260717-product-profiles-1" defer></script>
+    <script src="game.js?v=20260719-human-lab-recovery-1" defer></script>
   </body>
 </html>

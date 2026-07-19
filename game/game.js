@@ -48,9 +48,12 @@
   const aiAlphaPreviewPromise = PRODUCT_PROFILE.features.alphaRuntime
     ? import("./src/app/ai-alpha-preview.js?v=20260714-local-preview-1")
     : Promise.resolve(null);
-  const aiHumanDemonstrationPromise = import("./src/app/ai-alpha-human-demonstration.js?v=20260718-human-lab-public-1");
+  const aiHumanDemonstrationPromise = import("./src/app/ai-alpha-human-demonstration.js?v=20260719-human-lab-recovery-1");
   const aiHumanCapturePromise = PRODUCT_PROFILE.features.humanLabCaptureIntegrity
-    ? import("./src/app/ai-alpha-human-lab-capture.js?v=20260718-human-lab-public-1")
+    ? import("./src/app/ai-alpha-human-lab-capture.js?v=20260719-human-lab-recovery-1")
+    : Promise.resolve(null);
+  const aiHumanRecoveryPromise = PRODUCT_PROFILE.features.humanLabCaptureIntegrity
+    ? import("./src/app/ai-alpha-human-lab-recovery.js?v=20260719-human-lab-recovery-1")
     : Promise.resolve(null);
   const aiAlphaEnvironmentAdapterPromise = import("./src/app/ai-alpha-environment-adapter.js?v=20260713-human-recorder-1");
   const aiAlphaTrainingPromise = import("./src/app/ai-alpha-training.js?v=20260713-human-recorder-1");
@@ -652,7 +655,10 @@
   };
   Object.assign(I18N.zh.ui, {
     exportHumanDemonstration: "\u5bfc\u51fa\u4eba\u7c7b\u793a\u8303",
+    exportHumanRecovery: "\u5bfc\u51fa\u53ef\u6062\u590d\u4eba\u7c7b\u793a\u8303",
     humanLabPrivacyNotice: "\u6570\u636e\u4ec5\u4fdd\u5b58\u5728\u6b64\u6d4f\u89c8\u5668\uff1b\u5bfc\u51fa\u7531\u7528\u6237\u4e3b\u52a8\u4e0b\u8f7d\uff1b\u4e0d\u4f1a\u81ea\u52a8\u4e0a\u4f20\u3002",
+    humanLabRecoveryAvailable: "\u68c0\u6d4b\u5230 {count} \u4e2a\u53ef\u6062\u590d\u7684\u4eba\u7c7b\u51b3\u7b56\u3002\u53ef\u5148\u5bfc\u51fa\uff0c\u65e0\u9700\u7ee7\u7eed\u8fdb\u5165\u5bf9\u5c40\u3002",
+    humanLabCapturePaused: "Human Lab \u91c7\u96c6\u5df2\u6682\u505c\uff1a\u6d4f\u89c8\u5668\u5b58\u50a8\u4e0d\u8db3\u6216\u6062\u590d\u94fe\u4e0d\u4e00\u81f4\u3002\u6e38\u620f\u4ecd\u53ef\u7ee7\u7eed\uff0c\u8bf7\u5148\u5bfc\u51fa\u53ef\u6062\u590d\u6570\u636e\u3002",
     confirmUnexportedHumanDemonstrationNewGame: "\u5f53\u524d\u4eba\u7c7b\u793a\u8303\u5c1a\u672a\u5bfc\u51fa\u3002\u5f00\u59cb\u65b0\u5bf9\u5c40\u524d\u4f1a\u5c06\u5176\u4fdd\u7559\u5728\u672c\u5730\u5f52\u6863\u4e2d\u3002\u662f\u5426\u7ee7\u7eed\uff1f",
     aiThinking: "AI \u6b63\u5728\u6307\u6325 {side}",
     aiAwaitingInput: "AI \u5df2\u5b8c\u6210\u52a8\u4f5c\uff0c\u8bf7\u70b9\u51fb\u9636\u6bb5\u6309\u94ae\u7ee7\u7eed",
@@ -675,7 +681,10 @@
   });
   Object.assign(I18N.en.ui, {
     exportHumanDemonstration: "Export human demonstrations",
+    exportHumanRecovery: "Export recoverable human data",
     humanLabPrivacyNotice: "Data stays in this browser. Export is a user-initiated download. Nothing is uploaded automatically.",
+    humanLabRecoveryAvailable: "{count} recoverable human decisions were found. You can export them from this menu without continuing the game.",
+    humanLabCapturePaused: "Human Lab capture is paused because browser storage is full or the capture lineage cannot be reconciled. The game can continue; export the recoverable data first.",
     confirmUnexportedHumanDemonstrationNewGame: "This human demonstration has not been exported. It will be preserved in a local archive before a new game starts. Continue?",
     aiThinking: "AI is commanding {side}",
     aiAwaitingInput: "AI has finished. Use the phase buttons to continue",
@@ -699,6 +708,8 @@
   Object.assign(I18N.zh.text, {
     humanDemonstrationExported: "\u5df2\u5bfc\u51fa\u4eba\u7c7b\u793a\u8303\uff1a{count}\u4e2a\u51b3\u7b56",
     humanDemonstrationExportFailed: "\u4eba\u7c7b\u793a\u8303\u5bfc\u51fa\u5931\u8d25\uff1a{reason}",
+    humanDemonstrationRecoveryExported: "\u6807\u51c6\u6570\u636e\u96c6\u65e0\u6cd5\u751f\u6210\uff0c\u5df2\u5bfc\u51fa\u539f\u59cb\u6062\u590d\u5305\uff1a{count}\u4e2a\u51b3\u7b56",
+    humanLabCapturePaused: "Human Lab \u91c7\u96c6\u5df2\u6682\u505c\uff1b\u5f53\u524d\u6e38\u620f\u5df2\u6062\u590d\uff0c\u8bf7\u5148\u5bfc\u51fa\u53ef\u6062\u590d\u6570\u636e\u3002",
     aiMovementDone: "AI 完成 {side} 移动。",
     aiCombatDone: "AI 完成 {side} 战斗。",
     aiNoMove: "AI 没有找到有利移动。",
@@ -707,6 +718,8 @@
   Object.assign(I18N.en.text, {
     humanDemonstrationExported: "Exported human demonstrations: {count} decisions",
     humanDemonstrationExportFailed: "Human-demonstration export failed: {reason}",
+    humanDemonstrationRecoveryExported: "The standard dataset could not be built, so a raw recovery bundle was exported: {count} decisions",
+    humanLabCapturePaused: "Human Lab capture is paused. The game was restored; export the recoverable data first.",
     aiMovementDone: "AI completed {side} movement.",
     aiCombatDone: "AI completed {side} combat.",
     aiNoMove: "AI found no useful moves.",
@@ -734,6 +747,7 @@
     startCampaignButton: document.getElementById("startCampaignButton"),
     continueCampaignButton: document.getElementById("continueCampaignButton"),
     menuLoadButton: document.getElementById("menuLoadButton"),
+    menuExportHumanDemonstrationButton: document.getElementById("menuExportHumanDemonstrationButton"),
     mapImage: document.getElementById("mapImage"),
     hexLayer: document.getElementById("hexLayer"),
     unitLayer: document.getElementById("unitLayer"),
@@ -771,6 +785,8 @@
     aarButton: document.getElementById("aarButton"),
     exportHumanDemonstrationButton: document.getElementById("exportHumanDemonstrationButton"),
     humanLabPrivacyNotice: document.getElementById("humanLabPrivacyNotice"),
+    humanLabMenuStatus: document.getElementById("humanLabMenuStatus"),
+    humanLabGameStatus: document.getElementById("humanLabGameStatus"),
     returnMapButton: document.getElementById("returnMapButton"),
     aarMenuButton: document.getElementById("aarMenuButton"),
     aarTitle: document.getElementById("aarTitle"),
@@ -809,6 +825,9 @@
     aiHumanRecorder: null,
     aiHumanCapture: null,
     aiHumanCaptureStore: null,
+    aiHumanRecovery: null,
+    aiHumanCaptureWritable: true,
+    aiHumanCaptureIssue: null,
     aiAlphaAnalysisScheduler: null,
     aiAlphaGameAdapter: null,
     scenario: null,
@@ -1590,19 +1609,60 @@
     try {
       if (!recording) localStorage.removeItem(HUMAN_DEMONSTRATION_RECORDING_KEY);
       else localStorage.setItem(HUMAN_DEMONSTRATION_RECORDING_KEY, JSON.stringify(recording));
+      renderHumanLabRecoveryUi();
+      return true;
     } catch (error) {
       console.warn("Human-demonstration recording could not be persisted.", error);
+      setHumanLabCaptureIssue(app.aiHumanCapture?.humanLabStorageFailureReason(error) || "storage_write_failed");
+      return false;
     }
   }
 
   function startHumanDemonstrationRecording() {
     if (!app.aiHumanRecorder) return;
+    app.aiHumanCaptureWritable = true;
+    app.aiHumanCaptureIssue = null;
     const suffix = Date.now().toString(36);
-    return app.aiHumanRecorder.start({
+    const result = app.aiHumanRecorder.start({
       datasetId: `human-demo-${app.training.sessionId}-${suffix}`,
       gameId: `game-${app.training.sessionId}-${suffix}`,
       generatedAt: new Date().toISOString(),
     });
+    renderHumanLabRecoveryUi();
+    return result;
+  }
+
+  function currentHumanLabRecoveryState() {
+    return app.aiHumanRecovery?.humanLabRecordingRecoveryState(app.aiHumanRecorder?.getRecording()) || {
+      canExport: false,
+      decisionCount: 0,
+      gameStatus: null,
+    };
+  }
+
+  function setHumanLabCaptureIssue(reason) {
+    app.aiHumanCaptureWritable = false;
+    app.aiHumanCaptureIssue = String(reason || "capture_failed");
+    renderHumanLabRecoveryUi();
+  }
+
+  function renderHumanLabRecoveryUi() {
+    if (!el.menuExportHumanDemonstrationButton || !el.humanLabMenuStatus || !el.humanLabGameStatus) return;
+    const enabled = Boolean(PRODUCT_PROFILE.features.humanLabCaptureIntegrity);
+    const recovery = currentHumanLabRecoveryState();
+    el.menuExportHumanDemonstrationButton.hidden = !enabled;
+    el.menuExportHumanDemonstrationButton.disabled = !recovery.canExport;
+    if (el.exportHumanDemonstrationButton) el.exportHumanDemonstrationButton.disabled = !recovery.canExport;
+    const menuMessage = app.aiHumanCaptureIssue
+      ? tr("ui.humanLabCapturePaused")
+      : recovery.canExport
+        ? tr("ui.humanLabRecoveryAvailable", { count: recovery.decisionCount })
+        : "";
+    const gameMessage = app.aiHumanCaptureIssue ? tr("ui.humanLabCapturePaused") : "";
+    el.humanLabMenuStatus.textContent = menuMessage;
+    el.humanLabMenuStatus.hidden = !enabled || !menuMessage;
+    el.humanLabGameStatus.textContent = gameMessage;
+    el.humanLabGameStatus.hidden = !enabled || !gameMessage;
   }
 
   function humanDemonstrationStateHash(state = app.state) {
@@ -1618,13 +1678,18 @@
     const recording = app.aiHumanRecorder?.getRecording();
     if (!recording?.decisions?.length || !app.aiHumanCaptureStore) return true;
     try {
-      app.aiHumanCaptureStore.archiveRecording(recording, {
+      const result = app.aiHumanCaptureStore.archiveRecording(recording, {
         reason,
         stateHash: humanDemonstrationStateHash(state),
       });
+      if (result.status === "storage_failed") {
+        setHumanLabCaptureIssue(result.reason);
+        return false;
+      }
       return true;
     } catch (error) {
       console.warn("Human-lab recording archive failed closed.", error);
+      setHumanLabCaptureIssue("archive_failed");
       return false;
     }
   }
@@ -1638,13 +1703,18 @@
       if (recording?.game?.status === "incomplete") {
         app.aiHumanRecorder.recordLifecycle({ type: lifecycleType, stateHash, details: { slot } });
       }
-      app.aiHumanCaptureStore.writeCheckpoint(slot, {
+      const result = app.aiHumanCaptureStore.writeCheckpoint(slot, {
         stateHash,
         recording: app.aiHumanRecorder.getRecording(),
       });
+      if (result.status === "storage_failed") {
+        setHumanLabCaptureIssue(result.reason);
+        return false;
+      }
       return true;
     } catch (error) {
       console.warn("Human-lab recording checkpoint failed closed.", error);
+      setHumanLabCaptureIssue("checkpoint_failed");
       return false;
     }
   }
@@ -1676,6 +1746,18 @@
     }
   }
 
+  function applyHumanLabContinuationPolicy(captureStatus) {
+    const policy = app.aiHumanRecovery?.humanLabContinuationPolicy(captureStatus);
+    if (!policy) return { allowContinuation: true, captureWritable: true, requiresExport: false, reason: null };
+    if (!policy.captureWritable) {
+      app.aiHumanCaptureWritable = false;
+      if (policy.requiresExport) setHumanLabCaptureIssue(policy.reason);
+    } else if (!app.aiHumanCaptureIssue) {
+      app.aiHumanCaptureWritable = true;
+    }
+    return policy;
+  }
+
   function shouldProtectHumanDemonstrationRecording() {
     return Boolean(app.aiHumanCapture?.shouldProtectUnexportedHumanLabRecording(
       app.aiHumanRecorder?.getRecording(),
@@ -1683,8 +1765,8 @@
   }
 
   function prepareHumanDemonstrationForNewGame() {
-    if (shouldProtectHumanDemonstrationRecording()
-      && !window.confirm(tr("ui.confirmUnexportedHumanDemonstrationNewGame"))) {
+    if (!shouldProtectHumanDemonstrationRecording()) return true;
+    if (!window.confirm(tr("ui.confirmUnexportedHumanDemonstrationNewGame"))) {
       return false;
     }
     return archiveHumanDemonstrationRecording("new_game");
@@ -1708,7 +1790,7 @@
   }
 
   function recordHumanDemonstrationDecision(action, stateBefore = app.state, options = {}) {
-    if (!app.aiHumanRecorder || !stateBefore || stateBefore.winner) return false;
+    if (!app.aiHumanRecorder || !app.aiHumanCaptureWritable || !stateBefore || stateBefore.winner) return false;
     const snapshot = trainingStateSnapshot(stateBefore);
     const facts = app.aiHumanDemonstrationAdapter?.verifyDecision(snapshot);
     if (!facts) return false;
@@ -1749,8 +1831,10 @@
 
   function exportHumanDemonstration() {
     if (!app.aiHumanRecorder || !app.aiHumanDemonstration) return;
+    const recording = app.aiHumanRecorder.getRecording();
+    const decisionCount = Array.isArray(recording?.decisions) ? recording.decisions.length : 0;
+    if (decisionCount === 0) return;
     try {
-      const recording = app.aiHumanRecorder.getRecording();
       const dataset = app.aiHumanRecorder.buildDataset();
       const captureIntegrityEnabled = PRODUCT_PROFILE.features.humanLabCaptureIntegrity;
       const text = captureIntegrityEnabled
@@ -1764,10 +1848,28 @@
       );
       if (captureIntegrityEnabled) app.aiHumanRecorder.markExported(dataset.fingerprint);
       log(tr("text.humanDemonstrationExported", { count: dataset.decisions.length }));
+      setMenuStatus(tr("text.humanDemonstrationExported", { count: dataset.decisions.length }));
     } catch (error) {
       console.warn("Human-demonstration export failed.", error);
-      log(tr("text.humanDemonstrationExportFailed", { reason: String(error?.message || error) }));
+      try {
+        const text = app.aiHumanCapture?.serializeHumanLabRecoveryExport(recording, {
+          exportedAt: new Date().toISOString(),
+          reason: String(error?.message || "dataset_build_failed"),
+        });
+        if (!text) throw error;
+        downloadHumanLabJson(text, `el-alamein-human-recovery-${recording.datasetId || Date.now()}.json`);
+        const message = tr("text.humanDemonstrationRecoveryExported", { count: decisionCount });
+        log(message);
+        setMenuStatus(message);
+      } catch (recoveryError) {
+        const message = tr("text.humanDemonstrationExportFailed", {
+          reason: String(recoveryError?.message || recoveryError),
+        });
+        log(message);
+        setMenuStatus(message);
+      }
     }
+    renderHumanLabRecoveryUi();
     draw();
   }
 
@@ -1874,6 +1976,7 @@
         aiAlphaPreview,
         aiHumanDemonstration,
         aiHumanCapture,
+        aiHumanRecovery,
         aiAlphaEnvironmentAdapter,
         aiAlphaTraining,
         alphaFingerprint,
@@ -1895,6 +1998,7 @@
         aiAlphaPreviewPromise,
         aiHumanDemonstrationPromise,
         aiHumanCapturePromise,
+        aiHumanRecoveryPromise,
         aiAlphaEnvironmentAdapterPromise,
         aiAlphaTrainingPromise,
         alphaFingerprintPromise,
@@ -1940,6 +2044,7 @@
       app.aiAlphaModelLoad = aiAlphaModelLoad;
       app.aiHumanDemonstration = aiHumanDemonstration;
       app.aiHumanCapture = aiHumanCapture;
+      app.aiHumanRecovery = aiHumanRecovery;
       if (aiAlphaBrowser) {
         app.aiAlpha = aiAlphaBrowser.createBrowserAlphaAi({
           rawModel: aiAlphaModelLoad.value,
@@ -2091,6 +2196,7 @@
     el.startCampaignButton.addEventListener("click", startNewCampaign);
     el.continueCampaignButton.addEventListener("click", continueCampaign);
     el.menuLoadButton.addEventListener("click", () => loadGame({ fromMenu: true }));
+    el.menuExportHumanDemonstrationButton?.addEventListener("click", exportHumanDemonstration);
     el.menuButton.addEventListener("click", showMenu);
     el.newGameButton.addEventListener("click", startNewCampaign);
     el.saveButton.addEventListener("click", saveGame);
@@ -2408,6 +2514,7 @@
     el.startCampaignButton.disabled = actionState.startDisabled;
     el.continueCampaignButton.disabled = actionState.continueDisabled;
     el.menuLoadButton.disabled = actionState.loadDisabled;
+    renderHumanLabRecoveryUi();
   }
 
   function setView(view) {
@@ -2478,9 +2585,7 @@
     try {
       const nextState = normalizeState(JSON.parse(raw), { preserveTransient: true });
       const captureStatus = restoreHumanDemonstrationCheckpoint("manual", nextState);
-      if (["archive_failed", "restore_failed", "state_unavailable"].includes(captureStatus)) {
-        throw new Error(`human_lab_${captureStatus}`);
-      }
+      const capturePolicy = applyHumanLabContinuationPolicy(captureStatus);
       app.state = nextState;
       app.focusedBattleId = null;
       app.ai.running = false;
@@ -2490,6 +2595,7 @@
       log(tr("text.loaded"));
       setMenuStatus(tr("menu.loaded"));
       showGame();
+      if (capturePolicy.requiresExport) log(tr("text.humanLabCapturePaused"));
     } catch (_) {
       setMenuStatus(tr("menu.noSave"));
       if (!options.fromMenu) log(tr("text.badSave"));
@@ -2528,9 +2634,7 @@
     try {
       const nextState = normalizeState(JSON.parse(raw), { preserveTransient: Boolean(sessionRaw) });
       const captureStatus = restoreHumanDemonstrationCheckpoint(sessionRaw ? "session" : "turn", nextState);
-      if (["archive_failed", "restore_failed", "state_unavailable"].includes(captureStatus)) {
-        throw new Error(`human_lab_${captureStatus}`);
-      }
+      const capturePolicy = applyHumanLabContinuationPolicy(captureStatus);
       app.state = nextState;
       app.focusedBattleId = null;
       app.ai.running = false;
@@ -2540,6 +2644,7 @@
       else clearTransientState();
       setMenuStatus(tr("menu.continued"));
       showGame();
+      if (capturePolicy.requiresExport) log(tr("text.humanLabCapturePaused"));
     } catch (_) {
       setMenuStatus(tr("menu.noCheckpoint"));
     }

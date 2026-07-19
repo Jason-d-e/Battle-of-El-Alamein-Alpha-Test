@@ -306,6 +306,22 @@ button:disabled {
   line-height: 1.4;
 }
 
+.human-lab-recovery-status {
+  margin: 10px 0 0;
+  padding: 8px 10px;
+  border-left: 4px solid #8b5a20;
+  background: rgba(255, 244, 201, 0.88);
+  color: #4a321b;
+  font-size: 0.84rem;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.human-lab-game-status {
+  max-width: 460px;
+  margin: 0;
+}
+
 .game-view {
   display: flex;
   flex-direction: column;

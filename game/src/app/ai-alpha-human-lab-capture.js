@@ -1,4 +1,5 @@
 export const HUMAN_LAB_CAPTURE_ENVELOPE_SCHEMA = "zizi-el-alamein-human-lab-capture-envelope-v1";
+export const HUMAN_LAB_RECOVERY_EXPORT_SCHEMA = "zizi-el-alamein-human-lab-recovery-export-v1";
 
 export function createHumanLabCaptureStore({
   storage,
@@ -10,8 +11,10 @@ export function createHumanLabCaptureStore({
 
   function writeCheckpoint(slot, { stateHash, recording }) {
     const envelope = captureEnvelope({ kind: "checkpoint", slot, stateHash, recording, createdAt: now() });
-    storage.setItem(checkpointKey(slot), JSON.stringify(envelope));
-    return copy(envelope);
+    const key = checkpointKey(slot);
+    const failure = writeStorage(storage, key, JSON.stringify(envelope));
+    if (failure) return failure;
+    return { status: "written", key, envelope: copy(envelope) };
   }
 
   function readCheckpoint(slot, expectedStateHash) {
@@ -35,14 +38,17 @@ export function createHumanLabCaptureStore({
     });
     const mutationSequence = Number(recording.capture?.lastMutationSequence || 0);
     assert(Number.isInteger(mutationSequence) && mutationSequence >= 0, "invalid_capture_mutation_sequence");
-    const key = `${keyPrefix}:archive:${gameId}:${mutationSequence}`;
+    const journalSequence = Number(recording.journal?.at(-1)?.sequence || 0);
+    assert(Number.isInteger(journalSequence) && journalSequence >= 0, "invalid_capture_journal_sequence");
+    const key = `${keyPrefix}:archive:${gameId}:${mutationSequence}:${journalSequence}`;
     const existing = storage.getItem(key);
     if (existing !== null) {
       const parsed = parseEnvelope(existing);
       assert(canonicalJson(parsed.recording) === canonicalJson(envelope.recording), "human_lab_archive_collision");
       return { status: "already_archived", key, envelope: copy(parsed) };
     }
-    storage.setItem(key, JSON.stringify(envelope));
+    const failure = writeStorage(storage, key, JSON.stringify(envelope));
+    if (failure) return failure;
     return { status: "archived", key, envelope: copy(envelope) };
   }
 
@@ -54,7 +60,7 @@ export function createHumanLabCaptureStore({
 }
 
 export function shouldProtectUnexportedHumanLabRecording(recording) {
-  if (!recording || recording.game?.status !== "incomplete") return false;
+  if (!recording || !["incomplete", "completed"].includes(recording.game?.status)) return false;
   const lastMutation = Number(recording.capture?.lastMutationSequence || 0);
   const lastExported = Number(recording.capture?.lastExportedSequence || 0);
   return Array.isArray(recording.decisions) && recording.decisions.length > 0 && lastMutation > lastExported;
@@ -90,6 +96,36 @@ function parseEnvelope(raw) {
 
 function assertStorage(storage) {
   assert(storage && typeof storage.getItem === "function" && typeof storage.setItem === "function", "invalid_capture_storage");
+}
+
+export function humanLabStorageFailureReason(error) {
+  return error?.name === "QuotaExceededError" || error?.code === 22 || error?.code === 1014
+    ? "quota_exceeded"
+    : "storage_write_failed";
+}
+
+/** Preserves the raw local recording when normal dataset construction cannot complete. */
+export function serializeHumanLabRecoveryExport(recording, { exportedAt, reason } = {}) {
+  assert(recording && typeof recording === "object" && !Array.isArray(recording), "invalid_capture_recording");
+  return `${canonicalJson({
+    schema: HUMAN_LAB_RECOVERY_EXPORT_SCHEMA,
+    exportedAt: requiredText(exportedAt, "invalid_recovery_export_timestamp"),
+    reason: requiredText(reason, "invalid_recovery_export_reason"),
+    recording: copy(recording),
+  })}\n`;
+}
+
+function writeStorage(storage, key, value) {
+  try {
+    storage.setItem(key, value);
+    return null;
+  } catch (error) {
+    return {
+      status: "storage_failed",
+      reason: humanLabStorageFailureReason(error),
+      key,
+    };
+  }
 }
 
 function requiredText(value, reason) {
