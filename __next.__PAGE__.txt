@@ -3,7 +3,7 @@
 3:I[31713,["/Battle-of-El-Alamein-Alpha-Test/_next/static/chunks/04.swrss7h53m.js","/Battle-of-El-Alamein-Alpha-Test/_next/static/chunks/14xdthwga5u9i.js","/Battle-of-El-Alamein-Alpha-Test/_next/static/chunks/10r0lnh6ui0g8.js","/Battle-of-El-Alamein-Alpha-Test/_next/static/chunks/0~-251ypfd-xs.js"],"default"]
 6:I[76779,["/Battle-of-El-Alamein-Alpha-Test/_next/static/chunks/04.swrss7h53m.js","/Battle-of-El-Alamein-Alpha-Test/_next/static/chunks/14xdthwga5u9i.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/Battle-of-El-Alamein-Alpha-Test/_next/static/chunks/10r0lnh6ui0g8.js","async":true}],["$","script","script-1",{"src":"/Battle-of-El-Alamein-Alpha-Test/_next/static/chunks/0~-251ypfd-xs.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"rOo_OEZh3OMg18DE6gm2w"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/Battle-of-El-Alamein-Alpha-Test/_next/static/chunks/10r0lnh6ui0g8.js","async":true}],["$","script","script-1",{"src":"/Battle-of-El-Alamein-Alpha-Test/_next/static/chunks/0~-251ypfd-xs.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"6iPlllQB9HT0CHUWYjS_b"}
 4:{}
 5:"$0:rsc:props:children:0:props:serverProvidedParams:params"
 8:null

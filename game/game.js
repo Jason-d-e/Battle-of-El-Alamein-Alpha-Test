@@ -50,7 +50,7 @@
     : Promise.resolve(null);
   const aiHumanDemonstrationPromise = import("./src/app/ai-alpha-human-demonstration.js?v=20260719-human-lab-recovery-1");
   const aiHumanCapturePromise = PRODUCT_PROFILE.features.humanLabCaptureIntegrity
-    ? import("./src/app/ai-alpha-human-lab-capture.js?v=20260719-human-lab-recovery-1")
+    ? import("./src/app/ai-alpha-human-lab-capture.js?v=20260719-human-lab-recovery-2")
     : Promise.resolve(null);
   const aiHumanRecoveryPromise = PRODUCT_PROFILE.features.humanLabCaptureIntegrity
     ? import("./src/app/ai-alpha-human-lab-recovery.js?v=20260719-human-lab-recovery-1")
@@ -1852,12 +1852,15 @@
     } catch (error) {
       console.warn("Human-demonstration export failed.", error);
       try {
+        const exportedAt = new Date().toISOString();
         const text = app.aiHumanCapture?.serializeHumanLabRecoveryExport(recording, {
-          exportedAt: new Date().toISOString(),
+          exportedAt,
           reason: String(error?.message || "dataset_build_failed"),
         });
         if (!text) throw error;
         downloadHumanLabJson(text, `el-alamein-human-recovery-${recording.datasetId || Date.now()}.json`);
+        const acknowledged = app.aiHumanCapture?.acknowledgeHumanLabRecoveryExport(recording, { exportedAt });
+        if (acknowledged) app.aiHumanRecorder.restore(acknowledged);
         const message = tr("text.humanDemonstrationRecoveryExported", { count: decisionCount });
         log(message);
         setMenuStatus(message);

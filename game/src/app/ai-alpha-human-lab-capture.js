@@ -63,7 +63,10 @@ export function shouldProtectUnexportedHumanLabRecording(recording) {
   if (!recording || !["incomplete", "completed"].includes(recording.game?.status)) return false;
   const lastMutation = Number(recording.capture?.lastMutationSequence || 0);
   const lastExported = Number(recording.capture?.lastExportedSequence || 0);
-  return Array.isArray(recording.decisions) && recording.decisions.length > 0 && lastMutation > lastExported;
+  const lastRecoveryExported = Number(recording.capture?.lastRecoveryExportedSequence || 0);
+  return Array.isArray(recording.decisions)
+    && recording.decisions.length > 0
+    && lastMutation > Math.max(lastExported, lastRecoveryExported);
 }
 
 function captureEnvelope({ kind, slot, stateHash, recording, createdAt }) {
@@ -113,6 +116,18 @@ export function serializeHumanLabRecoveryExport(recording, { exportedAt, reason 
     reason: requiredText(reason, "invalid_recovery_export_reason"),
     recording: copy(recording),
   })}\n`;
+}
+
+/** Records that the player safely downloaded a raw recovery bundle without mutating the source. */
+export function acknowledgeHumanLabRecoveryExport(recording, { exportedAt } = {}) {
+  assert(recording && typeof recording === "object" && !Array.isArray(recording), "invalid_capture_recording");
+  const acknowledged = copy(recording);
+  const lastMutation = Number(acknowledged.capture?.lastMutationSequence || 0);
+  assert(Number.isInteger(lastMutation) && lastMutation >= 0, "invalid_capture_mutation_sequence");
+  acknowledged.capture ||= {};
+  acknowledged.capture.lastRecoveryExportedSequence = lastMutation;
+  acknowledged.capture.lastRecoveryExportedAt = requiredText(exportedAt, "invalid_recovery_export_timestamp");
+  return acknowledged;
 }
 
 function writeStorage(storage, key, value) {
