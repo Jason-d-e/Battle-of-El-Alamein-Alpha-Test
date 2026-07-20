@@ -1,16 +1,25 @@
 export const HUMAN_LAB_CAPTURE_ENVELOPE_SCHEMA = "zizi-el-alamein-human-lab-capture-envelope-v1";
+export const HUMAN_LAB_COMPACT_RECORDING_SCHEMA = "zizi-el-alamein-human-lab-compact-recording-v2";
 export const HUMAN_LAB_RECOVERY_EXPORT_SCHEMA = "zizi-el-alamein-human-lab-recovery-export-v1";
 
 export function createHumanLabCaptureStore({
   storage,
   keyPrefix = "zizi-el-alamein-human-lab-capture-v1",
   now,
+  codec = identityCaptureCodec(),
 } = {}) {
   assertStorage(storage);
   assert(typeof now === "function", "human_lab_capture_clock_required");
+  assertCaptureCodec(codec);
 
   function writeCheckpoint(slot, { stateHash, recording }) {
-    const envelope = captureEnvelope({ kind: "checkpoint", slot, stateHash, recording, createdAt: now() });
+    const envelope = captureEnvelope({
+      kind: "checkpoint",
+      slot,
+      stateHash,
+      recording: codec.encode(recording),
+      createdAt: now(),
+    });
     const key = checkpointKey(slot);
     const failure = writeStorage(storage, key, JSON.stringify(envelope));
     if (failure) return failure;
@@ -24,7 +33,7 @@ export function createHumanLabCaptureStore({
     if (envelope.stateHash !== requiredText(expectedStateHash, "invalid_capture_state_hash")) {
       return { status: "state_mismatch", recording: null, envelope: copy(envelope) };
     }
-    return { status: "matched", recording: copy(envelope.recording), envelope: copy(envelope) };
+    return { status: "matched", recording: codec.decode(envelope.recording), envelope: copy(envelope) };
   }
 
   function archiveRecording(recording, { reason, stateHash = null } = {}) {
@@ -33,7 +42,7 @@ export function createHumanLabCaptureStore({
       kind: "archive",
       slot: requiredText(reason, "invalid_capture_archive_reason"),
       stateHash,
-      recording,
+      recording: codec.encode(recording),
       createdAt: now(),
     });
     const mutationSequence = Number(recording.capture?.lastMutationSequence || 0);
@@ -57,6 +66,71 @@ export function createHumanLabCaptureStore({
   }
 
   return Object.freeze({ archiveRecording, readCheckpoint, writeCheckpoint });
+}
+
+/**
+ * Removes only deterministic legal-action lists from browser persistence.
+ * Decoding regenerates them through the same authoritative rules adapter and
+ * refuses to restore a recording if the stored decision no longer matches it.
+ */
+export function createHumanLabCaptureCodec({ verifyDecision, normalizeAction = copy } = {}) {
+  assert(typeof verifyDecision === "function", "human_lab_capture_verifier_required");
+  assert(typeof normalizeAction === "function", "human_lab_capture_action_normalizer_required");
+
+  function encode(recording) {
+    assertRecording(recording);
+    if (recording.schema === HUMAN_LAB_COMPACT_RECORDING_SCHEMA) return copy(recording);
+    const compact = copy(recording);
+    for (const decision of compact.decisions || []) delete decision.legalActions;
+    return {
+      schema: HUMAN_LAB_COMPACT_RECORDING_SCHEMA,
+      recording: compact,
+    };
+  }
+
+  function decode(value) {
+    assertRecording(value);
+    if (value.schema !== HUMAN_LAB_COMPACT_RECORDING_SCHEMA) return copy(value);
+    assertRecording(value.recording);
+    const recording = copy(value.recording);
+    for (const decision of recording.decisions || []) {
+      assert(decision?.stateSnapshot && typeof decision.stateSnapshot === "object", "invalid_compact_decision_state");
+      const facts = verifyDecision(copy(decision.stateSnapshot));
+      assert(facts && typeof facts === "object", "compact_decision_verification_failed");
+      assert(decision.stateHash === facts.stateHash, "compact_decision_state_hash_mismatch");
+      assert(decision.turn === facts.turn, "compact_decision_turn_mismatch");
+      assert(decision.phase === facts.phase, "compact_decision_phase_mismatch");
+      assert(decision.side === facts.side, "compact_decision_side_mismatch");
+      assert(Array.isArray(facts.legalActions), "compact_decision_legal_actions_missing");
+      const legalActions = facts.legalActions.map((action) => copy(normalizeAction(copy(action))));
+      const chosenActionKey = canonicalJson(normalizeAction(copy(decision.chosenAction)));
+      assert(
+        legalActions.some((action) => canonicalJson(action) === chosenActionKey),
+        "compact_decision_chosen_action_illegal",
+      );
+      decision.legalActions = legalActions;
+    }
+    return recording;
+  }
+
+  return Object.freeze({ decode, encode });
+}
+
+export function humanLabStandardExportReadiness(recording, {
+  captureIssue = null,
+  expectedHumanSides = [],
+} = {}) {
+  if (captureIssue) return { ready: false, reason: "capture_degraded" };
+  if (recording?.game?.status === "completed") {
+    const observedSides = new Set((recording.decisions || []).map((decision) => decision.side));
+    for (const side of expectedHumanSides) {
+      const expectedSide = requiredText(side, "invalid_expected_human_side");
+      if (!observedSides.has(expectedSide)) {
+        return { ready: false, reason: `missing_human_side:${expectedSide}` };
+      }
+    }
+  }
+  return { ready: true, reason: null };
 }
 
 export function shouldProtectUnexportedHumanLabRecording(recording) {
@@ -99,6 +173,21 @@ function parseEnvelope(raw) {
 
 function assertStorage(storage) {
   assert(storage && typeof storage.getItem === "function" && typeof storage.setItem === "function", "invalid_capture_storage");
+}
+
+function assertCaptureCodec(codec) {
+  assert(codec && typeof codec.encode === "function" && typeof codec.decode === "function", "invalid_capture_codec");
+}
+
+function identityCaptureCodec() {
+  return Object.freeze({
+    encode: copy,
+    decode: copy,
+  });
+}
+
+function assertRecording(recording) {
+  assert(recording && typeof recording === "object" && !Array.isArray(recording), "invalid_capture_recording");
 }
 
 export function humanLabStorageFailureReason(error) {

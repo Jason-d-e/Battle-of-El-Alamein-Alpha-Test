@@ -50,7 +50,7 @@
     : Promise.resolve(null);
   const aiHumanDemonstrationPromise = import("./src/app/ai-alpha-human-demonstration.js?v=20260719-human-lab-recovery-1");
   const aiHumanCapturePromise = PRODUCT_PROFILE.features.humanLabCaptureIntegrity
-    ? import("./src/app/ai-alpha-human-lab-capture.js?v=20260719-human-lab-recovery-2")
+    ? import("./src/app/ai-alpha-human-lab-capture.js?v=20260720-human-lab-capacity-1")
     : Promise.resolve(null);
   const aiHumanRecoveryPromise = PRODUCT_PROFILE.features.humanLabCaptureIntegrity
     ? import("./src/app/ai-alpha-human-lab-recovery.js?v=20260719-human-lab-recovery-1")
@@ -824,6 +824,7 @@
     aiHumanDemonstrationAdapter: null,
     aiHumanRecorder: null,
     aiHumanCapture: null,
+    aiHumanCaptureCodec: null,
     aiHumanCaptureStore: null,
     aiHumanRecovery: null,
     aiHumanCaptureWritable: true,
@@ -1597,8 +1598,11 @@
   function loadHumanDemonstrationRecording() {
     try {
       const parsed = JSON.parse(localStorage.getItem(HUMAN_DEMONSTRATION_RECORDING_KEY) || "null");
-      return parsed?.schema === app.aiHumanDemonstration?.HUMAN_DEMONSTRATION_RECORDING_SCHEMA
-        ? parsed
+      const recording = parsed && app.aiHumanCaptureCodec
+        ? app.aiHumanCaptureCodec.decode(parsed)
+        : parsed;
+      return recording?.schema === app.aiHumanDemonstration?.HUMAN_DEMONSTRATION_RECORDING_SCHEMA
+        ? recording
         : null;
     } catch (_) {
       return null;
@@ -1608,7 +1612,12 @@
   function persistHumanDemonstrationRecording(recording) {
     try {
       if (!recording) localStorage.removeItem(HUMAN_DEMONSTRATION_RECORDING_KEY);
-      else localStorage.setItem(HUMAN_DEMONSTRATION_RECORDING_KEY, JSON.stringify(recording));
+      else {
+        const persisted = app.aiHumanCaptureCodec
+          ? app.aiHumanCaptureCodec.encode(recording)
+          : recording;
+        localStorage.setItem(HUMAN_DEMONSTRATION_RECORDING_KEY, JSON.stringify(persisted));
+      }
       renderHumanLabRecoveryUi();
       return true;
     } catch (error) {
@@ -1835,6 +1844,13 @@
     const decisionCount = Array.isArray(recording?.decisions) ? recording.decisions.length : 0;
     if (decisionCount === 0) return;
     try {
+      const readiness = app.aiHumanCapture?.humanLabStandardExportReadiness(recording, {
+        captureIssue: app.aiHumanCaptureIssue,
+        expectedHumanSides: app.ai.mode === "hotseat"
+          ? ["axis", "allied"]
+          : [app.ai.humanSide].filter(Boolean),
+      }) || { ready: true, reason: null };
+      if (!readiness.ready) throw new Error(readiness.reason);
       const dataset = app.aiHumanRecorder.buildDataset();
       const captureIntegrityEnabled = PRODUCT_PROFILE.features.humanLabCaptureIntegrity;
       const text = captureIntegrityEnabled
@@ -2096,10 +2112,15 @@
         fingerprintModule: alphaFingerprint,
       });
       app.aiHumanDemonstrationAdapter = humanAdapterContext.adapter;
+      app.aiHumanCaptureCodec = app.aiHumanCapture?.createHumanLabCaptureCodec({
+        verifyDecision: (state) => app.aiHumanDemonstrationAdapter.verifyDecision(state),
+        normalizeAction: (action) => app.core.compactAction(action),
+      }) || null;
       app.aiHumanCaptureStore = app.aiHumanCapture?.createHumanLabCaptureStore({
         storage: localStorage,
         keyPrefix: "zizi-el-alamein-alpha-human-lab-capture-v1",
         now: () => new Date().toISOString(),
+        codec: app.aiHumanCaptureCodec || undefined,
       }) || null;
       app.aiHumanRecorder = app.aiHumanDemonstration.createHumanDemonstrationRecorder({
         ...humanAdapterContext,
