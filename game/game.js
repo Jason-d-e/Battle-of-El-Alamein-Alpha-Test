@@ -50,7 +50,7 @@
     : Promise.resolve(null);
   const aiHumanDemonstrationPromise = import("./src/app/ai-alpha-human-demonstration.js?v=20260719-human-lab-recovery-1");
   const aiHumanCapturePromise = PRODUCT_PROFILE.features.humanLabCaptureIntegrity
-    ? import("./src/app/ai-alpha-human-lab-capture.js?v=20260720-human-lab-capacity-1")
+    ? import("./src/app/ai-alpha-human-lab-capture.js?v=20260722-human-lab-continuity-1")
     : Promise.resolve(null);
   const aiHumanRecoveryPromise = PRODUCT_PROFILE.features.humanLabCaptureIntegrity
     ? import("./src/app/ai-alpha-human-lab-recovery.js?v=20260719-human-lab-recovery-1")
@@ -659,6 +659,7 @@
     humanLabPrivacyNotice: "\u6570\u636e\u4ec5\u4fdd\u5b58\u5728\u6b64\u6d4f\u89c8\u5668\uff1b\u5bfc\u51fa\u7531\u7528\u6237\u4e3b\u52a8\u4e0b\u8f7d\uff1b\u4e0d\u4f1a\u81ea\u52a8\u4e0a\u4f20\u3002",
     humanLabRecoveryAvailable: "\u68c0\u6d4b\u5230 {count} \u4e2a\u53ef\u6062\u590d\u7684\u4eba\u7c7b\u51b3\u7b56\u3002\u53ef\u5148\u5bfc\u51fa\uff0c\u65e0\u9700\u7ee7\u7eed\u8fdb\u5165\u5bf9\u5c40\u3002",
     humanLabCapturePaused: "Human Lab \u91c7\u96c6\u5df2\u6682\u505c\uff1a\u6d4f\u89c8\u5668\u5b58\u50a8\u4e0d\u8db3\u6216\u6062\u590d\u94fe\u4e0d\u4e00\u81f4\u3002\u6e38\u620f\u4ecd\u53ef\u7ee7\u7eed\uff0c\u8bf7\u5148\u5bfc\u51fa\u53ef\u6062\u590d\u6570\u636e\u3002",
+    humanLabPersistenceDegraded: "Human Lab \u672c\u5730\u6301\u4e45\u5316\u5df2\u964d\u7ea7\uff0c\u4f46\u5f53\u524d\u9875\u9762\u4ecd\u5728\u7ee7\u7eed\u91c7\u96c6\u3002\u8bf7\u52ff\u5237\u65b0\u6216\u5173\u95ed\u9875\u9762\uff0c\u5b8c\u6210\u5bf9\u5c40\u540e\u7acb\u5373\u5bfc\u51fa\u3002",
     confirmUnexportedHumanDemonstrationNewGame: "\u5f53\u524d\u4eba\u7c7b\u793a\u8303\u5c1a\u672a\u5bfc\u51fa\u3002\u5f00\u59cb\u65b0\u5bf9\u5c40\u524d\u4f1a\u5c06\u5176\u4fdd\u7559\u5728\u672c\u5730\u5f52\u6863\u4e2d\u3002\u662f\u5426\u7ee7\u7eed\uff1f",
     aiThinking: "AI \u6b63\u5728\u6307\u6325 {side}",
     aiAwaitingInput: "AI \u5df2\u5b8c\u6210\u52a8\u4f5c\uff0c\u8bf7\u70b9\u51fb\u9636\u6bb5\u6309\u94ae\u7ee7\u7eed",
@@ -685,6 +686,7 @@
     humanLabPrivacyNotice: "Data stays in this browser. Export is a user-initiated download. Nothing is uploaded automatically.",
     humanLabRecoveryAvailable: "{count} recoverable human decisions were found. You can export them from this menu without continuing the game.",
     humanLabCapturePaused: "Human Lab capture is paused because browser storage is full or the capture lineage cannot be reconciled. The game can continue; export the recoverable data first.",
+    humanLabPersistenceDegraded: "Human Lab local persistence is degraded, but this page is still recording. Do not refresh or close it; export immediately after the game ends.",
     confirmUnexportedHumanDemonstrationNewGame: "This human demonstration has not been exported. It will be preserved in a local archive before a new game starts. Continue?",
     aiThinking: "AI is commanding {side}",
     aiAwaitingInput: "AI has finished. Use the phase buttons to continue",
@@ -828,6 +830,7 @@
     aiHumanCaptureStore: null,
     aiHumanRecovery: null,
     aiHumanCaptureWritable: true,
+    aiHumanCapturePersistenceWritable: true,
     aiHumanCaptureIssue: null,
     aiAlphaAnalysisScheduler: null,
     aiAlphaGameAdapter: null,
@@ -1610,6 +1613,10 @@
   }
 
   function persistHumanDemonstrationRecording(recording) {
+    if (!app.aiHumanCapturePersistenceWritable) {
+      renderHumanLabRecoveryUi();
+      return false;
+    }
     try {
       if (!recording) localStorage.removeItem(HUMAN_DEMONSTRATION_RECORDING_KEY);
       else {
@@ -1630,6 +1637,7 @@
   function startHumanDemonstrationRecording() {
     if (!app.aiHumanRecorder) return;
     app.aiHumanCaptureWritable = true;
+    app.aiHumanCapturePersistenceWritable = true;
     app.aiHumanCaptureIssue = null;
     const suffix = Date.now().toString(36);
     const result = app.aiHumanRecorder.start({
@@ -1650,8 +1658,14 @@
   }
 
   function setHumanLabCaptureIssue(reason) {
-    app.aiHumanCaptureWritable = false;
-    app.aiHumanCaptureIssue = String(reason || "capture_failed");
+    const normalizedReason = String(reason || "capture_failed");
+    const policy = app.aiHumanCapture?.humanLabCaptureIssuePolicy?.(normalizedReason) || {
+      captureWritable: false,
+      persistenceWritable: false,
+    };
+    app.aiHumanCaptureWritable = policy.captureWritable;
+    app.aiHumanCapturePersistenceWritable = policy.persistenceWritable;
+    app.aiHumanCaptureIssue = normalizedReason;
     renderHumanLabRecoveryUi();
   }
 
@@ -1662,12 +1676,18 @@
     el.menuExportHumanDemonstrationButton.hidden = !enabled;
     el.menuExportHumanDemonstrationButton.disabled = !recovery.canExport;
     if (el.exportHumanDemonstrationButton) el.exportHumanDemonstrationButton.disabled = !recovery.canExport;
+    const issuePolicy = app.aiHumanCaptureIssue
+      ? app.aiHumanCapture?.humanLabCaptureIssuePolicy?.(app.aiHumanCaptureIssue)
+      : null;
+    const issueMessage = issuePolicy?.captureWritable
+      ? tr("ui.humanLabPersistenceDegraded")
+      : tr("ui.humanLabCapturePaused");
     const menuMessage = app.aiHumanCaptureIssue
-      ? tr("ui.humanLabCapturePaused")
+      ? issueMessage
       : recovery.canExport
         ? tr("ui.humanLabRecoveryAvailable", { count: recovery.decisionCount })
         : "";
-    const gameMessage = app.aiHumanCaptureIssue ? tr("ui.humanLabCapturePaused") : "";
+    const gameMessage = app.aiHumanCaptureIssue ? issueMessage : "";
     el.humanLabMenuStatus.textContent = menuMessage;
     el.humanLabMenuStatus.hidden = !enabled || !menuMessage;
     el.humanLabGameStatus.textContent = gameMessage;
@@ -1686,6 +1706,7 @@
   function archiveHumanDemonstrationRecording(reason, state = app.state) {
     const recording = app.aiHumanRecorder?.getRecording();
     if (!recording?.decisions?.length || !app.aiHumanCaptureStore) return true;
+    if (!app.aiHumanCapturePersistenceWritable) return false;
     try {
       const result = app.aiHumanCaptureStore.archiveRecording(recording, {
         reason,
@@ -1712,6 +1733,7 @@
       if (recording?.game?.status === "incomplete") {
         app.aiHumanRecorder.recordLifecycle({ type: lifecycleType, stateHash, details: { slot } });
       }
+      if (!app.aiHumanCapturePersistenceWritable) return false;
       const result = app.aiHumanCaptureStore.writeCheckpoint(slot, {
         stateHash,
         recording: app.aiHumanRecorder.getRecording(),
@@ -1760,9 +1782,11 @@
     if (!policy) return { allowContinuation: true, captureWritable: true, requiresExport: false, reason: null };
     if (!policy.captureWritable) {
       app.aiHumanCaptureWritable = false;
+      app.aiHumanCapturePersistenceWritable = false;
       if (policy.requiresExport) setHumanLabCaptureIssue(policy.reason);
     } else if (!app.aiHumanCaptureIssue) {
       app.aiHumanCaptureWritable = true;
+      app.aiHumanCapturePersistenceWritable = true;
     }
     return policy;
   }

@@ -1,4 +1,4 @@
 :HL["/Battle-of-El-Alamein-Alpha-Test/_next/static/chunks/0cg7-nrx3up4f.css","style"]
 :HL["/Battle-of-El-Alamein-Alpha-Test/_next/static/media/b4e85636e2ca4056-s.p.0c3c6tp9xl371.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/Battle-of-El-Alamein-Alpha-Test/_next/static/media/dc6d2a64e9dbf3bc-s.p.11~i--ovv74c_.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"play","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"RTvkMX7q-gf9BAnbRIPbr"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"play","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"oN9FuknTjJBf91G6e2ZUZ"}

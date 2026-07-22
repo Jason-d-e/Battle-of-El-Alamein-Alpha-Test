@@ -2,6 +2,12 @@ export const HUMAN_LAB_CAPTURE_ENVELOPE_SCHEMA = "zizi-el-alamein-human-lab-capt
 export const HUMAN_LAB_COMPACT_RECORDING_SCHEMA = "zizi-el-alamein-human-lab-compact-recording-v2";
 export const HUMAN_LAB_RECOVERY_EXPORT_SCHEMA = "zizi-el-alamein-human-lab-recovery-export-v1";
 
+const PERSISTENCE_ONLY_CAPTURE_ISSUES = new Set([
+  "checkpoint_failed",
+  "quota_exceeded",
+  "storage_write_failed",
+]);
+
 export function createHumanLabCaptureStore({
   storage,
   keyPrefix = "zizi-el-alamein-human-lab-capture-v1",
@@ -120,7 +126,9 @@ export function humanLabStandardExportReadiness(recording, {
   captureIssue = null,
   expectedHumanSides = [],
 } = {}) {
-  if (captureIssue) return { ready: false, reason: "capture_degraded" };
+  if (captureIssue && !humanLabCaptureIssuePolicy(captureIssue).standardExportAllowed) {
+    return { ready: false, reason: "capture_degraded" };
+  }
   if (recording?.game?.status === "completed") {
     const observedSides = new Set((recording.decisions || []).map((decision) => decision.side));
     for (const side of expectedHumanSides) {
@@ -131,6 +139,22 @@ export function humanLabStandardExportReadiness(recording, {
     }
   }
   return { ready: true, reason: null };
+}
+
+/**
+ * Keeps an uninterrupted in-memory recording alive when only browser
+ * persistence has failed. Alignment failures still fail closed because the
+ * recording may no longer describe the game state being played.
+ */
+export function humanLabCaptureIssuePolicy(reason) {
+  const normalizedReason = requiredText(reason, "invalid_capture_issue");
+  const persistenceOnly = PERSISTENCE_ONLY_CAPTURE_ISSUES.has(normalizedReason);
+  return {
+    captureWritable: persistenceOnly,
+    persistenceWritable: false,
+    standardExportAllowed: persistenceOnly,
+    reason: normalizedReason,
+  };
 }
 
 export function shouldProtectUnexportedHumanLabRecording(recording) {
