@@ -48,14 +48,14 @@
   const aiAlphaPreviewPromise = PRODUCT_PROFILE.features.alphaRuntime
     ? import("./src/app/ai-alpha-preview.js?v=20260714-local-preview-1")
     : Promise.resolve(null);
-  const aiHumanDemonstrationPromise = import("./src/app/ai-alpha-human-demonstration.js?v=20260719-human-lab-recovery-1");
+  const aiHumanDemonstrationPromise = import("./src/app/ai-alpha-human-demonstration.js?v=20260722-human-lab-completeness-1");
   const aiHumanCapturePromise = PRODUCT_PROFILE.features.humanLabCaptureIntegrity
-    ? import("./src/app/ai-alpha-human-lab-capture.js?v=20260722-human-lab-continuity-1")
+    ? import("./src/app/ai-alpha-human-lab-capture.js?v=20260722-human-lab-completeness-1")
     : Promise.resolve(null);
   const aiHumanRecoveryPromise = PRODUCT_PROFILE.features.humanLabCaptureIntegrity
     ? import("./src/app/ai-alpha-human-lab-recovery.js?v=20260719-human-lab-recovery-1")
     : Promise.resolve(null);
-  const aiAlphaEnvironmentAdapterPromise = import("./src/app/ai-alpha-environment-adapter.js?v=20260713-human-recorder-1");
+  const aiAlphaEnvironmentAdapterPromise = import("./src/app/ai-alpha-environment-adapter.js?v=20260722-human-lab-completeness-1");
   const aiAlphaTrainingPromise = import("./src/app/ai-alpha-training.js?v=20260713-human-recorder-1");
   const alphaFingerprintPromise = import("../shared/wargame-alpha/fingerprint.js?v=20260713-human-recorder-1");
   const onlineModulesPromise = PRODUCT_PROFILE.features.onlineFriendMatch
@@ -1559,6 +1559,9 @@
           legalActions: coreAdapter.legalActions(state).map((entry) => entry.action),
         };
       },
+      resolveAuthoritativeAction(action, legalActions) {
+        return environmentAdapterModule.resolveElAlameinAuthoritativeAction(action, legalActions);
+      },
       getTerminalResult(state) {
         const terminal = coreAdapter.terminalResult(state);
         if (!terminal) return null;
@@ -1825,32 +1828,25 @@
   function recordHumanDemonstrationDecision(action, stateBefore = app.state, options = {}) {
     if (!app.aiHumanRecorder || !app.aiHumanCaptureWritable || !stateBefore || stateBefore.winner) return false;
     const snapshot = trainingStateSnapshot(stateBefore);
-    const facts = app.aiHumanDemonstrationAdapter?.verifyDecision(snapshot);
-    if (!facts) return false;
-    const side = options.side || facts.side;
-    if (!side || !isHumanControlledSide(side)) return false;
-    const compact = app.core.compactAction(action);
-    const legalActions = (facts.legalActions || []).map((entry) => app.core.compactAction(entry));
-    const chosenKey = app.aiHumanDemonstration.canonicalHumanActionKey(compact);
-    const isLegal = legalActions.some((entry) => (
-      app.aiHumanDemonstration.canonicalHumanActionKey(entry) === chosenKey
-    ));
-    if (!isLegal) return false;
-    return app.aiHumanRecorder.recordDecision({
-      playerSourceId: humanDemonstrationPlayer(side).sourceId,
-      turn: facts.turn,
-      phase: facts.phase,
-      side,
-      stateHash: facts.stateHash,
+    const side = options.side || activeSide();
+    const result = app.aiHumanCapture.recordHumanLabObservedDecision({
+      recorder: app.aiHumanRecorder,
+      verifyDecision: app.aiHumanDemonstrationAdapter.verifyDecision,
+      resolveAuthoritativeAction: app.aiHumanDemonstrationAdapter.resolveAuthoritativeAction,
+      normalizeAction: app.core.compactAction,
       stateSnapshot: snapshot,
-      legalActions,
-      chosenAction: compact,
-      expertBestAction: null,
-      rankedAlternatives: [],
-      confidence: null,
-      intent: null,
-      turnDoctrineTags: [],
-    }, humanDemonstrationPlayer(side));
+      action,
+      side,
+      player: humanDemonstrationPlayer(side),
+      isSideAllowed: isHumanControlledSide,
+    });
+    if (result.status === "skipped") return false;
+    if (result.status !== "recorded") {
+      setHumanLabCaptureIssue("decision_recording_failed");
+      console.warn("Human-lab decision recording failed closed.", result.reason, result.error || action);
+      return false;
+    }
+    return result.decision;
   }
 
   function completeHumanDemonstrationRecording() {
@@ -3047,7 +3043,7 @@
     const odds = calculateOdds(attackers, defender);
     const eventStateBefore = clone(app.state);
     const trainingEntry = combatTrainingEntry(attackers, defender, odds);
-    recordHumanDemonstrationDecision({
+    const humanDemonstrationDecision = recordHumanDemonstrationDecision({
       type: app.core.ENV_ACTION.DECLARE_COMBAT,
       defenderId: defender.id,
       attackerIds: attackers.map((unit) => unit.id),
@@ -3067,6 +3063,9 @@
       resolved: false,
       result: null,
       events: [],
+      ...(PRODUCT_PROFILE.features.humanLabCaptureIntegrity
+        ? { humanDemonstrationDecisionId: humanDemonstrationDecision?.id || null }
+        : {}),
     };
     app.state.declaredCombats.push(battle);
     app.state.combatCompleteNotified = false;
@@ -3106,6 +3105,20 @@
     if (!isCombatPhase() || app.state.combatMode !== "declare") return;
     const battle = app.state.declaredCombats.find((item) => item.id === battleId);
     if (!battle) return;
+    if (PRODUCT_PROFILE.features.humanLabCaptureIntegrity && battle.humanDemonstrationDecisionId) {
+      const tombstone = app.aiHumanCapture.tombstoneHumanLabObservedDecision({
+        recorder: app.aiHumanRecorder,
+        decisionId: battle.humanDemonstrationDecisionId,
+        stateHash: humanDemonstrationStateHash(app.state),
+        reason: "cancel_declared_combat",
+      });
+      if (tombstone.status !== "tombstoned") {
+        setHumanLabCaptureIssue("decision_recording_failed");
+        console.warn("Human-lab combat cancellation tombstone failed closed.", tombstone.error || tombstone.reason);
+        draw();
+        return;
+      }
+    }
     if (app.focusedBattleId === battleId) app.focusedBattleId = null;
     app.state.declaredCombats = app.state.declaredCombats.filter((item) => item.id !== battleId);
     app.state.usedDefenders = app.state.usedDefenders.filter((id) => id !== battle.defenderId);

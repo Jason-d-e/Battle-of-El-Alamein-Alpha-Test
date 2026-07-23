@@ -122,6 +122,100 @@ export function createHumanLabCaptureCodec({ verifyDecision, normalizeAction = c
   return Object.freeze({ decode, encode });
 }
 
+/**
+ * Records one browser-observed action through the same authoritative action
+ * resolver used by the live game. The result is explicit so UI callers can
+ * latch a degraded capture instead of silently continuing with a missing
+ * policy sample.
+ */
+export function recordHumanLabObservedDecision({
+  recorder,
+  verifyDecision,
+  resolveAuthoritativeAction,
+  normalizeAction = copy,
+  stateSnapshot,
+  action,
+  side = null,
+  player,
+  isSideAllowed = () => true,
+} = {}) {
+  assert(recorder && typeof recorder.recordDecision === "function", "human_lab_recorder_required");
+  assert(typeof verifyDecision === "function", "human_lab_decision_verifier_required");
+  assert(typeof resolveAuthoritativeAction === "function", "human_lab_action_resolver_required");
+  assert(typeof normalizeAction === "function", "human_lab_action_normalizer_required");
+  assert(player && typeof player === "object" && !Array.isArray(player), "human_lab_player_required");
+  assert(typeof isSideAllowed === "function", "human_lab_side_guard_required");
+
+  let facts;
+  try {
+    facts = verifyDecision(copy(stateSnapshot));
+  } catch (error) {
+    return failedObservedDecision("decision_verification_failed", error);
+  }
+  if (!facts || typeof facts !== "object") {
+    return failedObservedDecision("decision_verification_failed");
+  }
+  if (!Array.isArray(facts.legalActions)) {
+    return failedObservedDecision("decision_legal_actions_missing");
+  }
+  const decisionSide = side || facts.side;
+  if (!decisionSide || !isSideAllowed(decisionSide)) {
+    return { status: "skipped", reason: "side_not_captured", decision: null };
+  }
+
+  let observedAction;
+  let legalActions;
+  let authoritativeAction;
+  try {
+    observedAction = copy(normalizeAction(copy(action)));
+    legalActions = facts.legalActions.map((entry) => copy(normalizeAction(copy(entry))));
+    authoritativeAction = resolveAuthoritativeAction(observedAction, legalActions);
+  } catch (error) {
+    return failedObservedDecision("decision_alignment_failed", error);
+  }
+  if (!authoritativeAction) return failedObservedDecision("decision_alignment_failed");
+
+  try {
+    const decision = recorder.recordDecision({
+      playerSourceId: player.sourceId,
+      turn: facts.turn,
+      phase: facts.phase,
+      side: decisionSide,
+      stateHash: facts.stateHash,
+      stateSnapshot: copy(stateSnapshot),
+      legalActions,
+      chosenAction: copy(authoritativeAction),
+      expertBestAction: null,
+      rankedAlternatives: [],
+      confidence: null,
+      intent: null,
+      turnDoctrineTags: [],
+    }, player);
+    return { status: "recorded", reason: null, decision };
+  } catch (error) {
+    return failedObservedDecision("decision_recording_failed", error);
+  }
+}
+
+/** Tombstones the exact declaration sample before the live battle is removed. */
+export function tombstoneHumanLabObservedDecision({
+  recorder,
+  decisionId,
+  stateHash,
+  reason = "cancel_declared_combat",
+} = {}) {
+  assert(recorder && typeof recorder.tombstoneDecision === "function", "human_lab_recorder_required");
+  if (typeof decisionId !== "string" || !decisionId) {
+    return { status: "skipped", reason: "missing_decision_id", tombstone: null };
+  }
+  try {
+    const tombstone = recorder.tombstoneDecision(decisionId, { reason, stateHash });
+    return { status: "tombstoned", reason: null, tombstone };
+  } catch (error) {
+    return { status: "failed", reason: "decision_tombstone_failed", tombstone: null, error };
+  }
+}
+
 export function humanLabStandardExportReadiness(recording, {
   captureIssue = null,
   expectedHumanSides = [],
@@ -129,6 +223,8 @@ export function humanLabStandardExportReadiness(recording, {
   if (captureIssue && !humanLabCaptureIssuePolicy(captureIssue).standardExportAllowed) {
     return { ready: false, reason: "capture_degraded" };
   }
+  const continuity = humanLabRecordingContinuity(recording);
+  if (!continuity.ok) return { ready: false, reason: "capture_continuity_gap" };
   if (recording?.game?.status === "completed") {
     const observedSides = new Set((recording.decisions || []).map((decision) => decision.side));
     for (const side of expectedHumanSides) {
@@ -139,6 +235,69 @@ export function humanLabStandardExportReadiness(recording, {
     }
   }
   return { ready: true, reason: null };
+}
+
+/**
+ * Reconciles every completed declaration group with the authoritative battle
+ * snapshot captured immediately before FINISH_DECLARATIONS. This catches both
+ * silently omitted legal declarations and stale declarations that were
+ * cancelled in the game but not tombstoned from the recording.
+ */
+export function humanLabRecordingContinuity(recording) {
+  const decisions = Array.isArray(recording?.decisions)
+    ? recording.decisions.map((decision, index) => ({ decision, index })).sort((left, right) => {
+      const leftSequence = Number.isInteger(left.decision?.sequence) ? left.decision.sequence : left.index;
+      const rightSequence = Number.isInteger(right.decision?.sequence) ? right.decision.sequence : right.index;
+      return leftSequence - rightSequence || left.index - right.index;
+    })
+    : [];
+  const pendingByGroup = new Map();
+  let inspectedDeclarationGroups = 0;
+
+  for (const { decision } of decisions) {
+    const action = decision?.chosenAction;
+    const groupKey = declarationGroupKey(decision);
+    if (action?.type === "DECLARE_COMBAT") {
+      const identity = combatDeclarationIdentity(action);
+      if (!groupKey || !identity) {
+        return continuityGap({
+          inspectedDeclarationGroups,
+          decision,
+          expectedDeclarations: 0,
+          recordedDeclarations: 1,
+        });
+      }
+      const pending = pendingByGroup.get(groupKey) || [];
+      pending.push(identity);
+      pendingByGroup.set(groupKey, pending);
+      continue;
+    }
+    if (action?.type !== "FINISH_DECLARATIONS") continue;
+
+    inspectedDeclarationGroups += 1;
+    const declaredCombats = decision?.stateSnapshot?.declaredCombats;
+    if (!groupKey || !Array.isArray(declaredCombats)) {
+      return continuityGap({
+        inspectedDeclarationGroups,
+        decision,
+        expectedDeclarations: 0,
+        recordedDeclarations: (pendingByGroup.get(groupKey) || []).length,
+      });
+    }
+    const expected = declaredCombats.map(combatDeclarationIdentity);
+    const recorded = pendingByGroup.get(groupKey) || [];
+    if (expected.some((identity) => identity === null) || !sameStringMultiset(expected, recorded)) {
+      return continuityGap({
+        inspectedDeclarationGroups,
+        decision,
+        expectedDeclarations: expected.length,
+        recordedDeclarations: recorded.length,
+      });
+    }
+    pendingByGroup.delete(groupKey);
+  }
+
+  return { ok: true, reason: null, inspectedDeclarationGroups };
 }
 
 /**
@@ -197,6 +356,54 @@ function parseEnvelope(raw) {
 
 function assertStorage(storage) {
   assert(storage && typeof storage.getItem === "function" && typeof storage.setItem === "function", "invalid_capture_storage");
+}
+
+function declarationGroupKey(decision) {
+  if (!decision || !Number.isInteger(decision.turn)) return null;
+  if (typeof decision.phase !== "string" || !decision.phase) return null;
+  if (typeof decision.side !== "string" || !decision.side) return null;
+  return `${decision.turn}|${decision.phase}|${decision.side}`;
+}
+
+function failedObservedDecision(reason, error = null) {
+  return { status: "failed", reason, decision: null, ...(error ? { error } : {}) };
+}
+
+function combatDeclarationIdentity(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  if (typeof value.defenderId !== "string" || !value.defenderId) return null;
+  if (!Array.isArray(value.attackerIds) || value.attackerIds.length === 0) return null;
+  const attackerIds = value.attackerIds.map((id) => (
+    typeof id === "string" && id ? id : null
+  ));
+  if (attackerIds.some((id) => id === null)) return null;
+  if (new Set(attackerIds).size !== attackerIds.length) return null;
+  return canonicalJson({ defenderId: value.defenderId, attackerIds: attackerIds.slice().sort() });
+}
+
+function sameStringMultiset(left, right) {
+  if (left.length !== right.length) return false;
+  const leftSorted = left.slice().sort();
+  const rightSorted = right.slice().sort();
+  return leftSorted.every((value, index) => value === rightSorted[index]);
+}
+
+function continuityGap({
+  inspectedDeclarationGroups,
+  decision,
+  expectedDeclarations,
+  recordedDeclarations,
+}) {
+  return {
+    ok: false,
+    reason: "combat_declaration_continuity_gap",
+    inspectedDeclarationGroups,
+    turn: decision?.turn ?? null,
+    phase: decision?.phase ?? null,
+    side: decision?.side ?? null,
+    expectedDeclarations,
+    recordedDeclarations,
+  };
 }
 
 function assertCaptureCodec(codec) {

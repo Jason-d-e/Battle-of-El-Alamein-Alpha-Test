@@ -26,6 +26,28 @@ const QUIET_APPLY_OPTIONS = Object.freeze({
   cloneResultState: false,
 });
 
+/**
+ * Resolves a UI action to the exact legal representation supplied by the El
+ * Alamein rules adapter. Multi-unit combat selection is set-equivalent because
+ * click order has no rules meaning; all other actions remain exact.
+ */
+export function resolveElAlameinAuthoritativeAction(action, legalActions) {
+  if (!isPlainObject(action) || !Array.isArray(legalActions)) return null;
+  const observedKey = safeCanonicalAction(action);
+  if (observedKey === null) return null;
+  for (const legalAction of legalActions) {
+    if (safeCanonicalAction(legalAction) === observedKey) return copy(legalAction);
+  }
+  const observedCombatIdentity = combatDeclarationIdentity(action);
+  if (!observedCombatIdentity) return null;
+  for (const legalAction of legalActions) {
+    if (combatDeclarationIdentity(legalAction) === observedCombatIdentity) {
+      return copy(legalAction);
+    }
+  }
+  return null;
+}
+
 function boardGameplayFingerprint(board) {
   const hexes = (board?.hexes || [])
     .map((hex) => ({
@@ -45,6 +67,41 @@ function boardGameplayFingerprint(board) {
     hash = Math.imul(hash, 16777619);
   }
   return `fnv1a32:${(hash >>> 0).toString(16).padStart(8, "0")}`;
+}
+
+function combatDeclarationIdentity(action) {
+  if (!isPlainObject(action) || action.type !== ENV_ACTION.DECLARE_COMBAT) return null;
+  if (typeof action.defenderId !== "string" || !action.defenderId.trim()) return null;
+  if (!Array.isArray(action.attackerIds) || action.attackerIds.length === 0) return null;
+  const attackerIds = action.attackerIds.map((id) => (
+    typeof id === "string" && id.trim() ? id : null
+  ));
+  if (attackerIds.some((id) => id === null)) return null;
+  if (new Set(attackerIds).size !== attackerIds.length) return null;
+  return canonicalSerialize({
+    type: action.type,
+    defenderId: action.defenderId,
+    attackerIds: attackerIds.slice().sort(),
+  }, "El Alamein combat declaration identity");
+}
+
+function safeCanonicalAction(action) {
+  if (!isPlainObject(action)) return null;
+  try {
+    return canonicalSerialize(action, "El Alamein observed action");
+  } catch (_) {
+    return null;
+  }
+}
+
+function copy(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
+function isPlainObject(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+  const prototype = Object.getPrototypeOf(value);
+  return prototype === Object.prototype || prototype === null;
 }
 
 export function createElAlameinAlphaEnvironmentAdapter({ scenario, rules, board = null, instrumentation = null }) {
